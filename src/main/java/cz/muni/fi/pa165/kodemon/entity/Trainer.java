@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.kodemon.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -35,6 +36,7 @@ public class Trainer {
     private String lastName;
 
     @Temporal(TemporalType.DATE)
+    @Past
     @Column(nullable = false)
     @NotNull
     private Date dateOfBirth;
