@@ -8,7 +8,16 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by mseleng on 10/19/16.
+ * An entity that represents a Pokemon trainer.
+ * <p>
+ * A trainer can:
+ * <ul>
+ *     <li>train one or many {@link Pokemon},</li>
+ *     <li>own zero or many {@link Badge}s and</li>
+ *     <li>be the leader of zero or one {@link Stadium}.</li>
+ * </ul>
+ *
+ * @author <a href="mailto:marosseleng@gmail.com">Maros Seleng</a>
  */
 @Entity
 public class Trainer {
@@ -40,6 +49,20 @@ public class Trainer {
 
     @OneToOne
     private Stadium homeStadium;
+
+    /**
+     * Parameterless constructor for (not only) persistence purposes.
+     */
+    public Trainer() { }
+
+    /**
+     * A constructor to initialize a Pokemon Trainer and assign his first {@link Pokemon} to him.
+     *
+     * @param initialPokemon a first Pokemon for this trainer.
+     */
+    public Trainer(@NotNull Pokemon initialPokemon) {
+        this.pokemons.add(initialPokemon);
+    }
 
     public Long getId() {
         return id;
