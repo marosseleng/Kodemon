@@ -13,9 +13,8 @@ import java.util.List;
  * <p>
  * A trainer can:
  * <ul>
- *     <li>train one or many {@link Pokemon},</li>
- *     <li>own zero or many {@link Badge}s and</li>
- *     <li>be the leader of zero or one {@link Stadium}.</li>
+ *     <li>train one or many {@link Pokemon} and</li>
+ *     <li>own zero or many {@link Badge}s.</li>
  * </ul>
  *
  * @author <a href="mailto:marosseleng@gmail.com">Maros Seleng</a>
@@ -48,9 +47,6 @@ public class Trainer {
     @OneToMany
     @NotNull
     private List<Pokemon> pokemons = new ArrayList<>();
-
-    @OneToOne
-    private Stadium homeStadium;
 
     /**
      * Parameterless constructor for (not only) persistence purposes.
@@ -110,14 +106,6 @@ public class Trainer {
         return Collections.unmodifiableList(pokemons);
     }
 
-    public Stadium getHomeStadium() {
-        return homeStadium;
-    }
-
-    public void setHomeStadium(Stadium homeStadium) {
-        this.homeStadium = homeStadium;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -127,17 +115,12 @@ public class Trainer {
 
         Trainer trainer = (Trainer) o;
 
-        if (!getId().equals(trainer.getId()) ||
+        return !(!getId().equals(trainer.getId()) ||
                 !getFirstName().equals(trainer.getFirstName()) ||
                 !getLastName().equals(trainer.getLastName()) ||
                 !getDateOfBirth().equals(trainer.getDateOfBirth()) ||
                 !badges.equals(trainer.badges) ||
-                !pokemons.equals(trainer.pokemons)) {
-            return false;
-        }
-
-        return getHomeStadium() != null ? getHomeStadium().equals(trainer.getHomeStadium()) : trainer.getHomeStadium() == null;
-
+                !pokemons.equals(trainer.pokemons));
     }
 
     @Override
@@ -148,7 +131,6 @@ public class Trainer {
         result = 31 * result + getDateOfBirth().hashCode();
         result = 31 * result + badges.hashCode();
         result = 31 * result + pokemons.hashCode();
-        result = 31 * result + (getHomeStadium() != null ? getHomeStadium().hashCode() : 0);
         return result;
     }
 }
