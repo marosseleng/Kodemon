@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.kodemon.entity;
 import cz.muni.fi.pa165.kodemon.enums.PokemonType;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -26,10 +27,9 @@ public class Pokemon {
 
     private String nickname;
 
-    @Column(nullable = false)
-    @NotNull
     private PokemonType type;
 
+    @Min(1)
     private int level;
 
     /**
@@ -42,16 +42,12 @@ public class Pokemon {
      *
      * @param type the Pokemon's type.
      */
-    public Pokemon(@NotNull PokemonType type) {
+    public Pokemon(PokemonType type) {
         this.type = type;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
