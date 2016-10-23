@@ -24,6 +24,7 @@ public class Stadium {
     @NotNull
     private String city;
 
+    @Enumerated
     private PokemonType type;
 
     @OneToOne
