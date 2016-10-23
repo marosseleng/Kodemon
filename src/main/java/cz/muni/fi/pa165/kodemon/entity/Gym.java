@@ -6,15 +6,15 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
- * Entity that represents a pokemon stadium.
+ * Entity that represents a pokemon gym.
  *
- * Each stadium has a leader, which can be challenged by other trainers that want to earn a badge.
+ * Each gym has a leader, which can be challenged by other trainers that want to earn a badge.
  *
- * @author Michal Romanek
+ * @author Miso Romanek
  */
 
 @Entity
-public class Stadium {
+public class Gym {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,14 +34,14 @@ public class Stadium {
     /**
      * Parameterless constructor for (not only) persistence purposes.
      */
-    public Stadium() {}
+    public Gym() {}
 
     /**
-     * Constructor which initializes a stadium.
+     * Constructor which initializes a gym with its {@link Trainer}.
      *
-     * @param trainer that is a leader of this stadium
+     * @param trainer that is the leader of this gym.
      */
-    public Stadium(@NotNull Trainer trainer) {
+    public Gym(@NotNull Trainer trainer) {
         this.trainer = trainer;
     }
 
@@ -78,12 +78,12 @@ public class Stadium {
         if (object == null || getClass() != object.getClass()) return false;
         if (!super.equals(object)) return false;
 
-        Stadium stadium = (Stadium) object;
+        Gym gym = (Gym) object;
 
-        if (!id.equals(stadium.id)) return false;
-        if (!city.equals(stadium.city)) return false;
-        if (type != stadium.type) return false;
-        return trainer.equals(stadium.trainer);
+        if (!id.equals(gym.id)) return false;
+        if (!city.equals(gym.city)) return false;
+        if (type != gym.type) return false;
+        return trainer.equals(gym.trainer);
     }
 
     public int hashCode() {
