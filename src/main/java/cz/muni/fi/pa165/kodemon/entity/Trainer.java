@@ -106,6 +106,10 @@ public class Trainer {
         return Collections.unmodifiableList(pokemons);
     }
 
+    public void addPokemon(Pokemon pokemon) {
+        pokemons.add(pokemon);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
