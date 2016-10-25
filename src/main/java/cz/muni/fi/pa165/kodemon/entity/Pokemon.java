@@ -17,6 +17,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Pokemon {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
