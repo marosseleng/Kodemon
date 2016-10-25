@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver;
 import org.springframework.instrument.classloading.LoadTimeWeaver;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -18,12 +17,17 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import javax.sql.DataSource;
 
 /**
- * Created by mseleng on 10/24/16.
+ * Configuration class for Spring.
+ *
+ * <p>We prefer using annotation based configuration (Java config).
+ * <p>For the creation of DAOs we chose to use {@link org.springframework.data.jpa.repository.JpaRepository} from Spring Data.
+ *
+ * @author <a href="marosseleng@gmail.com">Maro Seleng</a>
  */
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories
-@ComponentScan(basePackages = "cz.muni.fi.pa165.kodemon.dao")
+@ComponentScan(basePackages = "cz.muni.fi.pa165.kodemon")
 public class KodemonApplicationContext {
 
     @Bean
@@ -33,10 +37,11 @@ public class KodemonApplicationContext {
 
     /**
      * Starts up a container that emulates behavior prescribed in JPA spec for container-managed EntityManager
-     * @return
+     *
+     * @return configured entity manager factory
      */
     @Bean
-    public LocalContainerEntityManagerFactoryBean  entityManagerFactory(){
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
         LocalContainerEntityManagerFactoryBean jpaFactoryBean = new LocalContainerEntityManagerFactoryBean();
         jpaFactoryBean.setDataSource(db());
         jpaFactoryBean.setLoadTimeWeaver(instrumentationLoadTimeWeaver());
@@ -48,15 +53,21 @@ public class KodemonApplicationContext {
     public LocalValidatorFactoryBean localValidatorFactoryBean(){
         return new LocalValidatorFactoryBean();
     }
+
     @Bean
     public LoadTimeWeaver instrumentationLoadTimeWeaver() {
         return new InstrumentationLoadTimeWeaver();
     }
 
+    /**
+     * Creates the {@link DataSource} configured to use the Derby database.
+     *
+     * @return The dataSource
+     */
     @Bean
     public DataSource db(){
-        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-        EmbeddedDatabase db = builder.setType(EmbeddedDatabaseType.DERBY).build();
-        return db;
+        return new EmbeddedDatabaseBuilder()
+                .setType(EmbeddedDatabaseType.DERBY)
+                .build();
     }
 }
