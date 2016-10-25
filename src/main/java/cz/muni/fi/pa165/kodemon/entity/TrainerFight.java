@@ -18,13 +18,11 @@ public class TrainerFight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
+    
     @NotNull
     @ManyToOne
     private Trainer challenger;
 
-    @Column(nullable = false)
     @NotNull
     @ManyToOne
     private Gym gym;
