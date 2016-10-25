@@ -39,10 +39,6 @@ public class TrainerFight {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Trainer getChallenger() {
         return challenger;
     }
