@@ -13,6 +13,7 @@ import java.util.Date;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 
 /**
  * Created by mseleng on 10/24/16.
@@ -31,5 +32,7 @@ public class SomeTest extends AbstractTestNGSpringContextTests {
         trainer.setLastName("Seleng");
         dao.save(trainer);
         assertThat(dao.findAll().size(), is(greaterThan(0)));
+        Trainer t = dao.findAll().get(0);
+        assertThat(t, is(notNullValue()));
     }
 }
