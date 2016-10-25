@@ -18,7 +18,7 @@ public class TrainerFight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @NotNull
     @ManyToOne
     private Trainer challenger;
@@ -33,5 +33,60 @@ public class TrainerFight {
      * Parameterless constructor for (not only) persistence purposes.
      */
     public TrainerFight() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Trainer getChallenger() {
+        return challenger;
+    }
+
+    public void setChallenger(Trainer challenger) {
+        this.challenger = challenger;
+    }
+
+    public Gym getGym() {
+        return gym;
+    }
+
+    public void setGym(Gym gym) {
+        this.gym = gym;
+    }
+
+    public boolean isWasChallengerSuccessful() {
+        return wasChallengerSuccessful;
+    }
+
+    public void setWasChallengerSuccessful(boolean wasChallengerSuccessful) {
+        this.wasChallengerSuccessful = wasChallengerSuccessful;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TrainerFight)) return false;
+
+        TrainerFight that = (TrainerFight) o;
+
+        if (isWasChallengerSuccessful() != that.isWasChallengerSuccessful()) return false;
+        if (!getId().equals(that.getId())) return false;
+        if (!getChallenger().equals(that.getChallenger())) return false;
+        return getGym().equals(that.getGym());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId().hashCode();
+        result = 31 * result + getChallenger().hashCode();
+        result = 31 * result + getGym().hashCode();
+        result = 31 * result + (isWasChallengerSuccessful() ? 1 : 0);
+        return result;
     }
 }
