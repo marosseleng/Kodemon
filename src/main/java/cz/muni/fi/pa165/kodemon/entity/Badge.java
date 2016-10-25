@@ -4,9 +4,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
- * Entity that represents a badge a trainer can earn from a stadium.
+ * Entity that represents a badge a trainer can earn from a gym.
  *
- * A trainer earns a badge, by defeating stadium leader.
+ * A trainer earns a badge, by defeating gym leader.
  *
  * @author Oliver Roch
  */
@@ -24,7 +24,7 @@ public class Badge {
 
     @OneToOne
     @NotNull
-    private Stadium stadium;
+    private Gym gym;
 
     /**
      * Parameterless constructor for (not only) persistence purposes.
@@ -32,12 +32,12 @@ public class Badge {
     public Badge() {}
 
     /**
-     * Constructor which initialize a stadium of the badge
+     * Constructor which initialize a gym of the badge
      *
-     * @param stadium where can this badge be earned
+     * @param gym where can this badge be earned
      */
-    public Badge(@NotNull Stadium stadium) {
-        this.stadium = stadium;
+    public Badge(@NotNull Gym gym) {
+        this.gym = gym;
     }
 
     public Long getId() {
@@ -56,12 +56,12 @@ public class Badge {
         this.name = name;
     }
 
-    public Stadium getStadium() {
-        return stadium;
+    public Gym getGym() {
+        return gym;
     }
 
-    public void setStadium(Stadium stadium) {
-        this.stadium = stadium;
+    public void setGym(Gym gym) {
+        this.gym = gym;
     }
 
     @Override
@@ -73,7 +73,7 @@ public class Badge {
 
         if (getId() != null ? !getId().equals(badge.getId()) : badge.getId() != null) return false;
         if (getName() != null ? !getName().equals(badge.getName()) : badge.getName() != null) return false;
-        return getStadium() != null ? getStadium().equals(badge.getStadium()) : badge.getStadium() == null;
+        return getGym() != null ? getGym().equals(badge.getGym()) : badge.getGym() == null;
 
     }
 
@@ -81,7 +81,7 @@ public class Badge {
     public int hashCode() {
         int result = getId() != null ? getId().hashCode() : 0;
         result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        result = 31 * result + (getStadium() != null ? getStadium().hashCode() : 0);
+        result = 31 * result + (getGym() != null ? getGym().hashCode() : 0);
         return result;
     }
 }
