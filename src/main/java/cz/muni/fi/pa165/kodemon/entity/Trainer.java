@@ -3,11 +3,7 @@ package cz.muni.fi.pa165.kodemon.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * An entity that represents a Pokemon trainer.
@@ -41,24 +37,16 @@ public class Trainer {
     @NotNull
     private Date dateOfBirth;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "trainer")
     @NotNull
-    private List<Badge> badges = new ArrayList<>();
+    private Set<Badge> badges = new HashSet<>();
 
     /**
-     * The list of (maximum 6) {@link Pokemon} that the Trainer has by his side.
+     * The list of {@link Pokemon} that belong to the Trainer.
      */
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "trainer")
     @NotNull
-    @Size(max = 6)
-    private List<Pokemon> activePokemon = new ArrayList<>();
-
-    /**
-     * The list of {@link Pokemon} that belong to the Trainer, but are not currently by his side.
-     */
-    @OneToMany
-    @NotNull
-    private List<Pokemon> inventoryPokemon = new ArrayList<>();
+    private List<Pokemon> pokemons = new ArrayList<>();
 
     /**
      * Parameterless constructor for (not only) persistence purposes.
@@ -71,7 +59,7 @@ public class Trainer {
      * @param initialPokemon a first Pokemon for this trainer.
      */
     public Trainer(@NotNull Pokemon initialPokemon) {
-        this.activePokemon.add(initialPokemon);
+        this.pokemons.add(initialPokemon);
     }
 
     public Long getId() {
@@ -106,36 +94,24 @@ public class Trainer {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public List<Badge> getBadges() {
-        return Collections.unmodifiableList(badges);
+    public Set<Badge> getBadges() {
+        return Collections.unmodifiableSet(badges);
     }
 
     public void addBadge(Badge badge) {
         badges.add(badge);
     }
 
-    public List<Pokemon> getActivePokemon() {
-        return Collections.unmodifiableList(activePokemon);
+    public List<Pokemon> getPokemons() {
+        return Collections.unmodifiableList(pokemons);
     }
 
-    public void addActivePokemon(Pokemon pokemon) {
-        activePokemon.add(pokemon);
+    public void addPokemon(Pokemon pokemon) {
+        pokemons.add(pokemon);
     }
 
-    public boolean removeActivePokemon(Pokemon pokemon) {
-        return activePokemon.remove(pokemon);
-    }
-
-    public List<Pokemon> getInventoryPokemon() {
-        return Collections.unmodifiableList(inventoryPokemon);
-    }
-
-    public void addInventoryPokemon(Pokemon pokemon) {
-        inventoryPokemon.add(pokemon);
-    }
-
-    public boolean removeInventoryPokemon(Pokemon pokemon) {
-        return inventoryPokemon.remove(pokemon);
+    public boolean removePokemon(Pokemon pokemon) {
+        return pokemons.remove(pokemon);
     }
 
     @Override
@@ -152,8 +128,7 @@ public class Trainer {
                 !getLastName().equals(trainer.getLastName()) ||
                 !getDateOfBirth().equals(trainer.getDateOfBirth()) ||
                 !getBadges().equals(trainer.getBadges()) ||
-                !getActivePokemon().equals(trainer.getActivePokemon()) ||
-                !getInventoryPokemon().equals(trainer.getInventoryPokemon()));
+                !getPokemons().equals(trainer.getPokemons()));
     }
 
     @Override
@@ -163,8 +138,7 @@ public class Trainer {
         result = 31 * result + getLastName().hashCode();
         result = 31 * result + getDateOfBirth().hashCode();
         result = 31 * result + getBadges().hashCode();
-        result = 31 * result + getActivePokemon().hashCode();
-        result = 31 * result + getInventoryPokemon().hashCode();
+        result = 31 * result + getPokemons().hashCode();
         return result;
     }
 }
