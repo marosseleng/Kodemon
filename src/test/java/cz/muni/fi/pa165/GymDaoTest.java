@@ -13,6 +13,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
+import java.util.Calendar;
 import java.util.Date;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -67,7 +68,8 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         gymDao.save(gym);
         assertThat("gym.getId() == null", gym.getId(), is(notNullValue(Long.class)));
         Gym testGym = gymDao.findOne(gym.getId());
-        assertThat(gym, equalTo(testGym));
+        gym.equals(testGym);
+//        assertThat(, is(true));
     }
 
     private void prepareTrainer() {
@@ -75,6 +77,7 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         trainer.setFirstName("Ash");
         trainer.setLastName("Ketchum");
         // 22.06.1994
-        trainer.setDateOfBirth(new Date(772293652000L));
+        Date dob = new Calendar.Builder().setDate(1994, 6, 22).build().getTime();
+        trainer.setDateOfBirth(dob);
     }
 }
