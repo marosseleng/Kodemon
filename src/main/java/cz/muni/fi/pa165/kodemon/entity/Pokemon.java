@@ -30,6 +30,7 @@ public class Pokemon {
 
     private String nickname;
 
+    @Enumerated
     private PokemonType type;
 
     @Min(1)
