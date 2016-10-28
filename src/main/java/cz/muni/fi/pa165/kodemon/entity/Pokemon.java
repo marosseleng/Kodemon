@@ -21,6 +21,9 @@ public class Pokemon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne // this is the BIDIRECTIONAL OWNING side
+    private Trainer trainer;
+
     @Column(nullable = false)
     @NotNull
     private String name;
@@ -48,6 +51,14 @@ public class Pokemon {
 
     public Long getId() {
         return id;
+    }
+
+    public Trainer getTrainer() {
+        return trainer;
+    }
+
+    public void setTrainer(Trainer trainer) {
+        this.trainer = trainer;
     }
 
     public String getName() {
@@ -84,26 +95,25 @@ public class Pokemon {
 
     public boolean equals(Object object) {
         if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        if (!super.equals(object)) return false;
+        if (object == null || !(object instanceof Pokemon)) return false;
 
         Pokemon pokemon = (Pokemon) object;
 
-        if (level != pokemon.level) return false;
-        if (!id.equals(pokemon.id)) return false;
-        if (!name.equals(pokemon.name)) return false;
-        if (nickname != null ? !nickname.equals(pokemon.nickname) : pokemon.nickname != null) return false;
-        return type == pokemon.type;
+        if (getLevel() != pokemon.getLevel()) return false;
+        if (!getId().equals(pokemon.getId())) return false;
+        if (!getName().equals(pokemon.getName())) return false;
+        if (getNickname() != null ? !getNickname().equals(pokemon.getNickname()) : pokemon.getNickname() != null) return false;
+        return getType() == pokemon.getType();
 
     }
 
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + id.hashCode();
-        result = 31 * result + name.hashCode();
-        result = 31 * result + (nickname != null ? nickname.hashCode() : 0);
-        result = 31 * result + type.hashCode();
-        result = 31 * result + level;
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + getId().hashCode();
+        result = 31 * result + getName().hashCode();
+        result = 31 * result + (getNickname() != null ? getNickname().hashCode() : 0);
+        result = 31 * result + getType().hashCode();
+        result = 31 * result + getLevel();
         return result;
     }
 }
