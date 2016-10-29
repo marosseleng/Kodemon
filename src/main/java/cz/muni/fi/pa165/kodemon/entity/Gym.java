@@ -25,6 +25,7 @@ public class Gym {
     private String city;
 
     @Enumerated
+    @NotNull
     private PokemonType type;
 
     @OneToOne
