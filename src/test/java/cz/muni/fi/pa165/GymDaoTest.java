@@ -53,6 +53,7 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         prepareTrainer();
         assertThat("trainer == null", trainer, is(notNullValue()));
         trainerDao.save(trainer);
+        gym = null;
     }
 
     /** save(...) tests */
@@ -87,14 +88,14 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test(expectedExceptions = {NullPointerException.class})
     void testSaveGymWithNullCity() {
-        Gym gym = new Gym(trainer);
+        gym = new Gym(trainer);
         gym.setType(PokemonType.EARTH);
         gymDao.save(gym);
     }
 
     @Test(expectedExceptions = {NullPointerException.class})
     void testSaveGymWithNullTrainer() {
-        Gym gym = new Gym();
+        gym = new Gym();
         gym.setType(PokemonType.EARTH);
         gym.setCity("some city");
         gymDao.save(gym);
@@ -102,14 +103,14 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test(expectedExceptions = {NullPointerException.class})
     void testSaveGymWithNullTrainerAndNullCity() {
-        Gym gym = new Gym();
+        gym = new Gym();
         gym.setType(PokemonType.EARTH);
         gymDao.save(gym);
     }
 
     @Test(expectedExceptions = {NullPointerException.class})
     void testSaveGymWithoutType() {
-        Gym gym = new Gym();
+        gym = new Gym();
         gym.setTrainer(trainer);
         gym.setCity("some city");
         gymDao.save(gym);
@@ -119,17 +120,9 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test(expectedExceptions = {DataAccessException.class})
     void testDeleteNullGym() {
-        Gym gym = null;
+        gym = null;
         assertThat(gym, is(nullValue(Gym.class)));
         gymDao.delete(gym);
-    }
-
-    @Test
-    void testDeleteNotSavedGym() {
-        assertThat(gymDao.count(), is(equalTo(0L)));
-        Gym gym = randomGym(3);
-        Gym foundGym = gymDao.findOne(Example.of(gym));
-        assertThat(foundGym, is(nullValue(Gym.class)));
     }
 
     @Test(expectedExceptions = {DataAccessException.class})
@@ -150,7 +143,7 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     void testDeleteByPassingId() {
-        Gym gym = randomGym(4);
+        gym = randomGym(4);
         assertThat(gymDao.count(), is(equalTo(0L)));
         gymDao.save(gym);
         assertThat(gymDao.count(), is(equalTo(1L)));
@@ -212,6 +205,7 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         gymDao.save(gym);
         assertThat(gymDao.count(), is(equalTo(1L)));
         gym.setCity("another");
+        gymDao.saveAndFlush(gym);
         Gym found = gymDao.findOne(gym.getId());
         assertThat(found, equalTo(gym));
     }
