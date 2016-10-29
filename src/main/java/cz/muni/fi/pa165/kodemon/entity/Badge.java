@@ -80,7 +80,7 @@ public class Badge {
 
         Badge badge = (Badge) o;
 
-        if (!getId().equals(badge.getId())) return false;
+        if (getId() != null && !getId().equals(badge.getId())) return false;
         if (!getName().equals(badge.getName())) return false;
         if (!getGym().equals(badge.getGym())) return false;
         return getTrainer().equals(badge.getTrainer());
@@ -89,7 +89,7 @@ public class Badge {
 
     @Override
     public int hashCode() {
-        int result = getId().hashCode();
+        int result = getId() == null ? 0 : getId().hashCode();
         result = 31 * result + getName().hashCode();
         result = 31 * result + getGym().hashCode();
         result = 31 * result + getTrainer().hashCode();

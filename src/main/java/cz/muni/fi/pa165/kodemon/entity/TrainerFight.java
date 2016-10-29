@@ -71,7 +71,7 @@ public class TrainerFight {
         TrainerFight that = (TrainerFight) o;
 
         if (isWasChallengerSuccessful() != that.isWasChallengerSuccessful()) return false;
-        if (!getId().equals(that.getId())) return false;
+        if (getId() != null && !getId().equals(that.getId())) return false;
         if (!getChallenger().equals(that.getChallenger())) return false;
         return getTargetGym().equals(that.getTargetGym());
 
@@ -79,7 +79,7 @@ public class TrainerFight {
 
     @Override
     public int hashCode() {
-        int result = getId().hashCode();
+        int result = (getId() == null) ? 0 : getId().hashCode();
         result = 31 * result + getChallenger().hashCode();
         result = 31 * result + getTargetGym().hashCode();
         result = 31 * result + (isWasChallengerSuccessful() ? 1 : 0);
