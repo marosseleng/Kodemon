@@ -55,6 +55,8 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         trainerDao.save(trainer);
     }
 
+    /** save(...) tests */
+
     @Test(expectedExceptions = {DataAccessException.class})
     void testSaveNullGym() {
         gym = null;
@@ -113,6 +115,8 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         gymDao.save(gym);
     }
 
+    /** delete(...) tests */
+
     @Test(expectedExceptions = {DataAccessException.class})
     void testDeleteNullGym() {
         Gym gym = null;
@@ -166,6 +170,8 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(gymDao.count(), is(equalTo(0L)));
     }
 
+    /** find(...) tests */
+
     @Test
     void testFindByPassingId() {
         gym = randomGym(6);
@@ -196,6 +202,45 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         List<Gym> found = gymDao.findAll();
         assertThat(found.size(), is(equalTo(numberOfGyms)));
         assertThat(found, is(equalTo(gyms)));
+    }
+
+    /** update tests */
+
+    @Test
+    void testCorrectUpdate() {
+        gym = randomGym(3);
+        gymDao.save(gym);
+        assertThat(gymDao.count(), is(equalTo(1L)));
+        gym.setCity("another");
+        Gym found = gymDao.findOne(gym.getId());
+        assertThat(found, equalTo(gym));
+    }
+
+    @Test(expectedExceptions = {NullPointerException.class})
+    void testUpdateWithNullCity() {
+        gym = randomGym(10);
+        assertThat(gymDao.count(), is(equalTo(0L)));
+        gymDao.save(gym);
+        gym.setCity(null);
+        gymDao.saveAndFlush(gym);
+    }
+
+    @Test(expectedExceptions = {NullPointerException.class})
+    void testUpdateWithNullPokemonType() {
+        gym = randomGym(10);
+        assertThat(gymDao.count(), is(equalTo(0L)));
+        gymDao.save(gym);
+        gym.setType(null);
+        gymDao.saveAndFlush(gym);
+    }
+
+    @Test(expectedExceptions = {NullPointerException.class})
+    void testUpdateWithNullTrainer() {
+        gym = randomGym(10);
+        assertThat(gymDao.count(), is(equalTo(0L)));
+        gymDao.save(gym);
+        gym.setTrainer(null);
+        gymDao.saveAndFlush(gym);
     }
 
     private void prepareTrainer() {
