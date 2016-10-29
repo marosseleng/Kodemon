@@ -57,14 +57,6 @@ public class Gym {
         this.city = city;
     }
 
-    public Trainer getTrainer() {
-        return trainer;
-    }
-
-    public void setTrainer(Trainer trainer) {
-        this.trainer = trainer;
-    }
-
     public PokemonType getType() {
         return type;
     }
@@ -73,24 +65,36 @@ public class Gym {
         this.type = type;
     }
 
-    public boolean equals(Object object) {
+    public Trainer getTrainer() {
+        return trainer;
+    }
+
+    public void setTrainer(Trainer trainer) {
+        this.trainer = trainer;
+    }
+
+    @Override
+    public boolean equals(Object o) {
         if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        if (!super.equals(object)) return false;
+        if (object == null || !(object instanceof Trainer)) {
+            return false;
+        }
 
         Gym gym = (Gym) object;
 
-        if (!id.equals(gym.id)) return false;
-        if (!city.equals(gym.city)) return false;
-        if (type != gym.type) return false;
-        return trainer.equals(gym.trainer);
+        return !(!getId().equals(gym.getId()) ||
+                !getCity().equals(gym.getCity()) ||
+                !getType().equals(gym.getType()) ||
+                !getTrainer().equals(gym.getTrainer()) ||
+                !trainer.equals(gym.trainer));
     }
 
+    @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + id.hashCode();
-        result = 31 * result + city.hashCode();
-        result = 31 * result + type.hashCode();
+        int result = getId().hashCode();
+        result = 31 * result + getCity().hashCode();
+        result = 31 * result + getType().hashCode();
+        result = 31 * result + getTrainer().hashCode();
         result = 31 * result + trainer.hashCode();
         return result;
     }
