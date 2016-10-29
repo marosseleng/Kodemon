@@ -83,7 +83,7 @@ public class Gym {
 
         Gym gym = (Gym) object;
 
-        return !(!getId().equals(gym.getId()) ||
+        return !((getId() != null && !getId().equals(gym.getId())) ||
                 !getCity().equals(gym.getCity()) ||
                 !getType().equals(gym.getType()) ||
                 !getTrainer().equals(gym.getTrainer()));
@@ -91,7 +91,7 @@ public class Gym {
 
     @Override
     public int hashCode() {
-        int result = getId().hashCode();
+        int result = getId() == null ? 0 : getId().hashCode();
         result = 31 * result + getCity().hashCode();
         result = 31 * result + getType().hashCode();
         result = 31 * result + getTrainer().hashCode();
