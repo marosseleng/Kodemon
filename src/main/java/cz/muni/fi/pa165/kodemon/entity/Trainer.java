@@ -119,7 +119,7 @@ public class Trainer {
 
         Trainer trainer = (Trainer) o;
 
-        return !(!getId().equals(trainer.getId()) ||
+        return !((getId() != null && !getId().equals(trainer.getId())) ||
                 !getFirstName().equals(trainer.getFirstName()) ||
                 !getLastName().equals(trainer.getLastName()) ||
                 !getDateOfBirth().equals(trainer.getDateOfBirth()) ||
@@ -129,7 +129,7 @@ public class Trainer {
 
     @Override
     public int hashCode() {
-        int result = getId().hashCode();
+        int result = (getId() == null) ? 0 : getId().hashCode();
         result = 31 * result + getFirstName().hashCode();
         result = 31 * result + getLastName().hashCode();
         result = 31 * result + getDateOfBirth().hashCode();
