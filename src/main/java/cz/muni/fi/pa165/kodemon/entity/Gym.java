@@ -77,7 +77,7 @@ public class Gym {
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;
-        if (object == null || !(object instanceof Trainer)) {
+        if (object == null || !(object instanceof Gym)) {
             return false;
         }
 
