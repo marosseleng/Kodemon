@@ -86,7 +86,7 @@ public class Gym {
         return !(!getId().equals(gym.getId()) ||
                 !getCity().equals(gym.getCity()) ||
                 !getType().equals(gym.getType()) ||
-                !getTrainer().equals(gym.getTrainer());
+                !getTrainer().equals(gym.getTrainer()));
     }
 
     @Override
