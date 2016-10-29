@@ -26,18 +26,23 @@ public class Badge {
     @NotNull
     private Gym gym;
 
+    @ManyToOne // this is the BIDIRECTIONAL OWNING side
+    @NotNull
+    private Trainer trainer;
+
     /**
      * Parameterless constructor for (not only) persistence purposes.
      */
     public Badge() {}
 
     /**
-     * Constructor which initialize a gym of the badge
+     * Constructor which initialize a gym of the badge and trainer to own it
      *
      * @param gym where can this badge be earned
      */
-    public Badge(@NotNull Gym gym) {
+    public Badge(@NotNull Gym gym, @NotNull Trainer trainer) {
         this.gym = gym;
+        this.trainer = trainer;
     }
 
     public Long getId() {
@@ -60,6 +65,14 @@ public class Badge {
         this.gym = gym;
     }
 
+    public Trainer getTrainer() {
+        return trainer;
+    }
+
+    public void setTrainer(Trainer trainer) {
+        this.trainer = trainer;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -67,17 +80,19 @@ public class Badge {
 
         Badge badge = (Badge) o;
 
-        if (getId() != null ? !getId().equals(badge.getId()) : badge.getId() != null) return false;
-        if (getName() != null ? !getName().equals(badge.getName()) : badge.getName() != null) return false;
-        return getGym() != null ? getGym().equals(badge.getGym()) : badge.getGym() == null;
+        if (!getId().equals(badge.getId())) return false;
+        if (!getName().equals(badge.getName())) return false;
+        if (!getGym().equals(badge.getGym())) return false;
+        return getTrainer().equals(badge.getTrainer());
 
     }
 
     @Override
     public int hashCode() {
-        int result = getId() != null ? getId().hashCode() : 0;
-        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        result = 31 * result + (getGym() != null ? getGym().hashCode() : 0);
+        int result = getId().hashCode();
+        result = 31 * result + getName().hashCode();
+        result = 31 * result + getGym().hashCode();
+        result = 31 * result + getTrainer().hashCode();
         return result;
     }
 }

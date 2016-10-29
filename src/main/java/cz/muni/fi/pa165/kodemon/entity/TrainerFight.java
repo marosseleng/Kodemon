@@ -25,7 +25,7 @@ public class TrainerFight {
 
     @NotNull
     @ManyToOne
-    private Gym gym;
+    private Gym targetGym;
 
     private boolean wasChallengerSuccessful;
 
@@ -47,12 +47,12 @@ public class TrainerFight {
         this.challenger = challenger;
     }
 
-    public Gym getGym() {
-        return gym;
+    public Gym getTargetGym() {
+        return targetGym;
     }
 
-    public void setGym(Gym gym) {
-        this.gym = gym;
+    public void setTargetGym(Gym targetGym) {
+        this.targetGym = targetGym;
     }
 
     public boolean isWasChallengerSuccessful() {
@@ -73,7 +73,7 @@ public class TrainerFight {
         if (isWasChallengerSuccessful() != that.isWasChallengerSuccessful()) return false;
         if (!getId().equals(that.getId())) return false;
         if (!getChallenger().equals(that.getChallenger())) return false;
-        return getGym().equals(that.getGym());
+        return getTargetGym().equals(that.getTargetGym());
 
     }
 
@@ -81,7 +81,7 @@ public class TrainerFight {
     public int hashCode() {
         int result = getId().hashCode();
         result = 31 * result + getChallenger().hashCode();
-        result = 31 * result + getGym().hashCode();
+        result = 31 * result + getTargetGym().hashCode();
         result = 31 * result + (isWasChallengerSuccessful() ? 1 : 0);
         return result;
     }
