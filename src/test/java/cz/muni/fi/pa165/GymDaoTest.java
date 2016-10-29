@@ -26,7 +26,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 /**
- * Created by mseleng on 10/25/16.
+ * Unit tests to test the {@link GymDao}
+ *
+ * @author <a href="xseleng@fi.muni.cz">Maros Seleng, 422624</a>
  */
 @Transactional
 @TestExecutionListeners(TransactionalTestExecutionListener.class)

@@ -14,7 +14,7 @@ import java.util.*;
  *     <li>own zero or many {@link Badge}s.</li>
  * </ul>
  *
- * @author <a href="mailto:marosseleng@gmail.com">Maros Seleng</a>
+ * @author <a href="xseleng@fi.muni.cz">Maros Seleng, 422624</a>
  */
 @Entity
 public class Trainer {
