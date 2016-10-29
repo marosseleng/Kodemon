@@ -2,14 +2,19 @@ package cz.muni.fi.pa165;
 
 import cz.muni.fi.pa165.kodemon.KodemonApplicationContext;
 import cz.muni.fi.pa165.kodemon.dao.GymDao;
+import cz.muni.fi.pa165.kodemon.dao.PokemonDao;
 import cz.muni.fi.pa165.kodemon.dao.TrainerDao;
 import cz.muni.fi.pa165.kodemon.entity.Gym;
+import cz.muni.fi.pa165.kodemon.entity.Pokemon;
 import cz.muni.fi.pa165.kodemon.entity.Trainer;
 import cz.muni.fi.pa165.kodemon.enums.PokemonType;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Example;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -25,6 +30,8 @@ import static org.hamcrest.Matchers.*;
 /**
  * Created by mseleng on 10/25/16.
  */
+@Transactional
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
 @ContextConfiguration(classes = KodemonApplicationContext.class)
 public class GymDaoTest extends AbstractTestNGSpringContextTests {
 
@@ -34,7 +41,11 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
     @Inject
     private TrainerDao trainerDao;
 
+    @Inject
+    private PokemonDao pokemonDao;
+
     private Trainer trainer;
+    private Pokemon pokemon;
 
     @BeforeMethod
     void prepare() {
@@ -43,10 +54,13 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         assertThat("gymDao.count() != 0L", gymDao.count(), is(0L));
         assertThat(trainerDao, is(notNullValue(TrainerDao.class)));
         trainerDao.deleteAll();
+        pokemonDao.deleteAll();
         assertThat("trainerDao.count() != 0L", trainerDao.count(), is(0L));
         prepareTrainer();
         assertThat("trainer == null", trainer, is(notNullValue()));
         trainerDao.save(trainer);
+
+        pokemonDao.save(pokemon);
     }
 
     @Test(expectedExceptions = {DataAccessException.class})
@@ -131,6 +145,12 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         // 22.06.1994
         Date dob = new Calendar.Builder().setDate(1994, 6, 22).build().getTime();
         trainer.setDateOfBirth(dob);
+        pokemon = new Pokemon(PokemonType.EARTH);
+        pokemon.setTrainer(trainer);
+        pokemon.setName("Abra");
+        pokemon.setLevel(2);
+        pokemon.setNickname("Bohatstvo");
+        trainer.addPokemon(pokemon);
     }
 
     private List<Gym> randomGyms(int size) {
