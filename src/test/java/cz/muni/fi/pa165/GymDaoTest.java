@@ -2,10 +2,8 @@ package cz.muni.fi.pa165;
 
 import cz.muni.fi.pa165.kodemon.KodemonApplicationContext;
 import cz.muni.fi.pa165.kodemon.dao.GymDao;
-import cz.muni.fi.pa165.kodemon.dao.PokemonDao;
 import cz.muni.fi.pa165.kodemon.dao.TrainerDao;
 import cz.muni.fi.pa165.kodemon.entity.Gym;
-import cz.muni.fi.pa165.kodemon.entity.Pokemon;
 import cz.muni.fi.pa165.kodemon.entity.Trainer;
 import cz.muni.fi.pa165.kodemon.enums.PokemonType;
 import org.springframework.dao.DataAccessException;
@@ -41,11 +39,8 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
     @Inject
     private TrainerDao trainerDao;
 
-    @Inject
-    private PokemonDao pokemonDao;
-
     private Trainer trainer;
-    private Pokemon pokemon;
+    private Gym gym;
 
     @BeforeMethod
     void prepare() {
@@ -54,25 +49,22 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         assertThat("gymDao.count() != 0L", gymDao.count(), is(0L));
         assertThat(trainerDao, is(notNullValue(TrainerDao.class)));
         trainerDao.deleteAll();
-        pokemonDao.deleteAll();
         assertThat("trainerDao.count() != 0L", trainerDao.count(), is(0L));
         prepareTrainer();
         assertThat("trainer == null", trainer, is(notNullValue()));
         trainerDao.save(trainer);
-
-        pokemonDao.save(pokemon);
     }
 
     @Test(expectedExceptions = {DataAccessException.class})
     void testSaveNullGym() {
-        Gym gym = null;
+        gym = null;
         assertThat(gym, is(nullValue(Gym.class)));
         gymDao.save(gym);
     }
 
     @Test
     void testSaveCorrectInstance() {
-        Gym gym = new Gym(trainer);
+        gym = randomGym(1);
         gym.setCity("Thunder city");
         gym.setType(PokemonType.EARTH);
         gymDao.save(gym);
@@ -131,11 +123,79 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
     @Test
     void testDeleteNotSavedGym() {
         assertThat(gymDao.count(), is(equalTo(0L)));
-        Gym gym = new Gym(trainer);
-        gym.setCity("Some city");
-        gym.setType(PokemonType.EARTH);
+        Gym gym = randomGym(3);
         Gym foundGym = gymDao.findOne(Example.of(gym));
         assertThat(foundGym, is(nullValue(Gym.class)));
+    }
+
+    @Test(expectedExceptions = {DataAccessException.class})
+    void testDeleteWithNotExistingId() {
+        gymDao.delete(123456789L);
+    }
+
+    @Test
+    void testDeleteByPassingInstance() {
+        gym = randomGym(6);
+        assertThat(gymDao.count(), is(equalTo(0L)));
+        gymDao.save(gym);
+        assertThat(gymDao.count(), is(equalTo(1L)));
+        assertThat("gym.getId() == null", gym.getId(), is(notNullValue(Long.class)));
+        gymDao.delete(gym);
+        assertThat(gymDao.count(), is(equalTo(0L)));
+    }
+
+    @Test
+    void testDeleteByPassingId() {
+        Gym gym = randomGym(4);
+        assertThat(gymDao.count(), is(equalTo(0L)));
+        gymDao.save(gym);
+        assertThat(gymDao.count(), is(equalTo(1L)));
+        assertThat("gym.getId() == null", gym.getId(), is(notNullValue(Long.class)));
+        gymDao.delete(gym.getId());
+        assertThat(gymDao.count(), is(equalTo(0L)));
+    }
+
+    @Test
+    void testDeleteMultipleInstances() {
+        int gymsNumber = 5;
+        List<Gym> gyms = randomGyms(gymsNumber);
+        assertThat(gymDao.count(), is(equalTo(0L)));
+        gymDao.save(gyms);
+        assertThat(gymDao.count(), is(equalTo((long) gymsNumber)));
+        gymDao.delete(gyms);
+        assertThat(gymDao.count(), is(equalTo(0L)));
+    }
+
+    @Test
+    void testFindByPassingId() {
+        gym = randomGym(6);
+        gymDao.save(gym);
+        assertThat(gym.getId(), is(notNullValue()));
+        Gym found = gymDao.findOne(gym.getId());
+        assertThat(found, is(equalTo(gym)));
+    }
+
+    @Test
+    void testFindByPassingExample() {
+        gym = randomGym(6);
+        gymDao.save(gym);
+        assertThat(gym.getId(), is(notNullValue()));
+        Gym exampleGym = new Gym(gym.getTrainer());
+        exampleGym.setType(gym.getType());
+        exampleGym.setCity(gym.getCity());
+        Gym found = gymDao.findOne(Example.of(exampleGym));
+        assertThat(found, is(equalTo(gym)));
+    }
+
+    @Test
+    void testFindAll() {
+        int numberOfGyms = 10;
+        assertThat(gymDao.findAll(), is(empty()));
+        List<Gym> gyms = randomGyms(numberOfGyms);
+        gymDao.save(gyms);
+        List<Gym> found = gymDao.findAll();
+        assertThat(found.size(), is(equalTo(numberOfGyms)));
+        assertThat(found, is(equalTo(gyms)));
     }
 
     private void prepareTrainer() {
@@ -145,12 +205,6 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         // 22.06.1994
         Date dob = new Calendar.Builder().setDate(1994, 6, 22).build().getTime();
         trainer.setDateOfBirth(dob);
-        pokemon = new Pokemon(PokemonType.EARTH);
-        pokemon.setTrainer(trainer);
-        pokemon.setName("Abra");
-        pokemon.setLevel(2);
-        pokemon.setNickname("Bohatstvo");
-        trainer.addPokemon(pokemon);
     }
 
     private List<Gym> randomGyms(int size) {
