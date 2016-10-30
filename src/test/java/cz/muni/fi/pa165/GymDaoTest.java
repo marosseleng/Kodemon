@@ -92,12 +92,14 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
     void testSaveGymWithNullCity() {
         gym = new Gym(trainer);
         gym.setType(PokemonType.EARTH);
+        gym.setCity(null);
         gymDao.save(gym);
     }
 
     @Test(expectedExceptions = {NullPointerException.class})
     void testSaveGymWithNullTrainer() {
         gym = new Gym();
+        gym.setTrainer(null);
         gym.setType(PokemonType.EARTH);
         gym.setCity("some city");
         gymDao.save(gym);
@@ -106,15 +108,18 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
     @Test(expectedExceptions = {NullPointerException.class})
     void testSaveGymWithNullTrainerAndNullCity() {
         gym = new Gym();
+        gym.setTrainer(null);
+        gym.setCity(null);
         gym.setType(PokemonType.EARTH);
         gymDao.save(gym);
     }
 
     @Test(expectedExceptions = {NullPointerException.class})
-    void testSaveGymWithoutType() {
+    void testSaveGymWithNullType() {
         gym = new Gym();
         gym.setTrainer(trainer);
         gym.setCity("some city");
+        gym.setTrainer(null);
         gymDao.save(gym);
     }
 
