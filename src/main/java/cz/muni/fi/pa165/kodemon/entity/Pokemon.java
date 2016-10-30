@@ -32,6 +32,8 @@ public class Pokemon {
     private String nickname;
 
     @Enumerated
+    @Column(nullable = false)
+    @NotNull
     private PokemonType type;
 
     @Min(1)
@@ -47,7 +49,7 @@ public class Pokemon {
      *
      * @param type the Pokemon's type.
      */
-    public Pokemon(PokemonType type) {
+    public Pokemon(@NotNull PokemonType type) {
         this.type = type;
     }
 
