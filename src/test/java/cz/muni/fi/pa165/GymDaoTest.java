@@ -202,14 +202,49 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
     /** update tests */
 
     @Test
-    void testCorrectUpdate() {
-        gym = randomGym(3);
-        gymDao.save(gym);
+    void testUpdateCity() {
+        gym = new Gym(trainer);
+        gym.setCity("Some City");
+        gym.setType(PokemonType.DRAGON);
+        gymDao.saveAndFlush(gym);
+        String newCity = "another";
         assertThat(gymDao.count(), is(equalTo(1L)));
-        gym.setCity("another");
+        gym.setCity(newCity);
         gymDao.saveAndFlush(gym);
         Gym found = gymDao.findOne(gym.getId());
-        assertThat(found, equalTo(gym));
+        assertThat(found.getCity(), equalTo(newCity));
+    }
+
+    @Test
+    void testUpdateTrainer() {
+        gym = randomGym(6);
+        gymDao.saveAndFlush(gym);
+        assertThat(gymDao.count(), is(equalTo(1L)));
+        Trainer t = new Trainer();
+        Date dob = new Calendar.Builder().setDate(1999, 6, 22).build().getTime();
+        t.setDateOfBirth(dob);
+        t.setFirstName("Ash");
+        t.setLastName("Horcica");
+        trainerDao.saveAndFlush(t);
+        assertThat(trainerDao.count(), is(equalTo(2L)));
+        gym.setTrainer(t);
+        gymDao.saveAndFlush(gym);
+        assertThat(gymDao.count(), is(equalTo(1L)));
+        assertThat(gymDao.findOne(gym.getId()).getTrainer(), is(equalTo(t)));
+    }
+
+    @Test
+    void testUpdateType() {
+        gym = new Gym(trainer);
+        gym.setCity("Rainbow");
+        gym.setType(PokemonType.EARTH);
+        gymDao.saveAndFlush(gym);
+        assertThat(gymDao.count(), is(equalTo(1L)));
+        PokemonType newType = PokemonType.DRAGON;
+        gym.setType(newType);
+        gymDao.saveAndFlush(gym);
+        assertThat(gymDao.count(), is(equalTo(1L)));
+        assertThat(gymDao.findOne(gym.getId()).getType(), is(equalTo(newType)));
     }
 
     @Test(expectedExceptions = {NullPointerException.class})
