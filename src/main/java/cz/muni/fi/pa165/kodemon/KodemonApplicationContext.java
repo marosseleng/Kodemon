@@ -22,7 +22,7 @@ import javax.sql.DataSource;
  * <p>We prefer using annotation based configuration (Java config).
  * <p>For the creation of DAOs we chose to use {@link org.springframework.data.jpa.repository.JpaRepository} from Spring Data.
  *
- * @author <a href="marosseleng@gmail.com">Maro Seleng</a>
+ * @author <a href="xseleng@fi.muni.cz">Maros Seleng, 422624</a>
  */
 @Configuration
 @EnableTransactionManagement
