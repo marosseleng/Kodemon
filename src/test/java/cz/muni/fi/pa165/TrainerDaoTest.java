@@ -60,7 +60,7 @@ public class TrainerDaoTest extends AbstractTestNGSpringContextTests {
         trainer = null;
     }
 
-    // save(...) tests
+    // SAVE TESTS
 
     @Test(expectedExceptions = {DataAccessException.class})
     void testSaveNullTrainer() {
@@ -72,12 +72,8 @@ public class TrainerDaoTest extends AbstractTestNGSpringContextTests {
     @Test
     void testSaveCorrectInstance() {
         trainer = randomTrainer(1);
-        trainer.setFirstName("Ash");
-        trainer.setLastName("Ketchum");
-        Date dob = new Calendar.Builder().setDate(1987, 4, 1).build().getTime();
-        trainer.setDateOfBirth(dob);
         trainerDao.save(trainer);
-        assertThat("gym.getId() == null", trainer.getId(), is(notNullValue(Long.class)));
+        assertThat("trainer.getId() == null", trainer.getId(), is(notNullValue(Long.class)));
         Trainer testTrainer = trainerDao.findOne(trainer.getId());
         assertThat(testTrainer, is(equalTo(trainer)));
     }
@@ -95,6 +91,7 @@ public class TrainerDaoTest extends AbstractTestNGSpringContextTests {
     @Test(expectedExceptions = {NullPointerException.class})
     void testSaveTrainerWithNullFirstName() {
         trainer = new Trainer();
+        trainer.setFirstName(null);
         trainer.setLastName("Ketchum");
         Date dob = new Calendar.Builder().setDate(1987, 4, 1).build().getTime();
         trainer.setDateOfBirth(dob);
@@ -105,6 +102,7 @@ public class TrainerDaoTest extends AbstractTestNGSpringContextTests {
     void testSaveTrainerWithNullLastName() {
         trainer = new Trainer();
         trainer.setFirstName("Ash");
+        trainer.setLastName(null);
         Date dob = new Calendar.Builder().setDate(1987, 4, 1).build().getTime();
         trainer.setDateOfBirth(dob);
         trainerDao.save(trainer);
@@ -115,18 +113,21 @@ public class TrainerDaoTest extends AbstractTestNGSpringContextTests {
         trainer = new Trainer();
         trainer.setFirstName("Ash");
         trainer.setLastName("Ketchum");
+        trainer.setDateOfBirth(null);
         trainerDao.save(trainer);
     }
 
     @Test(expectedExceptions = {NullPointerException.class})
     void testSaveTrainerWithNullFirstNameAndNullLastName() {
         trainer = new Trainer();
+        trainer.setFirstName(null);
+        trainer.setLastName(null);
         Date dob = new Calendar.Builder().setDate(1987, 4, 1).build().getTime();
         trainer.setDateOfBirth(dob);
         trainerDao.save(trainer);
     }
 
-    //delete(...) tests
+    // DELETE TESTS
 
     @Test(expectedExceptions = {DataAccessException.class})
     void testDeleteNullTrainer() {
@@ -165,15 +166,15 @@ public class TrainerDaoTest extends AbstractTestNGSpringContextTests {
     @Test
     void testDeleteMultipleInstances() {
         int trainersNumber = 10;
-        List<Trainer> gyms = randomTrainers(trainersNumber);
+        List<Trainer> trainers = randomTrainers(trainersNumber);
         assertThat(trainerDao.count(), is(equalTo(0L)));
-        trainerDao.save(gyms);
+        trainerDao.save(trainers);
         assertThat(trainerDao.count(), is(equalTo((long) trainersNumber)));
-        trainerDao.delete(gyms);
+        trainerDao.delete(trainers);
         assertThat(trainerDao.count(), is(equalTo(0L)));
     }
 
-    // find(...) tests
+    // FIND TESTS
 
     @Test
     void testFindByPassingId() {
@@ -201,14 +202,14 @@ public class TrainerDaoTest extends AbstractTestNGSpringContextTests {
     void testFindAll() {
         int numberOfTrainers = 10;
         assertThat(trainerDao.findAll(), is(empty()));
-        List<Trainer> gyms = randomTrainers(numberOfTrainers);
-        trainerDao.save(gyms);
+        List<Trainer> trainers = randomTrainers(numberOfTrainers);
+        trainerDao.save(trainers);
         List<Trainer> found = trainerDao.findAll();
         assertThat(found.size(), is(equalTo(numberOfTrainers)));
-        assertThat(found, is(equalTo(gyms)));
+        assertThat(found, is(equalTo(trainers)));
     }
 
-    // update tests
+    // UPDATE TESTS
 
     @Test
     void testCorrectFirstNameUpdate() {
