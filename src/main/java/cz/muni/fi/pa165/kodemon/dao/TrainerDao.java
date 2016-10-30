@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * Data Access Object for the Trainer entity.
  *
- * @author <a href="mailto:marosseleng@gmail.com">Maros Seleng</a>
+ * @author <a href="xseleng@fi.muni.cz">Maros Seleng, 422624</a>
  */
 public interface TrainerDao extends JpaRepository<Trainer, Long> {
 
