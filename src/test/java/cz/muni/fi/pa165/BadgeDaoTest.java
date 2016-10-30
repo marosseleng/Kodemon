@@ -43,6 +43,9 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
     @Inject
     private TrainerDao trainerDao;
 
+    @Inject
+    private GymDao gymDao;
+
     private Trainer trainer;
     private Badge badge;
     private Gym gym;
@@ -210,7 +213,7 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
         badge = randomBadge(5);
         badgeDao.save(badge);
         assertThat(badge.getId(), is(notNullValue()));
-        Badge badgeExample = new Badge(badge.getTrainer());
+        Badge badgeExample = new Badge(badge.getGym(), badge.getTrainer());
         badgeExample.setName(badge.getName());
         Badge found = badgeDao.findOne(Example.of(badgeExample));
         assertThat(found, is(equalTo(badge)));
@@ -258,12 +261,27 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
         badgeDao.saveAndFlush(badge);
     }
 
+    @Test(expectedExceptions = {NullPointerException.class})
+    void testUpdateWithNullGym() {
+        badge = randomBadge(5);
+        assertThat(badgeDao.count(), is(equalTo(0L)));
+        badgeDao.save(badge);
+        badge.setGym(null);
+        badgeDao.saveAndFlush(badge);
+    }
+
     private void prepareTrainer() {
         trainer = new Trainer();
         trainer.setFirstName("Ash");
         trainer.setLastName("Ketchum");
         Date born = new Calendar.Builder().setDate(1990, 12, 24).build().getTime();
         trainer.setDateOfBirth(born);
+    }
+
+    private void prepareGym() {
+        gym = new Gym();
+        gym.setCity("Saffron City");
+        gym.setType(PokemonType.WATER);
     }
 
     private List<Badge> randomBadges(int size) {
@@ -276,7 +294,7 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     private Badge randomBadge(int index) {
-        Badge badge = new Badge(trainer);
+        Badge badge = new Badge(gym, trainer);
         String chars = "abcdefghijklmnopqrstuvxyzABCDEFGHIJKLMNOPQRSTUVXYZ ";
         badge.setName(chars.substring(index % chars.length()));
         return badge;
