@@ -17,6 +17,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
+import javax.validation.ConstraintViolationException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -75,6 +76,8 @@ public class PokemonDaoTest extends AbstractTestNGSpringContextTests {
         pokemon.setNickname("Killer");
         pokemon.setType(PokemonType.NORMAL);
 
+        trainer.addPokemon(pokemon);
+
         pokemonDao.save(pokemon);
         assertThat("pokemon.getId() == null", pokemon.getId(), is(notNullValue(Long.class)));
         Pokemon testPokemon = pokemonDao.findOne(pokemon.getId());
@@ -99,6 +102,39 @@ public class PokemonDaoTest extends AbstractTestNGSpringContextTests {
         pokemon.setLevel(1);
         pokemon.setNickname("Killer");
         pokemon.setType(PokemonType.NORMAL);
+        pokemon.setName(null);
+
+        trainer.addPokemon(pokemon);
+
+        pokemonDao.save(pokemon);
+    }
+
+    @Test(expectedExceptions = {NullPointerException.class})
+    void testSavePokemonWithNullType() {
+        Pokemon pokemon = new Pokemon();
+
+        pokemon.setTrainer(trainer);
+        pokemon.setLevel(1);
+        pokemon.setNickname("Killer");
+        pokemon.setType(null);
+        pokemon.setName("Pikachu");
+
+        trainer.addPokemon(pokemon);
+
+        pokemonDao.save(pokemon);
+    }
+
+    @Test(expectedExceptions = {ConstraintViolationException.class})
+    void testSavePokemonWithInvalidLevel() {
+        Pokemon pokemon = new Pokemon();
+
+        pokemon.setTrainer(trainer);
+        pokemon.setLevel(0);
+        pokemon.setNickname("Killer");
+        pokemon.setType(PokemonType.NORMAL);
+        pokemon.setName("Pikachu");
+
+        trainer.addPokemon(pokemon);
 
         pokemonDao.save(pokemon);
     }
@@ -198,7 +234,7 @@ public class PokemonDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(pokemonDao.count(), is(equalTo(1L)));
         pokemon.setName("Pikachu");
         pokemonDao.saveAndFlush(pokemon);
-        Pokemon found = pokemonDao.getOne(pokemon.getId());
+        Pokemon found = pokemonDao.findOne(pokemon.getId());
         assertThat(found, equalTo(pokemon));
     }
 
@@ -209,7 +245,7 @@ public class PokemonDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(pokemonDao.count(), is(equalTo(1L)));
         pokemon.setNickname("Yellow mouse");
         pokemonDao.saveAndFlush(pokemon);
-        Pokemon found = pokemonDao.getOne(pokemon.getId());
+        Pokemon found = pokemonDao.findOne(pokemon.getId());
         assertThat(found, equalTo(pokemon));
     }
 
@@ -220,7 +256,7 @@ public class PokemonDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(pokemonDao.count(), is(equalTo(1L)));
         pokemon.setType(PokemonType.GHOST);
         pokemonDao.saveAndFlush(pokemon);
-        Pokemon found = pokemonDao.getOne(pokemon.getId());
+        Pokemon found = pokemonDao.findOne(pokemon.getId());
         assertThat(found, equalTo(pokemon));
     }
 
@@ -231,7 +267,7 @@ public class PokemonDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(pokemonDao.count(), is(equalTo(1L)));
         pokemon.setLevel(10);
         pokemonDao.saveAndFlush(pokemon);
-        Pokemon found = pokemonDao.getOne(pokemon.getId());
+        Pokemon found = pokemonDao.findOne(pokemon.getId());
         assertThat(found, equalTo(pokemon));
     }
 
@@ -244,13 +280,31 @@ public class PokemonDaoTest extends AbstractTestNGSpringContextTests {
         pokemonDao.saveAndFlush(pokemon);
     }
 
+    @Test(expectedExceptions = {NullPointerException.class})
+    void testUpdateWithNullType() {
+        Pokemon pokemon = randomPokemon(6);
+        pokemonDao.save(pokemon);
+        assertThat(pokemonDao.count(), is(equalTo(1L)));
+        pokemon.setType(null);
+        pokemonDao.saveAndFlush(pokemon);
+    }
+
+    @Test(expectedExceptions = {ConstraintViolationException.class})
+    void testUpdateWithInvalidLevel() {
+        Pokemon pokemon = randomPokemon(6);
+        pokemonDao.save(pokemon);
+        assertThat(pokemonDao.count(), is(equalTo(1L)));
+        pokemon.setLevel(0);
+        pokemonDao.saveAndFlush(pokemon);
+    }
+
     @Test
     void testCorrectTrainerUpdate() {
         Pokemon pokemon = randomPokemon(6);
         pokemonDao.save(pokemon);
         assertThat(pokemonDao.count(), is(equalTo(1L)));
 
-        Pokemon found = pokemonDao.getOne(pokemon.getId());
+        Pokemon found = pokemonDao.findOne(pokemon.getId());
         assertThat(found.getTrainer(), equalTo(trainer));
 
         Trainer newTrainer = new Trainer();
@@ -258,11 +312,12 @@ public class PokemonDaoTest extends AbstractTestNGSpringContextTests {
         newTrainer.setDateOfBirth(dob);
         newTrainer.setFirstName("Lance");
         newTrainer.setLastName("Dragons");
+        newTrainer.addPokemon(pokemon);
         trainerDao.save(newTrainer);
         pokemon.setTrainer(newTrainer);
 
         pokemonDao.saveAndFlush(pokemon);
-        found = pokemonDao.getOne(pokemon.getId());
+        found = pokemonDao.findOne(pokemon.getId());
         assertThat(found.getTrainer(), equalTo(newTrainer));
     }
 
@@ -292,6 +347,8 @@ public class PokemonDaoTest extends AbstractTestNGSpringContextTests {
         pokemon.setType(PokemonType.FIRE);
         pokemon.setLevel(2);
         pokemon.setTrainer(trainer);
+
+        trainer.addPokemon(pokemon);
 
         return pokemon;
     }
