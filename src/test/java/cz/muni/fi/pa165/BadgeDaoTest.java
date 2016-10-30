@@ -283,9 +283,10 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     private void prepareGym() {
-        gym = new Gym();
+        gym = new Gym(trainer);
         gym.setCity("Saffron City");
         gym.setType(PokemonType.WATER);
+        gym.setTrainer(trainer);
     }
 
     private List<Badge> randomBadges(int size) {
