@@ -60,6 +60,10 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
         trainerDao.deleteAll();
         assertThat("trainerDao.count() != 0L", trainerDao.count(), is(0L));
 
+        assertThat(gymDao, is(notNullValue(GymDao.class)));
+        gymDao.deleteAll();
+        assertThat("gymDao.count() != 0L", gymDao.count(), is(0L));
+
         prepareTrainer();
         assertThat("trainer == null", trainer, is(notNullValue()));
         trainerDao.save(trainer);
