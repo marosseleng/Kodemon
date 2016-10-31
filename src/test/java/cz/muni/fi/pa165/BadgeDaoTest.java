@@ -165,7 +165,7 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = {DataAccessException.class})
-    void testDeleteWithNonexistantId() {
+    void testDeleteWithNonexistentId() {
         badgeDao.delete(99999999999L);
     }
 
