@@ -52,7 +52,7 @@ public class TrainerFightDaoTest extends AbstractTestNGSpringContextTests {
 
     @BeforeMethod
     void prepare() {
-        assertThat(trainerFight, is(notNullValue(TrainerFight.class)));
+        assertThat(trainerFightDao, is(notNullValue(TrainerFightDao.class)));
         trainerFightDao.deleteAll();
         assertThat("trainerFightDao.count() != 0L", trainerFightDao.count(), is(0L));
 
