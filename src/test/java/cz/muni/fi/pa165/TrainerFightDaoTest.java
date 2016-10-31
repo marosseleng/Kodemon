@@ -87,7 +87,6 @@ public class TrainerFightDaoTest extends AbstractTestNGSpringContextTests {
     @Test
     void testSaveCorrectInstance() {
         trainerFight = randomTrainerFight(1);
-        trainerFight.setWasChallengerSuccessful(true);
         trainerFightDao.save(trainerFight);
         assertThat("trainer.getId() == null", trainer.getId(), is(notNullValue(Long.class)));
         assertThat("gym.getId() == null", gym.getId(), is(notNullValue(Long.class)));
@@ -196,7 +195,9 @@ public class TrainerFightDaoTest extends AbstractTestNGSpringContextTests {
         trainerFightDao.save(trainerFight);
         assertThat(trainerFight.getId(), is(notNullValue()));
         TrainerFight trainerFightExample = new TrainerFight();
-        trainerFightExample.setWasChallengerSuccessful(true);
+        trainerFightExample.setWasChallengerSuccessful(trainerFight.isWasChallengerSuccessful());
+        trainerFightExample.setTargetGym(trainerFight.getTargetGym());
+        trainerFightExample.setChallenger(trainerFight.getChallenger());
         TrainerFight found = trainerFightDao.findOne(Example.of(trainerFightExample));
         assertThat(found, is(equalTo(trainerFight)));
     }
@@ -269,6 +270,8 @@ public class TrainerFightDaoTest extends AbstractTestNGSpringContextTests {
 
     private TrainerFight randomTrainerFight(int index) {
         TrainerFight trainerFight = new TrainerFight();
+        trainerFight.setChallenger(trainer);
+        trainerFight.setTargetGym(gym);
         trainerFight.setWasChallengerSuccessful((index % 2) == 0);
         return trainerFight;
     }
