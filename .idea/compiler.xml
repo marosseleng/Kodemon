@@ -22,11 +22,16 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="Kodemon" />
+        <module name="api" />
+        <module name="persistence" />
+        <module name="service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Kodemon" target="1.8" />
+      <module name="api" target="1.8" />
+      <module name="kodemon-app" target="1.5" />
+      <module name="persistence" target="1.8" />
+      <module name="service" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
