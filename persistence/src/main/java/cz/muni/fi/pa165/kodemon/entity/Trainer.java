@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.kodemon.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import java.util.*;
 
 /**
@@ -22,6 +23,11 @@ public class Trainer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(unique = true, nullable = false)
+    @NotNull
+    @Size(min = 4)
+    private String username;
 
     @Column(nullable = false)
     @NotNull
@@ -64,6 +70,14 @@ public class Trainer {
 
     public Long getId() {
         return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getFirstName() {
@@ -119,7 +133,7 @@ public class Trainer {
 
         Trainer trainer = (Trainer) o;
 
-        return !((getId() != null && !getId().equals(trainer.getId())) ||
+        return !(!getUsername().equals(trainer.getUsername()) ||
                 !getFirstName().equals(trainer.getFirstName()) ||
                 !getLastName().equals(trainer.getLastName()) ||
                 !getDateOfBirth().equals(trainer.getDateOfBirth()) ||
@@ -129,7 +143,8 @@ public class Trainer {
 
     @Override
     public int hashCode() {
-        int result = (getId() == null) ? 0 : getId().hashCode();
+        int result = 17;
+        result = 31 * result + getUsername().hashCode();
         result = 31 * result + getFirstName().hashCode();
         result = 31 * result + getLastName().hashCode();
         result = 31 * result + getDateOfBirth().hashCode();

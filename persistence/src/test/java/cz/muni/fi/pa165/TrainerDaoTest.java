@@ -306,6 +306,8 @@ public class TrainerDaoTest extends AbstractTestNGSpringContextTests {
         String chars = "abcdefghijklmnopqrstuvxyzABCDEFGHIJKLMNOPQRSTUVXYZ ";
         trainer.setFirstName(chars.substring(index % chars.length()));
         trainer.setLastName(chars.substring(index % chars.length()));
+        // UGLY, but simple enough as in each test all entities are deleted from db
+        trainer.setUsername(chars.substring(0, 5).replaceAll(".", String.valueOf(index)));
         Date dob = new Calendar.Builder().setDate(1987, 4, 1).build().getTime();
         trainer.setDateOfBirth(dob);
         return trainer;
