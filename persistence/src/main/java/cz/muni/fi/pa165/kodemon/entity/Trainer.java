@@ -17,6 +17,7 @@ import java.util.*;
  * @author <a href="xseleng@fi.muni.cz">Maros Seleng, 422624</a>
  */
 @Entity
+@Table(name = "TRAINER", schema = "APP")
 public class Trainer {
 
     @Id
