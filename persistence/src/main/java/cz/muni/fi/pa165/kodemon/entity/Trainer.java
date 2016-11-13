@@ -27,7 +27,7 @@ public class Trainer {
     @Column(unique = true, nullable = false)
     @NotNull
     @Size(min = 4)
-    private String username;
+    private String userName;
 
     @Column(nullable = false)
     @NotNull
@@ -72,12 +72,12 @@ public class Trainer {
         return id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getFirstName() {
@@ -133,7 +133,7 @@ public class Trainer {
 
         Trainer trainer = (Trainer) o;
 
-        return !(!getUsername().equals(trainer.getUsername()) ||
+        return !(!getUserName().equals(trainer.getUserName()) ||
                 !getFirstName().equals(trainer.getFirstName()) ||
                 !getLastName().equals(trainer.getLastName()) ||
                 !getDateOfBirth().equals(trainer.getDateOfBirth()) ||
@@ -144,7 +144,7 @@ public class Trainer {
     @Override
     public int hashCode() {
         int result = 17;
-        result = 31 * result + getUsername().hashCode();
+        result = 31 * result + getUserName().hashCode();
         result = 31 * result + getFirstName().hashCode();
         result = 31 * result + getLastName().hashCode();
         result = 31 * result + getDateOfBirth().hashCode();

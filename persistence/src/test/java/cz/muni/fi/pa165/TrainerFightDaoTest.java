@@ -248,7 +248,7 @@ public class TrainerFightDaoTest extends AbstractTestNGSpringContextTests {
         trainer = new Trainer();
         trainer.setFirstName("Ash");
         trainer.setLastName("Ketchum");
-        trainer.setUsername("ashhhh");
+        trainer.setUserName("ashhhh");
         Date born = new Calendar.Builder().setDate(1990, 12, 24).build().getTime();
         trainer.setDateOfBirth(born);
     }

@@ -276,7 +276,7 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
 
     private void prepareTrainer() {
         trainer = new Trainer();
-        trainer.setUsername("ash.ketchum");
+        trainer.setUserName("ash.ketchum");
         trainer.setFirstName("Ash");
         trainer.setLastName("Ketchum");
         Date born = new Calendar.Builder().setDate(1990, 12, 24).build().getTime();

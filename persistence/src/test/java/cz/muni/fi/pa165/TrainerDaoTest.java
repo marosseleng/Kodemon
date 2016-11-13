@@ -285,6 +285,118 @@ public class TrainerDaoTest extends AbstractTestNGSpringContextTests {
         trainerDao.saveAndFlush(trainer);
     }
 
+    // custom findByXXX(...) methods tests
+
+    @Test
+    void testFindByUsername() {
+        List<Trainer> trainers = randomTrainers(3);
+        trainerDao.save(trainers);
+        assertThat(trainerDao.count(), is(equalTo(3L)));
+        Trainer matching = trainers.get(0);
+        List<Trainer> found = trainerDao.findByUserName(matching.getUserName());
+        assertThat(found.size(), is(1));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+
+    @Test
+    void testFindByUsernameLike() {
+        List<Trainer> trainers = randomTrainers(3);
+        trainerDao.save(trainers);
+        assertThat(trainerDao.count(), is(equalTo(3L)));
+        Trainer matching = trainers.get(0);
+        List<Trainer> found = trainerDao.findByUserNameLike(matching.getUserName());
+        assertThat(found.size(), is(1));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+
+    @Test
+    void testFindByUsernameStartingWith() {
+        List<Trainer> trainers = randomTrainers(3);
+        trainerDao.save(trainers);
+        assertThat(trainerDao.count(), is(equalTo(3L)));
+        Trainer matching = trainers.get(0);
+        List<Trainer> found = trainerDao.findByUserNameStartingWith(matching.getUserName().substring(0, 2) + "%");
+        assertThat(found.size(), is(1));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+
+    @Test
+    void testFindByUsernameEndingWith() {
+        List<Trainer> trainers = randomTrainers(3);
+        trainerDao.save(trainers);
+        assertThat(trainerDao.count(), is(equalTo(3L)));
+        Trainer matching = trainers.get(0);
+        List<Trainer> found = trainerDao.findByUserNameEndingWith("%" + matching.getUserName().substring(2));
+        assertThat(found.size(), is(1));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+
+    @Test
+    void testFindByUsernameContaining() {
+        List<Trainer> trainers = randomTrainers(3);
+        trainerDao.save(trainers);
+        assertThat(trainerDao.count(), is(equalTo(3L)));
+        Trainer matching = trainers.get(0);
+        List<Trainer> found = trainerDao.findByUserNameContaining("%" + matching.getUserName().substring(2, 3) + "%");
+        assertThat(found.size(), is(1));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+
+    @Test
+    void testFindByFirstAndLastName() {
+        List<Trainer> trainers = randomTrainers(3);
+        trainerDao.save(trainers);
+        assertThat(trainerDao.count(), is(equalTo(3L)));
+        Trainer matching = trainers.get(0);
+        List<Trainer> found = trainerDao.findByFirstNameAndLastName(matching.getFirstName(), matching.getLastName());
+        assertThat(found.size(), is(1));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+
+    @Test
+    void testFindByFirstName() {
+        List<Trainer> trainers = randomTrainers(3);
+        trainerDao.save(trainers);
+        assertThat(trainerDao.count(), is(equalTo(3L)));
+        Trainer matching = trainers.get(0);
+        List<Trainer> found = trainerDao.findByFirstName(matching.getFirstName());
+        assertThat(found.size(), is(1));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+
+    @Test
+    void testFindByLastName() {
+        List<Trainer> trainers = randomTrainers(3);
+        trainerDao.save(trainers);
+        assertThat(trainerDao.count(), is(equalTo(3L)));
+        Trainer matching = trainers.get(0);
+        List<Trainer> found = trainerDao.findByLastName(matching.getLastName());
+        assertThat(found.size(), is(1));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+
+    @Test
+    void testFindByDateOfBirth() {
+        List<Trainer> trainers = randomTrainers(3);
+        trainerDao.save(trainers);
+        assertThat(trainerDao.count(), is(equalTo(3L)));
+        Trainer matching = trainers.get(0);
+        List<Trainer> found = trainerDao.findByDateOfBirth(matching.getDateOfBirth());
+        assertThat(found.size(), is(3));
+        assertThat(found, is(equalTo(trainers)));
+    }
+
+    @Test
+    void testFindByDateOfBirthBetween() {
+        List<Trainer> trainers = randomTrainers(3);
+        trainerDao.save(trainers);
+        assertThat(trainerDao.count(), is(equalTo(3L)));
+        Trainer matching = trainers.get(0);
+        List<Trainer> found = trainerDao.findByDateOfBirthBetween(matching.getDateOfBirth(), new Date());
+        assertThat(found.size(), is(3));
+        assertThat(found, is(equalTo(trainers)));
+    }
+
     private void preparePokemon() {
         pokemon = new Pokemon();
         pokemon.setName("Pikachu");
@@ -307,7 +419,7 @@ public class TrainerDaoTest extends AbstractTestNGSpringContextTests {
         trainer.setFirstName(chars.substring(index % chars.length()));
         trainer.setLastName(chars.substring(index % chars.length()));
         // UGLY, but simple enough as in each test all entities are deleted from db
-        trainer.setUsername(chars.substring(0, 5).replaceAll(".", String.valueOf(index)));
+        trainer.setUserName(chars.substring(0, 5).replaceAll(".", String.valueOf(index)));
         Date dob = new Calendar.Builder().setDate(1987, 4, 1).build().getTime();
         trainer.setDateOfBirth(dob);
         return trainer;
