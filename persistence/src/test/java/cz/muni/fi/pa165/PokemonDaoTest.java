@@ -312,6 +312,7 @@ public class PokemonDaoTest extends AbstractTestNGSpringContextTests {
         newTrainer.setDateOfBirth(dob);
         newTrainer.setFirstName("Lance");
         newTrainer.setLastName("Dragons");
+        newTrainer.setUserName("lance008");
         newTrainer.addPokemon(pokemon);
         trainerDao.save(newTrainer);
         pokemon.setTrainer(newTrainer);
@@ -323,6 +324,7 @@ public class PokemonDaoTest extends AbstractTestNGSpringContextTests {
 
     private void prepareTrainer() {
         trainer = new Trainer();
+        trainer.setUserName("GaryOak001");
         trainer.setFirstName("Gary");
         trainer.setLastName("Oak");
         // 13.04.1993

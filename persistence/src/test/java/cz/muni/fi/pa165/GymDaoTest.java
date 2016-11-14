@@ -230,6 +230,7 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         t.setDateOfBirth(dob);
         t.setFirstName("Ash");
         t.setLastName("Horcica");
+        t.setUserName("ash.horcica");
         trainerDao.saveAndFlush(t);
         assertThat(trainerDao.count(), is(equalTo(2L)));
         gym.setTrainer(t);
@@ -281,6 +282,7 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
 
     private void prepareTrainer() {
         trainer = new Trainer();
+        trainer.setUserName("ash.ketchum");
         trainer.setFirstName("Ash");
         trainer.setLastName("Ketchum");
         // 22.06.1994
