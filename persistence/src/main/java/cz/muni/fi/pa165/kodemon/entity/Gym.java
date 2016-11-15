@@ -84,15 +84,14 @@ public class Gym {
 
         Gym gym = (Gym) object;
 
-        return !((getId() != null && !getId().equals(gym.getId())) ||
-                !getCity().equals(gym.getCity()) ||
-                !getType().equals(gym.getType()) ||
-                !getTrainer().equals(gym.getTrainer()));
+        return !(!getCity().equals(gym.getCity()) ||
+                 !getType().equals(gym.getType()) ||
+                 !getTrainer().equals(gym.getTrainer()));
     }
 
     @Override
     public int hashCode() {
-        int result = getId() == null ? 0 : getId().hashCode();
+        int result = 47;
         result = 31 * result + getCity().hashCode();
         result = 31 * result + getType().hashCode();
         result = 31 * result + getTrainer().hashCode();
