@@ -288,7 +288,7 @@ public class TrainerDaoTest extends AbstractTestNGSpringContextTests {
     // custom findByXXX(...) methods tests
 
     @Test
-    void testFindByUsername() {
+    void testFindByUserName() {
         List<Trainer> trainers = randomTrainers(3);
         trainerDao.save(trainers);
         assertThat(trainerDao.count(), is(equalTo(3L)));
@@ -299,7 +299,7 @@ public class TrainerDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    void testFindByUsernameLike() {
+    void testFindByUserNameLike() {
         List<Trainer> trainers = randomTrainers(3);
         trainerDao.save(trainers);
         assertThat(trainerDao.count(), is(equalTo(3L)));
@@ -310,7 +310,7 @@ public class TrainerDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    void testFindByUsernameStartingWith() {
+    void testFindByUserNameStartingWith() {
         List<Trainer> trainers = randomTrainers(3);
         trainerDao.save(trainers);
         assertThat(trainerDao.count(), is(equalTo(3L)));
@@ -321,7 +321,7 @@ public class TrainerDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    void testFindByUsernameEndingWith() {
+    void testFindByUserNameEndingWith() {
         List<Trainer> trainers = randomTrainers(3);
         trainerDao.save(trainers);
         assertThat(trainerDao.count(), is(equalTo(3L)));
@@ -332,7 +332,7 @@ public class TrainerDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    void testFindByUsernameContaining() {
+    void testFindByUserNameContaining() {
         List<Trainer> trainers = randomTrainers(3);
         trainerDao.save(trainers);
         assertThat(trainerDao.count(), is(equalTo(3L)));
