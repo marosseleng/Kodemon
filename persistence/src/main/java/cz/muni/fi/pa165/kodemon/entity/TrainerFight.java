@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.kodemon.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 /**
  * Entity represents result of fight between challenging trainer and gym leader.
@@ -27,6 +28,10 @@ public class TrainerFight {
     @NotNull
     @ManyToOne
     private Gym targetGym;
+
+    @Column(nullable = false)
+    @NotNull
+    private Date fightTime;
 
     private boolean wasChallengerSuccessful;
 
@@ -64,6 +69,14 @@ public class TrainerFight {
         this.wasChallengerSuccessful = wasChallengerSuccessful;
     }
 
+    public Date getFightTime() {
+        return fightTime;
+    }
+
+    public void setFightTime(Date fightTime) {
+        this.fightTime = fightTime;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -72,17 +85,17 @@ public class TrainerFight {
         TrainerFight that = (TrainerFight) o;
 
         if (isWasChallengerSuccessful() != that.isWasChallengerSuccessful()) return false;
-        if (getId() != null && !getId().equals(that.getId())) return false;
         if (!getChallenger().equals(that.getChallenger())) return false;
-        return getTargetGym().equals(that.getTargetGym());
+        if (!getTargetGym().equals(that.getTargetGym())) return false;
+        return getFightTime().equals(that.getFightTime());
 
     }
 
     @Override
     public int hashCode() {
-        int result = (getId() == null) ? 0 : getId().hashCode();
-        result = 31 * result + getChallenger().hashCode();
+        int result = getChallenger().hashCode();
         result = 31 * result + getTargetGym().hashCode();
+        result = 31 * result + getFightTime().hashCode();
         result = 31 * result + (isWasChallengerSuccessful() ? 1 : 0);
         return result;
     }
