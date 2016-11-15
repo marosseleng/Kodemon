@@ -131,6 +131,16 @@ public class TrainerFightDaoTest extends AbstractTestNGSpringContextTests {
         trainerFightDao.save(trainerFight);
     }
 
+    @Test(expectedExceptions = {NullPointerException.class})
+    void testSaveTrainerFightWithNullFightTime() {
+        trainerFight = new TrainerFight();
+        trainerFight.setTargetGym(gym);
+        trainerFight.setChallenger(trainer);
+        trainerFight.setFightTime(null);
+        trainerFight.setWasChallengerSuccessful(true);
+        trainerFightDao.save(trainerFight);
+    }
+
 
     /** delete(...) tests */
 
@@ -244,6 +254,15 @@ public class TrainerFightDaoTest extends AbstractTestNGSpringContextTests {
         trainerFightDao.saveAndFlush(trainerFight);
     }
 
+    @Test(expectedExceptions = {NullPointerException.class})
+    void testUpdateWithNullFightTime() {
+        trainerFight = randomTrainerFight(5);
+        assertThat(trainerFightDao.count(), is(equalTo(0L)));
+        trainerFightDao.save(trainerFight);
+        trainerFight.setFightTime(null);
+        trainerFightDao.saveAndFlush(trainerFight);
+    }
+
     private void prepareTrainer() {
         trainer = new Trainer();
         trainer.setFirstName("Ash");
@@ -273,6 +292,7 @@ public class TrainerFightDaoTest extends AbstractTestNGSpringContextTests {
         TrainerFight trainerFight = new TrainerFight();
         trainerFight.setChallenger(trainer);
         trainerFight.setTargetGym(gym);
+        trainerFight.setFightTime(new Date());
         trainerFight.setWasChallengerSuccessful((index % 2) == 0);
         return trainerFight;
     }
