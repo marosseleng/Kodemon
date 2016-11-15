@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
  */
 
 @Entity
+@Table(name = "BADGE", schema = "APP")
 public class Badge {
 
     @Id
