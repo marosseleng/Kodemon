@@ -97,6 +97,7 @@ public class Pokemon {
         this.level = level;
     }
 
+    @Override
     public boolean equals(Object object) {
         if (this == object) return true;
         if (object == null || !(object instanceof Pokemon)) return false;
@@ -112,6 +113,7 @@ public class Pokemon {
 
     }
 
+    @Override
     public int hashCode() {
         int result = getId() != null ? getId().hashCode() : 0;
         result = 31 * result + (getTrainer() != null ? getTrainer().hashCode() : 0);
