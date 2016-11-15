@@ -322,6 +322,103 @@ public class PokemonDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(found.getTrainer(), equalTo(newTrainer));
     }
 
+    // Custom find tests
+    @Test
+    void testFindByTrainer() {
+        List<Pokemon> pokemons = randomPokemons(5);
+        pokemons.get(4).setTrainer(null);
+        pokemonDao.save(pokemons);
+        assertThat(pokemonDao.count(), is(equalTo(5L)));
+        Pokemon matching = pokemons.get(0);
+        List<Pokemon> found = pokemonDao.findByTrainer(matching.getTrainer());
+        assertThat(found.size(), is(4));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+
+    @Test
+    void testFindByName() {
+        List<Pokemon> pokemons = randomPokemons(10);
+        for (int i = 2; i < 7; i++)
+            pokemons.get(i).setName("Pikachu");
+        pokemonDao.save(pokemons);
+        assertThat(pokemonDao.count(), is(equalTo(10L)));
+        Pokemon matching = pokemons.get(2);
+        List<Pokemon> found = pokemonDao.findByName(matching.getName());
+        assertThat(found.size(), is(5));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+
+    @Test
+    void testFindByNameStartingWith() {
+        List<Pokemon> pokemons = randomPokemons(10);
+        for (int i = 2; i < 7; i++)
+            pokemons.get(i).setName("Pikachu");
+        pokemonDao.save(pokemons);
+        assertThat(pokemonDao.count(), is(equalTo(10L)));
+        Pokemon matching = pokemons.get(2);
+        List<Pokemon> found = pokemonDao.findByNameStartingWith(matching.getName().substring(0, 3) + "%");
+        assertThat(found.size(), is(5));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+
+    @Test
+    void testFindByNickname() {
+        List<Pokemon> pokemons = randomPokemons(9);
+        for (int i = 3; i < 6; i++)
+            pokemons.get(i).setNickname("CoolNickname");
+        pokemonDao.save(pokemons);
+        assertThat(pokemonDao.count(), is(equalTo(9L)));
+        Pokemon matching = pokemons.get(3);
+        List<Pokemon> found = pokemonDao.findByNickname(matching.getNickname());
+        assertThat(found.size(), is(3));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+
+    @Test
+    void testFindByNicknameStartingWith() {
+        List<Pokemon> pokemons = randomPokemons(9);
+        for (int i = 3; i < 6; i++)
+            pokemons.get(i).setNickname("CoolNickname");
+        pokemonDao.save(pokemons);
+        assertThat(pokemonDao.count(), is(equalTo(9L)));
+        Pokemon matching = pokemons.get(3);
+        List<Pokemon> found = pokemonDao.findByNicknameStartingWith(matching.getNickname().substring(0, 3) + "%");
+        assertThat(found.size(), is(3));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+
+    @Test
+    void testFindByType() {
+        List<Pokemon> pokemons = randomPokemons(8);
+        for (int i = 0; i < 8; i++)
+            if (i < 5)
+                pokemons.get(i).setType(PokemonType.BUG);
+            else
+                pokemons.get(i).setType(PokemonType.ICE);
+        pokemonDao.save(pokemons);
+        assertThat(pokemonDao.count(), is(equalTo(8L)));
+        Pokemon matching = pokemons.get(5);
+        List<Pokemon> found = pokemonDao.findByType(matching.getType());
+        assertThat(found.size(), is(3));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+
+    @Test
+    void testFindByLevel() {
+        List<Pokemon> pokemons = randomPokemons(8);
+        for (int i = 0; i < 8; i++)
+            if (i < 5)
+                pokemons.get(i).setLevel(5);
+            else
+                pokemons.get(i).setLevel(16);
+        pokemonDao.save(pokemons);
+        assertThat(pokemonDao.count(), is(equalTo(8L)));
+        Pokemon matching = pokemons.get(5);
+        List<Pokemon> found = pokemonDao.findByLevel(matching.getLevel());
+        assertThat(found.size(), is(3));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+
     private void prepareTrainer() {
         trainer = new Trainer();
         trainer.setUserName("GaryOak001");
