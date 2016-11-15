@@ -326,7 +326,10 @@ public class PokemonDaoTest extends AbstractTestNGSpringContextTests {
     @Test
     void testFindByTrainer() {
         List<Pokemon> pokemons = randomPokemons(5);
-        pokemons.get(4).setTrainer(null);
+        prepareTrainer();
+        trainer.setUserName("GaryOak002");
+        trainerDao.save(trainer);
+        pokemons.get(4).setTrainer(trainer);
         pokemonDao.save(pokemons);
         assertThat(pokemonDao.count(), is(equalTo(5L)));
         Pokemon matching = pokemons.get(0);
