@@ -31,6 +31,7 @@ public class TrainerFight {
 
     @Column(nullable = false)
     @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fightTime;
 
     private boolean wasChallengerSuccessful;
