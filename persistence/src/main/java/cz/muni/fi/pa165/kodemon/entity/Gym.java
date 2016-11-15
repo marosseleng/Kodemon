@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
  */
 
 @Entity
+@Table(name = "GYM", schema = "APP")
 public class Gym {
 
     @Id

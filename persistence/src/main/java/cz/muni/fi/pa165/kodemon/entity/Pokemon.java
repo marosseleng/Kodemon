@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
  */
 
 @Entity
+@Table(name = "POKEMON", schema = "APP")
 public class Pokemon {
 
 

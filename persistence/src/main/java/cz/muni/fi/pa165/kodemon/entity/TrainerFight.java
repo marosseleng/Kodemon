@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
  */
 
 @Entity
+@Table(name = "TRAINER_FIGHT", schema = "APP")
 public class TrainerFight {
 
     @Id
