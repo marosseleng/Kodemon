@@ -273,6 +273,55 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
         badge.setGym(null);
         badgeDao.saveAndFlush(badge);
     }
+    
+    // Custom find tests
+    @Test
+    void testFindByTrainer() {
+        List<Badge> badges = randomBadges(5);
+        badgeDao.save(badges);
+        assertThat(badgeDao.count(), is(equalTo(5L)));
+        Badge matching = badges.get(0);
+        List<Badge> found = badgeDao.findByTrainer(matching.getTrainer());
+        assertThat(found.size(), is(5));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+    
+    @Test
+    void testFindByName() {
+        List<Badge> badges = randomBadges(5);
+        for (int i = 0; i < 3; i++)
+            badges.get(i).setName("Ultimate Badge");
+        badgeDao.save(badges);
+        assertThat(badgeDao.count(), is(equalTo(5L)));
+        Badge matching = badges.get(0);
+        List<Badge> found = badgeDao.findByName(matching.getName());
+        assertThat(found.size(), is(3));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+    
+    @Test
+    void testFindByNameStartingWith() {
+        List<Badge> badges = randomBadges(5);
+        for (int i = 0; i < 3; i++)
+            badges.get(i).setName("Ultimate Badge");
+        badgeDao.save(badges);
+        assertThat(badgeDao.count(), is(equalTo(5L)));
+        Badge matching = badges.get(0);
+        List<Badge> found = badgeDao.findByNameStartingWith(matching.getName().substring(0, 5) + "%");
+        assertThat(found.size(), is(3));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+    
+    @Test
+    void testFindByGym() {
+        List<Badge> badges = randomBadges(5);
+        badgeDao.save(badges);
+        assertThat(badgeDao.count(), is(equalTo(5L)));
+        Badge matching = badges.get(0);
+        List<Badge> found = badgeDao.findByGym(matching.getGym());
+        assertThat(found.size(), is(5));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
 
     private void prepareTrainer() {
         trainer = new Trainer();
