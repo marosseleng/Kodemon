@@ -263,6 +263,61 @@ public class TrainerFightDaoTest extends AbstractTestNGSpringContextTests {
         trainerFightDao.saveAndFlush(trainerFight);
     }
 
+    //Custom find tests
+
+    @Test
+    void testFindByChallenger() {
+        List<TrainerFight> fights = randomTrainerFights(5);
+
+        Trainer customTrainer = new Trainer();
+        customTrainer.setUserName("GaryOak001");
+        customTrainer.setFirstName("Gary");
+        customTrainer.setLastName("Oak");
+        Date dob = new Calendar.Builder().setDate(1993, 4, 13).build().getTime();
+        customTrainer.setDateOfBirth(dob);
+
+        trainerDao.save(customTrainer);
+
+        fights.get(4).setChallenger(customTrainer);
+        trainerFightDao.save(fights);
+        assertThat(trainerFightDao.count(), is(equalTo(5L)));
+        TrainerFight matching = fights.get(0);
+        List<TrainerFight> found = trainerFightDao.findByChallenger(matching.getChallenger());
+        assertThat(found.size(), is(4));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+
+    @Test
+    void testFindByTargetGym() {
+        List<TrainerFight> fights = randomTrainerFights(5);
+
+        Gym customGym = new Gym(trainer);
+        customGym.setCity("Saffron City");
+        customGym.setType(PokemonType.WATER);
+        customGym.setTrainer(trainer);
+
+        gymDao.save(customGym);
+
+        fights.get(4).setTargetGym(customGym);
+        trainerFightDao.save(fights);
+        assertThat(trainerFightDao.count(), is(equalTo(5L)));
+        TrainerFight matching = fights.get(0);
+        List<TrainerFight> found = trainerFightDao.findByTargetGym(matching.getTargetGym());
+        assertThat(found.size(), is(4));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+
+    @Test
+    void testFindByFightTimeBetween() {
+        List<TrainerFight> fights = randomTrainerFights(3);
+        trainerFightDao.save(fights);
+        assertThat(trainerFightDao.count(), is(equalTo(3L)));
+        TrainerFight matching = fights.get(0);
+        List<TrainerFight> found = trainerFightDao.findByFightTimeBetween(matching.getFightTime(), new Date());
+        assertThat(found.size(), is(3));
+        assertThat(found, is(equalTo(fights)));
+    }
+
     private void prepareTrainer() {
         trainer = new Trainer();
         trainer.setFirstName("Ash");
@@ -292,7 +347,8 @@ public class TrainerFightDaoTest extends AbstractTestNGSpringContextTests {
         TrainerFight trainerFight = new TrainerFight();
         trainerFight.setChallenger(trainer);
         trainerFight.setTargetGym(gym);
-        trainerFight.setFightTime(new Date());
+        Date fightTime = new Calendar.Builder().setDate(1990, 12, (index % 20)+1).build().getTime();
+        trainerFight.setFightTime(fightTime);
         trainerFight.setWasChallengerSuccessful((index % 2) == 0);
         return trainerFight;
     }
