@@ -203,6 +203,64 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(found.size(), is(equalTo(numberOfGyms)));
         assertThat(found, is(equalTo(gyms)));
     }
+    
+    @Test
+    void testFindByCity() {
+        List<Gym> gyms = randomGyms(3);
+        gymDao.save(gyms);
+        assertThat(gymDao.count(), is(equalTo(3L)));
+        Gym matching = gyms.get(0);
+        List<Gym> found = gymDao.findByCity(matching.getCity());
+        assertThat(found.size(), is(1));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+
+    @Test
+    void testFindByCityLike() {
+        List<Gym> gyms = randomGyms(3);
+        gymDao.save(gyms);
+        assertThat(gymDao.count(), is(equalTo(3L)));
+        Gym matching = gyms.get(0);
+        List<Gym> found = gymDao.findByCityLike(matching.getCity());
+        assertThat(found.size(), is(1));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+
+    @Test
+    void testFindByCityContaining() {
+        List<Gym> gyms = randomGyms(3);
+        gymDao.save(gyms);
+        assertThat(gymDao.count(), is(equalTo(3L)));
+        Gym matching = gyms.get(0);
+        List<Gym> found = gymDao.findByCityContaining("%" + matching.getCity().substring(2, 3) + "%");
+        assertThat(found.size(), is(3));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+    
+    @Test
+    void testFindByType() {
+        List<Gym> gyms = randomGyms(3);
+        gyms.get(0).setType(PokemonType.GHOST);
+        gyms.get(1).setType(PokemonType.FIRE);
+        gyms.get(2).setType(PokemonType.WATER);
+        gymDao.save(gyms);
+        assertThat(gymDao.count(), is(equalTo(3L)));
+        Gym matching = gyms.get(1);
+        List<Gym> found = gymDao.findByType(matching.getType());
+        assertThat(found.size(), is(1));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+    
+    @Test
+    void testFindByTrainer() {
+        List<Gym> gyms = randomGyms(4);
+        gymDao.save(gyms);
+        assertThat(gymDao.count(), is(equalTo(4L)));
+        Gym matching = gyms.get(0);
+        List<Gym> found = gymDao.findByTrainer(matching.getTrainer());
+        assertThat(found.size(), is(4));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
 
     /** update tests */
 

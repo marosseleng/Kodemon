@@ -49,7 +49,7 @@ public interface TrainerDao extends JpaRepository<Trainer, Long> {
      * {@code … where x.userName like ?1}
      *
      * @param postfix Username postfix to search by
-     * @return {@link List} of {@link Trainer}s with userNames prefixed with the given prefix
+     * @return {@link List} of {@link Trainer}s with userNames postfixed with the given postfix
      */
     List<Trainer> findByUserNameEndingWith(String postfix);
 
@@ -60,7 +60,7 @@ public interface TrainerDao extends JpaRepository<Trainer, Long> {
      * {@code … where x.userName like ?1}
      *
      * @param string String that should be contained in {@link Trainer}'s username
-     * @return {@link List} of {@link Trainer}s with userNames prefixed with the given prefix
+     * @return {@link List} of {@link Trainer}s with userNames which contain the given string
      */
     List<Trainer> findByUserNameContaining(String string);
 
