@@ -71,7 +71,7 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
     void testSaveCorrectInstance() {
         gym = randomGym(1);
         gym.setCity("Thunder city");
-        gym.setType(PokemonType.EARTH);
+        gym.setType(PokemonType.GRASS);
         gymDao.save(gym);
         assertThat("gym.getId() == null", gym.getId(), is(notNullValue(Long.class)));
         Gym testGym = gymDao.findOne(gym.getId());
@@ -91,7 +91,7 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
     @Test(expectedExceptions = {NullPointerException.class})
     void testSaveGymWithNullCity() {
         gym = new Gym(trainer);
-        gym.setType(PokemonType.EARTH);
+        gym.setType(PokemonType.GRASS);
         gym.setCity(null);
         gymDao.save(gym);
     }
@@ -100,7 +100,7 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
     void testSaveGymWithNullTrainer() {
         gym = new Gym();
         gym.setTrainer(null);
-        gym.setType(PokemonType.EARTH);
+        gym.setType(PokemonType.GRASS);
         gym.setCity("some city");
         gymDao.save(gym);
     }
@@ -110,7 +110,7 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         gym = new Gym();
         gym.setTrainer(null);
         gym.setCity(null);
-        gym.setType(PokemonType.EARTH);
+        gym.setType(PokemonType.GRASS);
         gymDao.save(gym);
     }
 
@@ -301,7 +301,7 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
     void testUpdateType() {
         gym = new Gym(trainer);
         gym.setCity("Rainbow");
-        gym.setType(PokemonType.EARTH);
+        gym.setType(PokemonType.GRASS);
         gymDao.saveAndFlush(gym);
         assertThat(gymDao.count(), is(equalTo(1L)));
         PokemonType newType = PokemonType.DRAGON;
