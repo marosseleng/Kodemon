@@ -92,12 +92,12 @@
         <!-- </dependency> -->
         <!-- <dependency> -->
         <!-- <groupId>javax.enterprise</groupId> -->
-        <!-- <artifactId>cdi-api</artifactId> -->
+        <!-- <artifactId>cdi-persistence</artifactId> -->
         <!-- <version>1.2</version> -->
         <!-- </dependency> -->
         <!--<dependency>-->
         <!--<groupId>javax.el</groupId>-->
-        <!--<artifactId>javax.el-api</artifactId>-->
+        <!--<artifactId>javax.el-persistence</artifactId>-->
         <!--<version>2.2.4</version>-->
         <!--</dependency>-->
         <!--<dependency>-->
