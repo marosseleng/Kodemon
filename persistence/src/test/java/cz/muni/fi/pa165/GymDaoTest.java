@@ -71,7 +71,7 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
     void testSaveCorrectInstance() {
         gym = randomGym(1);
         gym.setCity("Thunder city");
-        gym.setType(PokemonType.EARTH);
+        gym.setType(PokemonType.GRASS);
         gymDao.save(gym);
         assertThat("gym.getId() == null", gym.getId(), is(notNullValue(Long.class)));
         Gym testGym = gymDao.findOne(gym.getId());
@@ -91,7 +91,7 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
     @Test(expectedExceptions = {NullPointerException.class})
     void testSaveGymWithNullCity() {
         gym = new Gym(trainer);
-        gym.setType(PokemonType.EARTH);
+        gym.setType(PokemonType.GRASS);
         gym.setCity(null);
         gymDao.save(gym);
     }
@@ -100,7 +100,7 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
     void testSaveGymWithNullTrainer() {
         gym = new Gym();
         gym.setTrainer(null);
-        gym.setType(PokemonType.EARTH);
+        gym.setType(PokemonType.GRASS);
         gym.setCity("some city");
         gymDao.save(gym);
     }
@@ -110,7 +110,7 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         gym = new Gym();
         gym.setTrainer(null);
         gym.setCity(null);
-        gym.setType(PokemonType.EARTH);
+        gym.setType(PokemonType.GRASS);
         gymDao.save(gym);
     }
 
@@ -203,6 +203,64 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(found.size(), is(equalTo(numberOfGyms)));
         assertThat(found, is(equalTo(gyms)));
     }
+    
+    @Test
+    void testFindByCity() {
+        List<Gym> gyms = randomGyms(3);
+        gymDao.save(gyms);
+        assertThat(gymDao.count(), is(equalTo(3L)));
+        Gym matching = gyms.get(0);
+        List<Gym> found = gymDao.findByCity(matching.getCity());
+        assertThat(found.size(), is(1));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+
+    @Test
+    void testFindByCityLike() {
+        List<Gym> gyms = randomGyms(3);
+        gymDao.save(gyms);
+        assertThat(gymDao.count(), is(equalTo(3L)));
+        Gym matching = gyms.get(0);
+        List<Gym> found = gymDao.findByCityLike(matching.getCity());
+        assertThat(found.size(), is(1));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+
+    @Test
+    void testFindByCityContaining() {
+        List<Gym> gyms = randomGyms(3);
+        gymDao.save(gyms);
+        assertThat(gymDao.count(), is(equalTo(3L)));
+        Gym matching = gyms.get(0);
+        List<Gym> found = gymDao.findByCityContaining("%" + matching.getCity().substring(2, 3) + "%");
+        assertThat(found.size(), is(3));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+    
+    @Test
+    void testFindByType() {
+        List<Gym> gyms = randomGyms(3);
+        gyms.get(0).setType(PokemonType.GHOST);
+        gyms.get(1).setType(PokemonType.FIRE);
+        gyms.get(2).setType(PokemonType.WATER);
+        gymDao.save(gyms);
+        assertThat(gymDao.count(), is(equalTo(3L)));
+        Gym matching = gyms.get(1);
+        List<Gym> found = gymDao.findByType(matching.getType());
+        assertThat(found.size(), is(1));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+    
+    @Test
+    void testFindByTrainer() {
+        List<Gym> gyms = randomGyms(4);
+        gymDao.save(gyms);
+        assertThat(gymDao.count(), is(equalTo(4L)));
+        Gym matching = gyms.get(0);
+        List<Gym> found = gymDao.findByTrainer(matching.getTrainer());
+        assertThat(found.size(), is(4));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
 
     /** update tests */
 
@@ -243,7 +301,7 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
     void testUpdateType() {
         gym = new Gym(trainer);
         gym.setCity("Rainbow");
-        gym.setType(PokemonType.EARTH);
+        gym.setType(PokemonType.GRASS);
         gymDao.saveAndFlush(gym);
         assertThat(gymDao.count(), is(equalTo(1L)));
         PokemonType newType = PokemonType.DRAGON;
