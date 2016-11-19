@@ -339,22 +339,6 @@ public class PokemonDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(found.get(0), is(equalTo(matching)));
     }
 
-    /*@Test
-    void testFindByType() {
-        List<Pokemon> pokemons = randomPokemons(8);
-        for (int i = 0; i < 8; i++)
-            if (i < 5)
-                pokemons.get(i).setName(PokemonName.ABRA);
-            else
-                pokemons.get(i).setName(PokemonName.CHARMANDER);
-        pokemonDao.save(pokemons);
-        assertThat(pokemonDao.count(), is(equalTo(8L)));
-        Pokemon matching = pokemons.get(5);
-        List<Pokemon> found = pokemonDao.findByType(matching.getType());
-        assertThat(found.size(), is(3));
-        assertThat(found.get(0), is(equalTo(matching)));
-    }*/
-
     @Test
     void testFindByLevel() {
         List<Pokemon> pokemons = randomPokemons(8);
