@@ -6,5 +6,5 @@ package com.kodemon.persistence.enums;
  * @author Matej Poklemba
  */
 public enum PokemonType {
-    WATER, FIRE, GRASS, DRAGON, PSYCHIC, BUG, NORMAL, ELECTRIC, FIGHTING, POISON, GROUND, FLYING, ROCK, GHOST, FAIRY, ICE
+    WATER, FIRE, GRASS, DRAGON, PSYCHIC, BUG, NORMAL, ELECTRIC, FIGHTING, POISON, GROUND, FLYING, ROCK, GHOST, ICE
 }

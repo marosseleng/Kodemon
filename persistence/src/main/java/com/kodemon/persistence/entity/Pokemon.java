@@ -1,5 +1,6 @@
 package com.kodemon.persistence.entity;
 
+import com.kodemon.persistence.enums.PokemonName;
 import com.kodemon.persistence.enums.PokemonType;
 
 import javax.persistence.*;
@@ -28,14 +29,9 @@ public class Pokemon {
 
     @Column(nullable = false)
     @NotNull
-    private String name;
+    private PokemonName name;
 
     private String nickname;
-
-    @Enumerated
-    @Column(nullable = false)
-    @NotNull
-    private PokemonType type;
 
     @Min(1)
     private int level;
@@ -46,12 +42,12 @@ public class Pokemon {
     public Pokemon() {}
 
     /**
-     * A constructor to initialize a Pokemon with its {@link PokemonType}.
+     * A constructor to initialize a Pokemon with its {@link PokemonName}.
      *
-     * @param type the Pokemon's type.
+     * @param name the Pokemon's name.
      */
-    public Pokemon(@NotNull PokemonType type) {
-        this.type = type;
+    public Pokemon(@NotNull PokemonName name) {
+        this.name = name;
     }
 
     public Long getId() {
@@ -66,11 +62,11 @@ public class Pokemon {
         this.trainer = trainer;
     }
 
-    public String getName() {
+    public PokemonName getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(PokemonName name) {
         this.name = name;
     }
 
@@ -82,12 +78,8 @@ public class Pokemon {
         this.nickname = nickname;
     }
 
-    public PokemonType getType() {
-        return type;
-    }
-
-    public void setType(PokemonType type) {
-        this.type = type;
+    public PokemonType[] getType() {
+        return name.getTypes();
     }
 
     public int getLevel() {
