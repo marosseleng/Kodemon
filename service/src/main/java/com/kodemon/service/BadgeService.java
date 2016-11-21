@@ -3,6 +3,7 @@ package com.kodemon.service;
 import com.kodemon.persistence.entity.Badge;
 import com.kodemon.persistence.entity.Gym;
 import com.kodemon.persistence.entity.Trainer;
+import com.kodemon.persistence.enums.PokemonType;
 
 import java.util.List;
 
@@ -10,6 +11,19 @@ import java.util.List;
  * Created by mseleng on 11/19/16.
  */
 public interface BadgeService {
+
+    // TODO add other CRUD METHODS
+    void saveBadge(Badge badge);
+
+
+    /**
+     * Generates new badge for a trainer after successful fight for a gym
+     *
+     * @param type
+     * @return
+     */
+    Badge getBadgeOfType(PokemonType type);
+
     /**
      * Returns a {@link List} of {@link Badge}s with given name
      *

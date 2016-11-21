@@ -3,6 +3,8 @@ package com.kodemon.api.facade;
 import com.kodemon.api.dto.UserAuthDTO;
 import com.kodemon.api.dto.UserDTO;
 
+import java.util.Set;
+
 /**
  * Created by mseleng on 11/19/16.
  */
@@ -31,4 +33,9 @@ public interface UserFacade {
      */
     UserDTO findUserByUserName(String userName);
 
+    /**
+     *
+     * @return Set of use
+     */
+    Set<UserDTO> findAllUsers();
 }

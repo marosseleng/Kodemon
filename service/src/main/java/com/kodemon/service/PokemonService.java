@@ -18,4 +18,11 @@ public interface PokemonService {
      * @return generated wild Pokemon
      */
     Pokemon generateWildPokemon(@Nullable PokemonType type);
+
+    /**
+     * Each won fight means +1 level
+     *
+     * @param pokemon
+     */
+    void levelPokemonUp(Pokemon pokemon);
 }

@@ -11,6 +11,8 @@ import java.util.List;
  * Created by mseleng on 11/19/16.
  */
 public interface GymService {
+    //TODO CRUD operations
+
     /**
      * Returns a {@link List} of {@link Gym}s with the given username.
      *
