@@ -2,15 +2,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cz.muni.fi.pa165.kodemon</groupId>
     <artifactId>api</artifactId>
     <version>0.9-SNAPSHOT</version>
     <packaging>war</packaging>
-
     <name>API and presentation layer for Kodemon</name>
 
     <parent>
-        <groupId>cz.muni.fi.pa165.kodemon</groupId>
+        <groupId>com.kodemon</groupId>
         <artifactId>kodemon-app</artifactId>
         <version>0.9-SNAPSHOT</version>
     </parent>
@@ -34,15 +32,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>cz.muni.fi.pa165.kodemon</groupId>
-            <artifactId>persistence</artifactId>
-            <version>0.9-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>15.0</version>
         </dependency>
-
     </dependencies>
 </project>
