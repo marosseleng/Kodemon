@@ -5,6 +5,7 @@ import com.kodemon.persistence.dao.PokemonDao;
 import com.kodemon.persistence.dao.TrainerDao;
 import com.kodemon.persistence.entity.Pokemon;
 import com.kodemon.persistence.entity.Trainer;
+import com.kodemon.persistence.enums.PokemonName;
 import com.kodemon.persistence.enums.PokemonType;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Example;
@@ -399,9 +400,8 @@ public class TrainerDaoTest extends AbstractTestNGSpringContextTests {
 
     private void preparePokemon() {
         pokemon = new Pokemon();
-        pokemon.setName("Pikachu");
+        pokemon.setName(PokemonName.PIKACHU);
         pokemon.setLevel(5);
-        pokemon.setType(PokemonType.ELECTRIC);
     }
 
     private List<Trainer> randomTrainers(int size) {
