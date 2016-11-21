@@ -1,6 +1,5 @@
-package com.kodemon.service;
+package com.kodemon.service.interfaces;
 
-import com.kodemon.persistence.entity.Badge;
 import com.kodemon.persistence.entity.Gym;
 import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.persistence.enums.PokemonType;
@@ -8,10 +7,32 @@ import com.kodemon.persistence.enums.PokemonType;
 import java.util.List;
 
 /**
- * Created by mseleng on 11/19/16.
+ * Service for doing stuff with {@link Gym}s
+ *
+ * @author <a href="mailto:xseleng@fi.muni.cz">Maros Seleng, 422624</a>
  */
 public interface GymService {
-    //TODO CRUD operations
+
+    /**
+     * Initializes all gyms
+     * <p/>
+     * This method takes care of the creation and proper initialization of all gyms
+     */
+    void initializeGyms();
+
+    /**
+     * Saves the given gym to the database
+     *
+     * @param gym gym to be saved to database
+     */
+    void save(Gym gym);
+
+    /**
+     * Deletes the given gym from the database
+     *
+     * @param gym gym to be deleted from database
+     */
+    void delete(Gym gym);
 
     /**
      * Returns a {@link List} of {@link Gym}s with the given username.
@@ -60,11 +81,4 @@ public interface GymService {
      * @return {@link List} of {@link Gym}s of the given trainer.
      */
     List<Gym> findByTrainer(Trainer trainer);
-
-    /**
-     *
-     *
-     * @return
-     */
-    Badge giveBadge();
 }

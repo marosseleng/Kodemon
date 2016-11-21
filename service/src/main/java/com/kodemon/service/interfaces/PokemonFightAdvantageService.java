@@ -1,15 +1,17 @@
-package com.kodemon.service;
+package com.kodemon.service.interfaces;
 
 import com.kodemon.persistence.enums.PokemonName;
 
 /**
- * Created by mseleng on 11/21/16.
+ * This service computes the sum of coefficients describing what (dis)advantage a {@link PokemonName} has against other
+ *
+ * @author <a href="mailto:xseleng@fi.muni.cz">Maros Seleng, 422624</a>
  */
 public interface PokemonFightAdvantageService {
     /**
      * Returns the sum of coefficients
      * that multipliy challenger Pokemon's level before the fight.
-     * </p>
+     * <p/>
      * Returned coefficient is greater than or equal to zero.
      * Zero means the Pokemon has no chance against the defender, whatever its level is.
      *

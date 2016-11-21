@@ -3,7 +3,9 @@ package com.kodemon.service.util;
 import java.util.Objects;
 
 /**
- * Created by mseleng on 11/21/16.
+ * Class representing a pair of values
+ *
+ * @author <a href="mailto:xseleng@fi.muni.cz">Maros Seleng, 422624</a>
  */
 public class Pair<X, Y> {
     private X x;
