@@ -37,10 +37,26 @@ public interface FightFacade {
      */
     void fightWildPokemon(UserDTO user, WildPokemonFightMode mode);
 
-    /* TODO implement those just by calling the method below
+    /**
+     * Returns fights, which has been played today
+     *
+     * @return a {@link List} of {@link FightDTO}s
+     */
     List<FightDTO> listTodaysFights();
+
+    /**
+     * Returns fights, which has been played this month
+     *
+     * @return a {@link List} of {@link FightDTO}s
+     */
     List<FightDTO> listThisMonthsFights();
-    List<FightDTO> listThisYearsFights();*/
+
+    /**
+     * Returns fights, which has been played this year
+     *
+     * @return a {@link List} of {@link FightDTO}s
+     */
+    List<FightDTO> listThisYearsFights();
 
     /**
      * Returns fights that happened between two specified dates
