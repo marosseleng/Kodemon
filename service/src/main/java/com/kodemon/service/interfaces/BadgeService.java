@@ -17,14 +17,14 @@ public interface BadgeService {
     /**
      * Generates new badge of the given type.
      * <p/>
-     * This method only creates a new instance of {@link Badge} and sets its type.
+     * This method only creates a new instance of {@link Badge} and sets its gym.
      * This method does <b>not</b> set a {@link Trainer} to the badge.
      * This method does <b>not</b> take care of saving the {@link Badge} entity to the database.
      *
      * @param type
      * @return
      */
-    Badge createBadgeOfType(PokemonType type);
+    Badge createBadgeOfGym(Gym gym);
 
     /**
      * Assigns the given trainer to the given badge and updates badge table
