@@ -1,7 +1,17 @@
 package com.kodemon.persistence.util;
 
+import com.kodemon.persistence.entity.Pokemon;
+
+import java.util.Comparator;
+
 /**
- * Created by xpoklemb on 22.11.16.
+ * Comparator for Pokemon for sorting Pokemons by their level
+ *
+ * @author Matej Poklemba
  */
-public class PokemonComparator {
+public class PokemonComparator implements Comparator<Pokemon> {
+    @Override
+    public int compare(Pokemon p1, Pokemon p2) {
+        return Integer.compare(p1.getLevel(), p2.getLevel());
+    }
 }
