@@ -1,6 +1,6 @@
 package com.kodemon.persistence.test;
 
-import com.kodemon.persistence.KodemonApplicationContext;
+import com.kodemon.persistence.config.PersistenceConfig;
 import com.kodemon.persistence.dao.TrainerFightDao;
 import com.kodemon.persistence.dao.TrainerDao;
 import com.kodemon.persistence.dao.GymDao;
@@ -34,7 +34,7 @@ import static org.hamcrest.Matchers.*;
  */
 @Transactional
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
-@ContextConfiguration(classes = KodemonApplicationContext.class)
+@ContextConfiguration(classes = PersistenceConfig.class)
 public class TrainerFightDaoTest extends AbstractTestNGSpringContextTests {
 
     @Inject

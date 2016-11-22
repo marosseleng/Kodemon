@@ -1,12 +1,11 @@
 package com.kodemon.persistence.test;
 
-import com.kodemon.persistence.KodemonApplicationContext;
+import com.kodemon.persistence.config.PersistenceConfig;
 import com.kodemon.persistence.dao.PokemonDao;
 import com.kodemon.persistence.dao.TrainerDao;
 import com.kodemon.persistence.entity.Pokemon;
 import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.persistence.enums.PokemonName;
-import com.kodemon.persistence.enums.PokemonType;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Example;
 import org.springframework.test.context.ContextConfiguration;
@@ -33,7 +32,7 @@ import static org.hamcrest.Matchers.*;
  */
 @Transactional
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
-@ContextConfiguration(classes = KodemonApplicationContext.class)
+@ContextConfiguration(classes = PersistenceConfig.class)
 public class TrainerDaoTest extends AbstractTestNGSpringContextTests {
 
     @Inject

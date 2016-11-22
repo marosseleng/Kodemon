@@ -1,8 +1,8 @@
-package com.kodemon.persistence;
+package com.kodemon.persistence.config;
 
+import com.kodemon.persistence.dao.BadgeDao;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -27,9 +27,8 @@ import javax.sql.DataSource;
  */
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories
-@ComponentScan(basePackages = "cz.muni.fi.pa165.kodemon")
-public class KodemonApplicationContext {
+@EnableJpaRepositories(basePackageClasses = BadgeDao.class)
+public class PersistenceConfig {
 
     /**
      * Enables automatic translation of exceptions to DataAccessExceptions.
