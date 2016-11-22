@@ -6,7 +6,9 @@ import com.kodemon.api.dto.UserDTO;
 import java.util.Set;
 
 /**
- * Created by mseleng on 11/19/16.
+ * Facade providing access to the user administration
+ *
+ * @author <a href="mailto:xseleng@fi.muni.cz">Maros Seleng, 422624</a>
  */
 public interface UserFacade {
 

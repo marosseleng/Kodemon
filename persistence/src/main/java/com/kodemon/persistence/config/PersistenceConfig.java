@@ -1,4 +1,4 @@
-package com.kodemon.persistence;
+package com.kodemon.persistence.config;
 
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
@@ -28,8 +28,8 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories
-@ComponentScan(basePackages = "cz.muni.fi.pa165.kodemon")
-public class KodemonApplicationContext {
+@ComponentScan(basePackages = "com.kodemon.persistence")
+public class PersistenceConfig {
 
     /**
      * Enables automatic translation of exceptions to DataAccessExceptions.
