@@ -5,16 +5,14 @@ import com.kodemon.api.dto.GymDTO;
 import com.kodemon.api.dto.UserDTO;
 import com.kodemon.api.enums.WildPokemonFightMode;
 import com.kodemon.api.facade.FightFacade;
-import com.kodemon.persistence.entity.Gym;
-import com.kodemon.persistence.entity.Pokemon;
-import com.kodemon.persistence.entity.Trainer;
-import com.kodemon.persistence.entity.TrainerFight;
+import com.kodemon.persistence.entity.*;
 import com.kodemon.service.interfaces.*;
 import com.kodemon.service.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -26,23 +24,26 @@ import java.util.List;
 @Service
 @Transactional
 public class FightFacadeImpl implements FightFacade {
-    @Autowired
+    @Inject
     private BeanMappingService beanMappingService;
 
-    @Autowired
+    @Inject
     private TrainerFightService trainerFightService;
 
-    @Autowired
+    @Inject
     private PokemonFightService pokemonFightService;
 
-    @Autowired
+    @Inject
     private PokemonService pokemonService;
 
-    @Autowired
+    @Inject
     private TrainerService trainerService;
 
-    @Autowired
+    @Inject
     private BadgeService badgeService;
+
+    @Inject
+    private TimeService timeService;
 
 
     @Override
@@ -52,7 +53,9 @@ public class FightFacadeImpl implements FightFacade {
 
         boolean wasChallengerSuccessful = false;
         if(trainerFightService.wasFightForBadgeSuccessful(challengingTrainer, targetGym.getTrainer())) {
-            challengingTrainer.addBadge(badgeService.createBadgeOfType(targetGym.getType()));
+            Badge badge = badgeService.createBadgeOfType(targetGym.getType());
+            trainerService.addBadge(badge, challengingTrainer);
+            badgeService.assignTrainerToBadge(challengingTrainer, badge);
             wasChallengerSuccessful = true;
         }
 
@@ -68,7 +71,7 @@ public class FightFacadeImpl implements FightFacade {
     public void fightWildPokemon(UserDTO user, WildPokemonFightMode mode) {
         Trainer trainer = beanMappingService.mapTo(user, Trainer.class);
         Pokemon wildPokemon = pokemonService.generateWildPokemon(null);
-        Pokemon trainersPokemon = trainer.getPokemons().get(0);
+        Pokemon trainersPokemon = pokemonService.findByTrainer(trainer).get(0);
 
         Pair<Double, Double> fightScore = pokemonFightService.getScorePair(trainersPokemon, wildPokemon);
 
@@ -83,7 +86,7 @@ public class FightFacadeImpl implements FightFacade {
 
     @Override
     public List<FightDTO> listTodaysFights() {
-        return listFightsBetween(new Date(), new Date());
+        return listFightsBetween(timeService.currentDate(), timeService.currentDate());
     }
 
     @Override
@@ -91,14 +94,14 @@ public class FightFacadeImpl implements FightFacade {
         int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         Date from = new Calendar.Builder().setDate(currentYear, currentMonth, 1).build().getTime();
-        return listFightsBetween(from, new Date());
+        return listFightsBetween(from, timeService.currentDate());
     }
 
     @Override
     public List<FightDTO> listThisYearsFights() {
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         Date from = new Calendar.Builder().setDate(currentYear, 1, 1).build().getTime();
-        return listFightsBetween(from, new Date());
+        return listFightsBetween(from, timeService.currentDate());
     }
 
     @Override

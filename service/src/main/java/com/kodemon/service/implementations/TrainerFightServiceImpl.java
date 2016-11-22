@@ -23,10 +23,11 @@ public class TrainerFightServiceImpl implements TrainerFightService {
     @Inject
     private TrainerFightDao trainerFightDao;
 
+    @Inject
+    private PokemonFightService pokemonFightService;
+
     @Override
     public boolean wasFightForBadgeSuccessful(Trainer challenger, Trainer defender) {
-        PokemonFightService pokemonFightService = new PokemonFightServiceImpl();
-
         double challengerScore = 0;
         double defenderScore = 0;
 
