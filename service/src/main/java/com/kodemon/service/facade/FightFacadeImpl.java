@@ -57,8 +57,8 @@ public class FightFacadeImpl implements FightFacade {
         }
 
         FightDTO fight = new FightDTO();
-        fight.setTargetGym(targetGym);
-        fight.setChallenger(challengingTrainer);
+        fight.setTargetGym(gym);
+        fight.setChallenger(user);
         fight.setFightTime(new Date());
         fight.setWasChallengerSuccessful(wasChallengerSuccessful);
         trainerFightService.save(beanMappingService.mapTo(fight, TrainerFight.class));

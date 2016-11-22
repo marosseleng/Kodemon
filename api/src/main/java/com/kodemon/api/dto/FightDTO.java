@@ -9,24 +9,24 @@ import java.util.Date;
  * Created by mseleng on 11/19/16.
  */
 public class FightDTO {
-    private Trainer challenger;
-    private Gym targetGym;
+    private UserDTO challenger;
+    private GymDTO targetGym;
     private Date fightTime;
     private boolean wasChallengerSuccessful;
 
-    public Trainer getChallenger() {
+    public UserDTO getChallenger() {
         return challenger;
     }
 
-    public void setChallenger(Trainer challenger) {
+    public void setChallenger(UserDTO challenger) {
         this.challenger = challenger;
     }
 
-    public Gym getTargetGym() {
+    public GymDTO getTargetGym() {
         return targetGym;
     }
 
-    public void setTargetGym(Gym targetGym) {
+    public void setTargetGym(GymDTO targetGym) {
         this.targetGym = targetGym;
     }
 
