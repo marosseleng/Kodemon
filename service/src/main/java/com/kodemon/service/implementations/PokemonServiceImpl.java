@@ -24,7 +24,7 @@ public class PokemonServiceImpl implements PokemonService {
     @Inject
     private PokemonDao pokemonDao;
 
-    private static final Random random = new Random();
+    private static final Random RANDOM = new Random();
     @Override
     public Pokemon generateWildPokemon(@Nullable PokemonType type) {
         Pokemon pokemon;
