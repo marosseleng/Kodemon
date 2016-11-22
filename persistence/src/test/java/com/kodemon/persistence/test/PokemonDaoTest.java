@@ -18,7 +18,6 @@ import org.testng.annotations.Test;
 
 import javax.inject.Inject;
 import javax.validation.ConstraintViolationException;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,9 +27,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 /**
- *  @author Oliver Roch
+ * @author Oliver Roch
  */
-
 @Transactional
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @ContextConfiguration(classes = PersistenceConfig.class)
