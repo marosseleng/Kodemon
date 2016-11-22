@@ -21,6 +21,7 @@
         <mockito.version>2.2.21</mockito.version>
         <jetbrains.annotations.version>15.0</jetbrains.annotations.version>
         <dozer.version>5.5.1</dozer.version>
+        <joda-time.version>2.9.6</joda-time.version>
     </properties>
 
     <modules>
@@ -144,8 +145,12 @@
                 <artifactId>dozer</artifactId>
                 <version>${dozer.version}</version>
             </dependency>
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${joda-time.version}</version>
+            </dependency>
         </dependencies>
-
     </dependencyManagement>
 
 </project>
