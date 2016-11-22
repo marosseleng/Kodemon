@@ -86,7 +86,7 @@ public class FightFacadeImpl implements FightFacade {
 
     @Override
     public List<FightDTO> listTodaysFights() {
-        return listFightsBetween(timeService.currentDate(), timeService.currentDate());
+        return listFightsBetween(timeService.startOfTheDay(timeService.currentDate()), timeService.endOfTheDay(timeService.currentDate()));
     }
 
     @Override
