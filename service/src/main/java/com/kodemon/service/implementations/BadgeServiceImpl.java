@@ -34,6 +34,7 @@ public class BadgeServiceImpl implements BadgeService {
     @Override
     public void assignTrainerToBadge(Trainer trainer, Badge badge) {
         badge.setTrainer(trainer);
+        badgeDao.save(badge);
     }
 
     @Override
