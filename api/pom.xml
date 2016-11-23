@@ -4,7 +4,7 @@
 
     <artifactId>api</artifactId>
     <version>0.9-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>API and presentation layer for Kodemon</name>
 
     <parent>
@@ -17,7 +17,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <build>
+    <!--<build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -28,7 +28,7 @@
                 </configuration>
             </plugin>
         </plugins>
-    </build>
+    </build>-->
 
     <dependencies>
         <!--TESTS-->
