@@ -6,6 +6,7 @@ import com.kodemon.persistence.entity.Pokemon;
 import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.service.interfaces.TrainerService;
 import com.kodemon.service.util.PasswordStorage;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -27,15 +28,14 @@ public class TrainerServiceImpl implements TrainerService {
     public boolean register(Trainer trainer, String password) {
         try {
             trainer.setPwdHash(PasswordStorage.createHash(password));
+            trainerDao.save(trainer);
         } catch (PasswordStorage.CannotPerformOperationException e) {
             return false;
+        } catch (DataAccessException e) {
+            // probably a trainer with the given username exists
+            return false;
         }
-        try {
-            trainerDao.save(trainer);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
+        return true;
     }
 
     @Override
