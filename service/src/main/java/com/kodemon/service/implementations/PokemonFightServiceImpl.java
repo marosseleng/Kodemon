@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 
 /**
+ * Service for fight between pokemons. Used to calculated fight score for both pokemons from their level and fight
+ * advantage coefficient.
+ *
  * @author Oliver Roch
  */
 
