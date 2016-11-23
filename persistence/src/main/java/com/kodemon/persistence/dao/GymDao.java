@@ -1,17 +1,19 @@
 package com.kodemon.persistence.dao;
 
+import com.kodemon.persistence.entity.Gym;
 import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.persistence.enums.PokemonType;
-import com.kodemon.persistence.entity.Gym;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Data Access Object for the Gym entity.
  *
  * @author Miso Romanek
  */
+@Repository
 public interface GymDao extends JpaRepository<Gym, Long> {
 
     /**

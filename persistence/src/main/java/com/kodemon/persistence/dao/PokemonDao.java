@@ -1,10 +1,10 @@
 package com.kodemon.persistence.dao;
 
 import com.kodemon.persistence.entity.Pokemon;
-import com.kodemon.persistence.enums.PokemonName;
-import com.kodemon.persistence.enums.PokemonType;
 import com.kodemon.persistence.entity.Trainer;
+import com.kodemon.persistence.enums.PokemonName;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -13,6 +13,7 @@ import java.util.List;
  *
  * @author Matej Poklemba
  */
+@Repository
 public interface PokemonDao extends JpaRepository<Pokemon, Long> {
 
     /**
