@@ -22,10 +22,9 @@ public interface TrainerFightService {
      * This method also takes care of giving new badge to the challenger if he wins
      *
      * @param challenger trainer that wants to conquer the gym
-     * @param defender   trainer that defends the gym
-     * @return true if challenger was successful
+     * @param defender  trainer that defends the gym
      */
-    boolean wasFightForBadgeSuccessful(Trainer challenger, Trainer defender);
+    void fightForBadge(Trainer challenger, Trainer defender);
 
     /**
      * Find all fights where challenger is specified trainer
@@ -47,7 +46,7 @@ public interface TrainerFightService {
      * Find all fight between specified times
      *
      * @param from bottom bound for the fight time
-     * @param til  upper bound for the fight time
+     * @param til upper bound for the fight time
      * @return list of all fights between specified times
      */
     List<TrainerFight> findByFightTimeBetween(Date from, Date til);
@@ -58,11 +57,4 @@ public interface TrainerFightService {
      * @return a {@link List} of all {@link TrainerFight}s in the database
      */
     List<TrainerFight> findAll();
-
-    /**
-     * Saves trainer played fight into database
-     *
-     * @param trainerFight trainer fight, that has been played and is to be saved
-     */
-    void save(TrainerFight trainerFight);
 }
