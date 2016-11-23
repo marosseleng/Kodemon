@@ -24,12 +24,12 @@ public class PokemonServiceImpl implements PokemonService {
     @Inject
     private PokemonDao pokemonDao;
 
-    private static final Random random = new Random();
+    private static final Random RANDOM = new Random();
     @Override
     public Pokemon generateWildPokemon(@Nullable PokemonType type) {
         Pokemon pokemon;
         if (type == null) {
-            int i = random.nextInt(PokemonName.class.getEnumConstants().length);
+            int i = RANDOM.nextInt(PokemonName.class.getEnumConstants().length);
             pokemon = new Pokemon(PokemonName.class.getEnumConstants()[i]);
         }
         else {
@@ -40,7 +40,7 @@ public class PokemonServiceImpl implements PokemonService {
                 if (Arrays.asList(pokemons.get(i).getTypes()).indexOf(type) != -1)
                     pokemonsOfWantedType.add(p);
             }
-            int i = random.nextInt(pokemonsOfWantedType.size());
+            int i = RANDOM.nextInt(pokemonsOfWantedType.size());
             pokemon = new Pokemon(pokemonsOfWantedType.get(i));
         }
         return pokemon;
