@@ -10,6 +10,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * Service which returns fight advantage of pokemon against another pokemon.
+ * Fight advantage is calculated from pokemon types. For each weaker type there is +0.2 to score coefficient.
+ * For each stronger type there is -0.2 to score coefficient.
+ *
  * @author Oliver Roch
  */
 
