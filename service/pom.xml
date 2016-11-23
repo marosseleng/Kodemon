@@ -54,7 +54,7 @@
             <groupId>com.kodemon</groupId>
             <artifactId>api</artifactId>
             <version>${project.parent.version}</version>
-            <type>war</type>
+            <!--<type>war</type>-->
         </dependency>
         <dependency>
             <groupId>org.jetbrains</groupId>
