@@ -22,7 +22,7 @@ public interface TrainerFightService {
      * This method also takes care of giving new badge to the challenger if he wins
      *
      * @param challenger trainer that wants to conquer the gym
-     * @param defender  trainer that defends the gym
+     * @param defender trainer that defends the gym
      */
     void fightForBadge(Trainer challenger, Trainer defender);
 
