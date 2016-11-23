@@ -15,14 +15,14 @@ import java.util.List;
 public interface BadgeService {
 
     /**
-     * Generates new badge of the given type.
+     * Generates new badge of the given gym.
      * <p/>
      * This method only creates a new instance of {@link Badge} and sets its gym.
      * This method does <b>not</b> set a {@link Trainer} to the badge.
      * This method does <b>not</b> take care of saving the {@link Badge} entity to the database.
      *
-     * @param type
-     * @return
+     * @param gym gym where the badge is awarded from
+     * @return returns the created badge
      */
     Badge createBadgeOfGym(Gym gym);
 
