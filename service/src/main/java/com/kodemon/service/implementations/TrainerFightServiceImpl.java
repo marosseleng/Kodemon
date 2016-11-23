@@ -15,6 +15,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * Service for TrainerFights. It can find you fights played at specified time range and simulate fight,
+ * determine, whether match for a badge was successful and save the result.
+ *
  * @author Oliver Roch
  */
 
@@ -26,15 +29,26 @@ public class TrainerFightServiceImpl implements TrainerFightService {
     @Inject
     private PokemonFightService pokemonFightService;
 
+    public static final int AMOUNT_OF_POKEMONS_FOR_MATCH = 6;
+
     @Override
     public boolean wasFightForBadgeSuccessful(Trainer challenger, Trainer defender) {
         double challengerScore = 0;
         double defenderScore = 0;
 
-        for(int i = 0; i < 6; i++) {
-            Pokemon currentChallengerPokemon = challenger.getPokemons().get(i);
-            Pokemon currentDefenderPokemon = defender.getPokemons().get(i);
-            Pair<Double, Double> scorePair = pokemonFightService.getScorePair(currentChallengerPokemon, currentDefenderPokemon);
+        for(int i = 0; i < AMOUNT_OF_POKEMONS_FOR_MATCH; i++) {
+            Pair<Double, Double> scorePair;
+            if(challenger.getPokemons().size() > i && defender.getPokemons().size() > i) {
+                Pokemon currentChallengerPokemon = challenger.getPokemons().get(i);
+                Pokemon currentDefenderPokemon = defender.getPokemons().get(i);
+                scorePair = pokemonFightService.getScorePair(currentChallengerPokemon, currentDefenderPokemon);
+            } else if(challenger.getPokemons().size() <= i && defender.getPokemons().size() > i) {
+                scorePair = new Pair<>(0.0, (double) defender.getPokemons().get(i).getLevel());
+            } else if(challenger.getPokemons().size() > i && defender.getPokemons().size() <= i) {
+                scorePair = new Pair<>((double) challenger.getPokemons().get(i).getLevel(), 0.0);
+            } else {
+                scorePair = new Pair<>(0.0, 0.0);
+            }
 
             challengerScore += scorePair.getX();
             defenderScore += scorePair.getY();
