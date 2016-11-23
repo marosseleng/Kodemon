@@ -4,6 +4,7 @@ import com.kodemon.persistence.entity.Gym;
 import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.persistence.entity.TrainerFight;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  *
  * @author Oliver Roch
  */
+@Repository
 public interface TrainerFightDao extends JpaRepository<TrainerFight, Long> {
     /**
      * Find all fights where challenger is specified trainer
