@@ -2,6 +2,7 @@ package com.kodemon.persistence.dao;
 
 import com.kodemon.persistence.entity.Trainer;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
  *
  * @author <a href="xseleng@fi.muni.cz">Maros Seleng, 422624</a>
  */
+@Repository
 public interface TrainerDao extends JpaRepository<Trainer, Long> {
 
     /**
