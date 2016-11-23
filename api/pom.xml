@@ -4,7 +4,7 @@
 
     <artifactId>api</artifactId>
     <version>0.9-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>API and presentation layer for Kodemon</name>
 
     <parent>
