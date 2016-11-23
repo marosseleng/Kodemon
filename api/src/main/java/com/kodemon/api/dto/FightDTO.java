@@ -3,6 +3,8 @@ package com.kodemon.api.dto;
 import java.util.Date;
 
 /**
+ * DTO for TrainerFight entity. Used for transferring data of trainer fights in facades.
+ *
  * @author Oliver Roch
  */
 public class FightDTO {

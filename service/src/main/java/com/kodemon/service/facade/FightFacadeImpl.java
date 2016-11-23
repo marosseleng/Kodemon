@@ -54,8 +54,8 @@ public class FightFacadeImpl implements FightFacade {
         boolean wasChallengerSuccessful = false;
         if(trainerFightService.wasFightForBadgeSuccessful(challengingTrainer, targetGym.getTrainer())) {
             Badge badge = badgeService.createBadgeOfGym(targetGym);
-            trainerService.addBadge(badge, challengingTrainer);
             badgeService.assignTrainerToBadge(challengingTrainer, badge);
+            trainerService.addBadge(badge, challengingTrainer);
             wasChallengerSuccessful = true;
         }
 
@@ -79,6 +79,7 @@ public class FightFacadeImpl implements FightFacade {
             if(mode == WildPokemonFightMode.TRAIN) {
                 pokemonService.levelPokemonUp(trainersPokemon);
             } else if(mode == WildPokemonFightMode.CATCH) {
+                pokemonService.save(wildPokemon);
                 trainerService.addPokemon(wildPokemon, trainer);
             }
         }
