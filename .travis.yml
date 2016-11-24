@@ -4,3 +4,5 @@ jdk:
 script:
   - mvn clean install 
 install: true
+notifications:
+  email: false

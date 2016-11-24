@@ -1,4 +1,4 @@
-package com.kodemon.service.implementations;
+package com.kodemon.service.facade;
 
 import com.kodemon.api.dto.UserAuthDTO;
 import com.kodemon.api.dto.UserDTO;
