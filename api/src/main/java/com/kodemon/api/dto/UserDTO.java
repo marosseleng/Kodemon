@@ -1,7 +1,5 @@
 package com.kodemon.api.dto;
 
-import com.kodemon.persistence.entity.Pokemon;
-
 import java.util.*;
 
 /**
@@ -65,7 +63,7 @@ public class UserDTO {
         pokemons.add(pokemon);
     }
 
-    public boolean removePokemon(Pokemon pokemon) {
+    public boolean removePokemon(PokemonDTO pokemon) {
         return pokemons.remove(pokemon);
     }
 
