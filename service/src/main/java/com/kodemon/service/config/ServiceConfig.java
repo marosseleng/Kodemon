@@ -1,6 +1,7 @@
 package com.kodemon.service.config;
 
 import com.kodemon.persistence.config.PersistenceConfig;
+import com.kodemon.service.implementations.BadgeServiceImpl;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +16,7 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import(PersistenceConfig.class)
-@ComponentScan(basePackages = "com.kodemon.service")
+@ComponentScan(basePackageClasses = BadgeServiceImpl.class)
 public class ServiceConfig {
 
     @Bean
