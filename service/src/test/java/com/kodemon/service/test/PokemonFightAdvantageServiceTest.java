@@ -34,4 +34,9 @@ public class PokemonFightAdvantageServiceTest extends AbstractTestNGSpringContex
         double pokemonFightAdvantage = pokemonFightAdvantageService.computePokemonFightAdvantage(challenger, target);
         Assert.assertEquals(1.0,pokemonFightAdvantage);
     }
+
+    @Test(expectedExceptions = {NullPointerException.class})
+    public void computePokemonFightAdvantageWithNullNameTest() {
+        double pokemonFightAdvantage = pokemonFightAdvantageService.computePokemonFightAdvantage(null, target);
+    }
 }
