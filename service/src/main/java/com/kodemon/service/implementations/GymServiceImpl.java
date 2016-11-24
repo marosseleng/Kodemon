@@ -362,4 +362,9 @@ public class GymServiceImpl implements GymService {
         return gymDao.findByTrainer(trainer);
     }
     
+    @Override
+    public List<Gym> findAll() {
+        return gymDao.findAll();
+    }
+    
 }
