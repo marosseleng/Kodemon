@@ -2,10 +2,10 @@ package com.kodemon.service.facade;
 
 import com.kodemon.api.dto.GymDTO;
 import com.kodemon.api.facade.GymFacade;
-import com.kodemon.persistence.entity.Gym;
 import com.kodemon.service.interfaces.BeanMappingService;
 import com.kodemon.service.interfaces.GymService;
-
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 import java.util.List;
 
