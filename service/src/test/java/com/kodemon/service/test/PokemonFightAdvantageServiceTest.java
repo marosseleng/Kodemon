@@ -25,7 +25,6 @@ import javax.inject.Inject;
 @ContextConfiguration(classes = ServiceConfig.class)
 public class PokemonFightAdvantageServiceTest extends AbstractTestNGSpringContextTests {
     @Inject
-    @InjectMocks
     private PokemonFightAdvantageService pokemonFightAdvantageService;
 
     private PokemonName challenger;
@@ -35,11 +34,6 @@ public class PokemonFightAdvantageServiceTest extends AbstractTestNGSpringContex
     public void initPokemonNames() {
         challenger = PokemonName.ARTICUNO;
         target = PokemonName.CHARIZARD;
-    }
-
-    @BeforeClass
-    public void setup() throws ServiceException {
-        MockitoAnnotations.initMocks(this);
     }
 
     @Test
