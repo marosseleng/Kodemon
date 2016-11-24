@@ -182,7 +182,6 @@ public class GymServiceImpl implements GymService {
         pokemonDao.save(pokemon75);
         pokemonDao.save(pokemon76);
 
-
         Trainer trainer0 = new Trainer(pokemon01);
         trainer0.addPokemon(pokemon02);
         trainer0.addPokemon(pokemon03);
@@ -213,7 +212,7 @@ public class GymServiceImpl implements GymService {
         trainer2.addPokemon(pokemon25);
         trainer2.setFirstName("Lucius");
         trainer2.setLastName("Surge");
-        trainer2.setUserName("Headshot360");
+        trainer2.setUserName("Headsh0tman");
         dob = new Calendar.Builder().setDate(1989, 20, 12).build().getTime();
         trainer2.setDateOfBirth(dob);
 
@@ -283,6 +282,96 @@ public class GymServiceImpl implements GymService {
         trainerDao.save(trainer5);
         trainerDao.save(trainer6);
         trainerDao.save(trainer7);
+
+        pokemon01.setTrainer(trainer0);
+        pokemon02.setTrainer(trainer0);
+        pokemon03.setTrainer(trainer0);
+        pokemon04.setTrainer(trainer0);
+        pokemon05.setTrainer(trainer0);
+        pokemon11.setTrainer(trainer1);
+        pokemon12.setTrainer(trainer1);
+        pokemon13.setTrainer(trainer1);
+        pokemon14.setTrainer(trainer1);
+        pokemon15.setTrainer(trainer1);
+        pokemon16.setTrainer(trainer1);
+        pokemon21.setTrainer(trainer2);
+        pokemon22.setTrainer(trainer2);
+        pokemon23.setTrainer(trainer2);
+        pokemon24.setTrainer(trainer2);
+        pokemon25.setTrainer(trainer2);
+        pokemon31.setTrainer(trainer3);
+        pokemon32.setTrainer(trainer3);
+        pokemon33.setTrainer(trainer3);
+        pokemon34.setTrainer(trainer3);
+        pokemon35.setTrainer(trainer3);
+        pokemon41.setTrainer(trainer4);
+        pokemon42.setTrainer(trainer4);
+        pokemon43.setTrainer(trainer4);
+        pokemon44.setTrainer(trainer4);
+        pokemon45.setTrainer(trainer4);
+        pokemon46.setTrainer(trainer4);
+        pokemon51.setTrainer(trainer5);
+        pokemon52.setTrainer(trainer5);
+        pokemon53.setTrainer(trainer5);
+        pokemon54.setTrainer(trainer5);
+        pokemon55.setTrainer(trainer5);
+        pokemon61.setTrainer(trainer6);
+        pokemon62.setTrainer(trainer6);
+        pokemon63.setTrainer(trainer6);
+        pokemon64.setTrainer(trainer6);
+        pokemon65.setTrainer(trainer6);
+        pokemon66.setTrainer(trainer6);
+        pokemon71.setTrainer(trainer7);
+        pokemon72.setTrainer(trainer7);
+        pokemon73.setTrainer(trainer7);
+        pokemon74.setTrainer(trainer7);
+        pokemon75.setTrainer(trainer7);
+        pokemon76.setTrainer(trainer7);
+
+        pokemonDao.save(pokemon01);
+        pokemonDao.save(pokemon02);
+        pokemonDao.save(pokemon03);
+        pokemonDao.save(pokemon04);
+        pokemonDao.save(pokemon05);
+        pokemonDao.save(pokemon11);
+        pokemonDao.save(pokemon12);
+        pokemonDao.save(pokemon13);
+        pokemonDao.save(pokemon14);
+        pokemonDao.save(pokemon15);
+        pokemonDao.save(pokemon16);
+        pokemonDao.save(pokemon21);
+        pokemonDao.save(pokemon22);
+        pokemonDao.save(pokemon23);
+        pokemonDao.save(pokemon24);
+        pokemonDao.save(pokemon25);
+        pokemonDao.save(pokemon31);
+        pokemonDao.save(pokemon32);
+        pokemonDao.save(pokemon33);
+        pokemonDao.save(pokemon34);
+        pokemonDao.save(pokemon35);
+        pokemonDao.save(pokemon41);
+        pokemonDao.save(pokemon42);
+        pokemonDao.save(pokemon43);
+        pokemonDao.save(pokemon44);
+        pokemonDao.save(pokemon45);
+        pokemonDao.save(pokemon46);
+        pokemonDao.save(pokemon51);
+        pokemonDao.save(pokemon52);
+        pokemonDao.save(pokemon53);
+        pokemonDao.save(pokemon54);
+        pokemonDao.save(pokemon55);
+        pokemonDao.save(pokemon61);
+        pokemonDao.save(pokemon62);
+        pokemonDao.save(pokemon63);
+        pokemonDao.save(pokemon64);
+        pokemonDao.save(pokemon65);
+        pokemonDao.save(pokemon66);
+        pokemonDao.save(pokemon71);
+        pokemonDao.save(pokemon72);
+        pokemonDao.save(pokemon73);
+        pokemonDao.save(pokemon74);
+        pokemonDao.save(pokemon75);
+        pokemonDao.save(pokemon76);
 
         Gym gym0 = new Gym(trainer0);
         gym0.setCity("Pewter");
@@ -361,5 +450,9 @@ public class GymServiceImpl implements GymService {
     public List<Gym> findByTrainer(Trainer trainer) {
         return gymDao.findByTrainer(trainer);
     }
-    
+
+    @Override
+    public List<Gym> findAll() {
+        return gymDao.findAll();
+    }
 }

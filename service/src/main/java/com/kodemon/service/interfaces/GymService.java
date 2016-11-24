@@ -81,4 +81,11 @@ public interface GymService {
      * @return {@link List} of {@link Gym}s of the given trainer.
      */
     List<Gym> findByTrainer(Trainer trainer);
+
+    /**
+     * Returns a {@link List} of all {@link Gym}s in database.
+     *
+     * @return {@link List} of {@link Gym}s in the database.
+     */
+    List<Gym> findAll();
 }
