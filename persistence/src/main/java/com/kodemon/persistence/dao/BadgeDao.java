@@ -3,14 +3,17 @@ package com.kodemon.persistence.dao;
 import com.kodemon.persistence.entity.Badge;
 import com.kodemon.persistence.entity.Gym;
 import com.kodemon.persistence.entity.Trainer;
-import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Data Access Object for the Badge entity.
  *
  * @author Oliver Roch
  */
+@Repository
 public interface BadgeDao extends JpaRepository<Badge, Long> {
 
     /**

@@ -3,7 +3,7 @@ package com.kodemon.api.facade;
 import com.kodemon.api.dto.UserAuthDTO;
 import com.kodemon.api.dto.UserDTO;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * Facade providing access to the user administration
@@ -17,9 +17,9 @@ public interface UserFacade {
      * Checks whether an user with that username exists, etc.
      *
      * @param user User details
-     * @param pwdHash hash of user's password
+     * @param password user's password
      */
-    boolean register(UserDTO user, String pwdHash);
+    boolean register(UserDTO user, String password);
 
     /**
      * Authenticates the user with given credentials
@@ -33,11 +33,11 @@ public interface UserFacade {
      * @param userName
      * @return
      */
-    UserDTO findUserByUserName(String userName);
+    List<UserDTO> findUserByUserName(String userName);
 
     /**
      *
      * @return Set of use
      */
-    Set<UserDTO> findAllUsers();
+    List<UserDTO> findAllUsers();
 }

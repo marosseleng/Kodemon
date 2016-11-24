@@ -30,6 +30,8 @@ public class Trainer {
     @Size(min = 4)
     private String userName;
 
+    private String pwdHash;
+
     @Column(nullable = false)
     @NotNull
     private String firstName;
@@ -79,6 +81,14 @@ public class Trainer {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getPwdHash() {
+        return pwdHash;
+    }
+
+    public void setPwdHash(String pwdHash) {
+        this.pwdHash = pwdHash;
     }
 
     public String getFirstName() {
