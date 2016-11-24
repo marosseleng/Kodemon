@@ -18,24 +18,25 @@ public interface TrainerService {
      * Creates new user in the database.
      * Checks whether an user with that username exists, etc.
      *
-     * @param trainer trainer to be registered(created)
-     * @param pwdHash hash of user's password
+     * @param trainer trainer to be registered(created), eg. correct {@link Trainer} instance that can be saved into db
+     * @param password hash of user's password
      * @return {@code true} iff the user was successfully created, {@code false} otherwise
      */
-    boolean register(Trainer trainer, String pwdHash);
+    boolean register(Trainer trainer, String password);
 
     /**
      * Authenticates the user with given credentials
      *
      * @param userName userName to authenticate with
-     * @param pwdHash hash of user's password
+     * @param password hash of user's password
      * @return {@code true} iff authentication was successfull, {@code false} otherwise
      */
-    boolean login(String userName, String pwdHash);
+    boolean login(String userName, String password);
 
     /**
      * Adds the given badge to the given trainer and updates the trainer table
      * <p/>
+     * This method expects that the given Badge has already been saved in the database.
      * This method does <b>not</b> assign the trainer to the badge.
      *
      * @param badge badge to add
@@ -46,7 +47,8 @@ public interface TrainerService {
     /**
      * Adds the given Pokemon to the given trainer and updates the trainer table
      * <p/>
-     * This method does not assign the trainer to the Pokemon
+     * This method expects that the given Pokemon has already been saved in the db
+     * This method does <b>not</b> assign the trainer to the Pokemon
      *
      * @param pokemon Pokemon to be added to trainer
      * @param trainer trainer that receives a new Pokemon

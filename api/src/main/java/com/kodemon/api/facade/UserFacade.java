@@ -17,9 +17,9 @@ public interface UserFacade {
      * Checks whether an user with that username exists, etc.
      *
      * @param user User details
-     * @param pwdHash hash of user's password
+     * @param password user's password
      */
-    boolean register(UserDTO user, String pwdHash);
+    boolean register(UserDTO user, String password);
 
     /**
      * Authenticates the user with given credentials

@@ -1,7 +1,9 @@
 package com.kodemon.api.enums;
 
 /**
- * Created by mseleng on 11/19/16.
+ * Enum, whose cases represent purposes of wild pokemon fight
+ *
+ * @author <a href="mailto:xseleng@fi.muni.cz">Maros Seleng, 422624</a>
  */
 public enum WildPokemonFightMode {
     TRAIN,
