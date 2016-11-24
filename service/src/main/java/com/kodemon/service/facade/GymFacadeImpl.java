@@ -16,6 +16,9 @@ import java.util.List;
  *
  * @author Miso Romanek
  */
+
+@Service
+@Transactional
 public class GymFacadeImpl implements GymFacade {
     @Inject
     private BeanMappingService beanMappingService;
