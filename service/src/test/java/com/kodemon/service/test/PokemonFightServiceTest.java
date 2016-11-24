@@ -10,11 +10,13 @@ import org.hibernate.service.spi.ServiceException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.internal.matchers.Null;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.ExpectedExceptions;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
@@ -63,5 +65,11 @@ public class PokemonFightServiceTest extends AbstractTestNGSpringContextTests {
 
         Assert.assertEquals(10.0, score.getX());
         Assert.assertEquals(6.0, score.getY());
+    }
+
+    @Test(expectedExceptions = {NullPointerException.class})
+    public void getScorePairWithNullPokemonTest() {
+        when(pokemonFightAdvantageService.computePokemonFightAdvantage(PokemonName.ARTICUNO, PokemonName.CHARIZARD)).thenReturn(1.0);
+        Pair<Double, Double> score = pokemonFightService.getScorePair(null, target);
     }
 }
