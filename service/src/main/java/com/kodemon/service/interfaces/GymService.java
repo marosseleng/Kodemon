@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Service for doing stuff with {@link Gym}s
  *
- * @author <a href="mailto:xseleng@fi.muni.cz">Maros Seleng, 422624</a>
+ * @author Miso Romanek
  */
 public interface GymService {
 
@@ -81,4 +81,11 @@ public interface GymService {
      * @return {@link List} of {@link Gym}s of the given trainer.
      */
     List<Gym> findByTrainer(Trainer trainer);
+
+    /**
+     * Returns a {@link List} of all {@link Gym}s in database.
+     *
+     * @return {@link List} of {@link Gym}s in the database.
+     */
+    List<Gym> findAll();
 }
