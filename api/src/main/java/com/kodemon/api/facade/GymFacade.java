@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Facade providing access to the gym administration
  *
- * @author <a href="mailto:xseleng@fi.muni.cz">Maros Seleng, 422624</a>
+ * @author <a href="mailto:xseleng@fi.muni.cz">Maros Seleng, 422624</a> and Miso Romanek
  */
 public interface GymFacade {
     /**
@@ -15,5 +15,5 @@ public interface GymFacade {
      *
      * @return a {@link List} of {@link com.kodemon.persistence.entity.Gym}s
      */
-    List<GymDTO> listAllGyms();
+    List<GymDTO> findAll();
 }
