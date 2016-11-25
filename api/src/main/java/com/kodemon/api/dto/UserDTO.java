@@ -48,7 +48,7 @@ public class UserDTO {
     }
 
     public Set<BadgeDTO> getBadges() {
-        return Collections.unmodifiableSet(badges);
+        return badges;
     }
 
     public void addBadge(BadgeDTO badge) {
@@ -56,7 +56,7 @@ public class UserDTO {
     }
 
     public List<PokemonDTO> getPokemons() {
-        return Collections.unmodifiableList(pokemons);
+        return pokemons;
     }
 
     public void addPokemon(PokemonDTO pokemon) {
