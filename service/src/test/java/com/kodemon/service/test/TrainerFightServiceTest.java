@@ -11,9 +11,11 @@ import com.kodemon.service.config.ServiceConfig;
 import com.kodemon.service.interfaces.PokemonFightService;
 import com.kodemon.service.interfaces.TrainerFightService;
 import com.kodemon.service.util.Pair;
+import org.hibernate.service.spi.ServiceException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.annotations.BeforeClass;
@@ -56,7 +58,7 @@ public class TrainerFightServiceTest extends AbstractTransactionalTestNGSpringCo
     private Gym targetGym2;
 
     @BeforeClass
-    public void setup() {
+    public void setup() throws ServiceException {
         MockitoAnnotations.initMocks(this);
     }
 
