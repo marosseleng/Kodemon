@@ -95,23 +95,23 @@ public class GymServiceImpl implements GymService {
         Pokemon pokemon44 = new Pokemon(PokemonName.GOLBAT);
         Pokemon pokemon45 = new Pokemon(PokemonName.MUK);
         Pokemon pokemon46 = new Pokemon(PokemonName.NIDOKING);
-        pokemon11.setLevel(40);
-        pokemon12.setLevel(43);
-        pokemon13.setLevel(43);
-        pokemon14.setLevel(42);
-        pokemon15.setLevel(44);
-        pokemon16.setLevel(45);
+        pokemon41.setLevel(40);
+        pokemon42.setLevel(43);
+        pokemon43.setLevel(43);
+        pokemon44.setLevel(42);
+        pokemon45.setLevel(44);
+        pokemon46.setLevel(45);
 
         Pokemon pokemon51 = new Pokemon(PokemonName.DROWZEE);
         Pokemon pokemon52 = new Pokemon(PokemonName.ABRA);
         Pokemon pokemon53 = new Pokemon(PokemonName.HYPNO);
         Pokemon pokemon54 = new Pokemon(PokemonName.MRMIME);
         Pokemon pokemon55 = new Pokemon(PokemonName.ALAKAZAM);
-        pokemon31.setLevel(49);
-        pokemon32.setLevel(50);
-        pokemon33.setLevel(50);
-        pokemon34.setLevel(52);
-        pokemon35.setLevel(55);
+        pokemon51.setLevel(49);
+        pokemon52.setLevel(50);
+        pokemon53.setLevel(50);
+        pokemon54.setLevel(52);
+        pokemon55.setLevel(55);
 
         Pokemon pokemon61 = new Pokemon(PokemonName.PONYTA);
         Pokemon pokemon62 = new Pokemon(PokemonName.CHARMELEON);
@@ -119,12 +119,12 @@ public class GymServiceImpl implements GymService {
         Pokemon pokemon64 = new Pokemon(PokemonName.ARCANINE);
         Pokemon pokemon65 = new Pokemon(PokemonName.MAGMAR);
         Pokemon pokemon66 = new Pokemon(PokemonName.CHARIZARD);
-        pokemon11.setLevel(54);
-        pokemon12.setLevel(55);
-        pokemon13.setLevel(58);
-        pokemon14.setLevel(56);
-        pokemon15.setLevel(57);
-        pokemon16.setLevel(59);
+        pokemon61.setLevel(54);
+        pokemon62.setLevel(55);
+        pokemon63.setLevel(58);
+        pokemon64.setLevel(56);
+        pokemon65.setLevel(57);
+        pokemon66.setLevel(59);
 
         Pokemon pokemon71 = new Pokemon(PokemonName.SANDSLASH);
         Pokemon pokemon72 = new Pokemon(PokemonName.CUBONE);
@@ -132,12 +132,12 @@ public class GymServiceImpl implements GymService {
         Pokemon pokemon74 = new Pokemon(PokemonName.GRAVELER);
         Pokemon pokemon75 = new Pokemon(PokemonName.DUGTRIO);
         Pokemon pokemon76 = new Pokemon(PokemonName.RHYDON);
-        pokemon11.setLevel(62);
-        pokemon12.setLevel(62);
-        pokemon13.setLevel(64);
-        pokemon14.setLevel(63);
-        pokemon15.setLevel(66);
-        pokemon16.setLevel(70);
+        pokemon71.setLevel(62);
+        pokemon72.setLevel(62);
+        pokemon73.setLevel(64);
+        pokemon74.setLevel(63);
+        pokemon75.setLevel(66);
+        pokemon76.setLevel(70);
 
         pokemonDao.save(pokemon01);
         pokemonDao.save(pokemon02);
