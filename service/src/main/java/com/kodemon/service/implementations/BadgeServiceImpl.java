@@ -6,6 +6,8 @@ import com.kodemon.persistence.entity.Gym;
 import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.persistence.enums.PokemonType;
 import com.kodemon.service.interfaces.BadgeService;
+import org.springframework.stereotype.Service;
+
 import java.util.HashSet;
 
 import javax.inject.Inject;
@@ -19,6 +21,7 @@ import java.util.Set;
  * 
  * @author Miso Romanek
  */
+@Service
 public class BadgeServiceImpl implements BadgeService {
   
     @Inject

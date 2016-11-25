@@ -7,6 +7,7 @@ import com.kodemon.persistence.config.PersistenceConfig;
 import com.kodemon.persistence.entity.Badge;
 import com.kodemon.persistence.entity.Pokemon;
 import com.kodemon.persistence.entity.Trainer;
+import com.kodemon.service.facade.FightFacadeImpl;
 import com.kodemon.service.implementations.BadgeServiceImpl;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
@@ -25,7 +26,7 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import(PersistenceConfig.class)
-@ComponentScan(basePackageClasses = BadgeServiceImpl.class)
+@ComponentScan(basePackageClasses = {BadgeServiceImpl.class, FightFacadeImpl.class})
 public class ServiceConfig {
 
     @Bean
