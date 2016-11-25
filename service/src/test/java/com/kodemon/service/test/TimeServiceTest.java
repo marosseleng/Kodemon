@@ -43,13 +43,13 @@ public class TimeServiceTest extends AbstractTransactionalTestNGSpringContextTes
 
     @Test
     public void startOfTheDayTest() {
-        //DateTime dt = new DateTime(new Date());
-        assertThat(timeService.startOfTheDay(dayz), equalTo((new DateTime(new Date())).withTimeAtStartOfDay().toDate()));
+        DateTime dt = new DateTime(new Date());
+        assertThat(timeService.startOfTheDay(dayz), equalTo(dt.withTimeAtStartOfDay().toDate()));
     }
 
     @Test
     public void endOfTheDayTest() {
-        //DateTime dt = new DateTime(new Date());
-        assertThat(timeService.endOfTheDay(dayz), equalTo((new DateTime(new Date())).plusDays(1).withTimeAtStartOfDay().toDate()));
+        DateTime dt = new DateTime(new Date());
+        assertThat(timeService.endOfTheDay(dayz), equalTo(dt.plusDays(1).withTimeAtStartOfDay().toDate()));
     }
 }
