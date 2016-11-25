@@ -29,8 +29,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.ArgumentMatchers.isNotNull;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Test class for Badge service
@@ -129,13 +128,13 @@ public class BadgeServiceTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void findByNameStartingWithTest() {
-        when(badgeDao.findByNameStartingWith(badgename.substring(0, 3))).thenReturn(Collections.singletonList(badge));
+        when(badgeDao.findByNameStartingWith(badgename.substring(0, 3) + "%")).thenReturn(Collections.singletonList(badge));
 
-        List<Badge> result = badgeService.findByNameStartingWith(badgename.substring(0, 3));
+        List<Badge> result = badgeService.findByNameStartingWith(badgename.substring(0, 3) + "%");
         assertThat(result.size(), is(1));
         assertThat(result.get(0), is(badge));
 
-        verify(badgeDao).findByNameStartingWith(badgename.substring(0, 3));
+        verify(badgeDao).findByNameStartingWith(badgename.substring(0, 3) + "%");
     }
 
     @Test
@@ -173,5 +172,19 @@ public class BadgeServiceTest extends AbstractTestNGSpringContextTests {
         when(badgeDao.save(badge)).thenThrow(NullPointerException.class);
         badgeService.save(badge);
         verify(badgeDao).save(badge);
+    }
+
+    @Test
+    public void successfulDeleteTest() {
+        doNothing().when(badgeDao).delete(badge);
+        badgeService.delete(badge);
+        verify(badgeDao).delete(badge);
+    }
+
+    @Test(expectedExceptions = {NullPointerException.class})
+    public void nullDeleteTest() {
+        Badge b = null;
+        doThrow(NullPointerException.class).when(badgeDao).delete(b);
+        badgeService.delete(b);
     }
 }
