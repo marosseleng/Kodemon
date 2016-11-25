@@ -36,6 +36,7 @@ import static org.mockito.Mockito.when;
 @ContextConfiguration(classes=ServiceConfig.class)
 public class TimeServiceTest extends AbstractTransactionalTestNGSpringContextTests {
     
+    @Inject
     private TimeService timeService;
 
     @Test
