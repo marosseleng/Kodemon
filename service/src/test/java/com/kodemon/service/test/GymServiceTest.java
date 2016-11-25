@@ -128,6 +128,17 @@ public class GymServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
+    public void findAllTest() {
+        when(gymDao.findAll()).thenReturn(Collections.singletonList(gym));
+
+        List<Gym> result = gymService.findAll();
+        assertThat(result.size(), is(1));
+        assertThat(result.get(0), is(gym));
+
+        verify(gymDao).findAll();
+    }
+
+    @Test
     public void successfulSaveTest() {
         when(gymDao.save(gym)).thenReturn(gym);
         gymService.save(gym);
