@@ -1,4 +1,4 @@
-package com.kodemon.api.test.facade;
+package com.kodemon.service.test.facade;
 
 import com.kodemon.api.config.ApiConfig;
 import com.kodemon.api.dto.GymDTO;
