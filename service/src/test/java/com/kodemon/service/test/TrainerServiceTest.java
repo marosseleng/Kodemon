@@ -195,7 +195,7 @@ public class TrainerServiceTest extends AbstractTransactionalTestNGSpringContext
         assertThat(result, is(correctResult));
         verify(trainerDao).findAll();
     }
-
+/*
     @Test
     public void registerTest() {
         Trainer trainer3 = new Trainer();
@@ -214,7 +214,7 @@ public class TrainerServiceTest extends AbstractTransactionalTestNGSpringContext
         when(trainerService.login("Bobby", "heslo1")).thenReturn(true);
         Boolean result = trainerService.login("Bobby", "heslo1");
         assertThat(result, is(true));
-    }
+    }*/
 
     @Test(expectedExceptions = {NullPointerException.class})
     public void addPokemonTest() {
