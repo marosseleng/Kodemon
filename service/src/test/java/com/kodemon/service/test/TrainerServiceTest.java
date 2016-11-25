@@ -34,8 +34,6 @@ import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes=ServiceConfig.class)
 public class TrainerServiceTest extends AbstractTransactionalTestNGSpringContextTests {
-    @Mock
-    private TrainerService TrainerService;
 
     @Mock
     private TrainerDao trainerDao;
@@ -91,126 +89,6 @@ public class TrainerServiceTest extends AbstractTransactionalTestNGSpringContext
         gym1.setTrainer(trainer2);
         gym1.setCity("Gotham City");
         gym1.setType(PokemonType.NORMAL);
-    }
-
-    @Test
-    public void registerTest() {
-        Trainer trainer3 = new Trainer();
-        trainer3.setFirstName("Gustav");
-        trainer3.setLastName("Martinson");
-        Date dob = new Calendar.Builder().setDate(1944, 10, 11).build().getTime();
-        trainer3.setDateOfBirth(dob);
-        trainer3.setUserName("Gusto");
-        when(trainerService.register(trainer3, "topsecret4")).thenReturn(true);
-        Boolean result = trainerService.register(trainer3, "topsecret4");
-        assertThat(result, is(true));
-    }
-
-    @Test
-    public void loginTest() {
-        when(trainerService.login("Bobby", "heslo1")).thenReturn(true);
-        Boolean result = trainerService.login("Bobby", "heslo1");
-        assertThat(result, is(true));
-    }
-
-
-    @Test(expectedExceptions = {NullPointerException.class})
-    public void addPokemonTest() {
-        Pokemon gloom = new Pokemon(PokemonName.GLOOM);
-        gloom.setLevel(9);
-        gloom.setNickname("Sadboy");
-        gloom.setTrainer(trainer1);
-        trainer1.addPokemon(gloom);
-        assertThat(trainer1.getPokemons(), contains(gloom));
-    }
-
-    @Test(expectedExceptions = {NullPointerException.class})
-    public void addBadgeTest() {
-        Badge badge = new Badge();
-        badge.setName("Super badge");
-        badge.setGym(gym1);
-        badge.setTrainer(trainer1);
-        trainer1.addBadge(badge);
-        assertThat(trainer1.getBadges(), contains(badge));
-    }
-
-    @Test
-    public void saveCorrectTest() {
-        when(trainerDao.save(trainer1)).thenReturn(trainer1);
-        trainerService.save(trainer1);
-        verify(trainerDao).save(trainer1);
-    }
-
-    @Test(expectedExceptions = {NullPointerException.class})
-    public void saveNullTrainerTest() {
-        Trainer trainerx = null;
-        when(trainerDao.save(trainerx)).thenThrow(NullPointerException.class);
-        trainerService.save(trainerx);
-        verify(trainerDao).save(trainerx);
-    }
-
-    @Test(expectedExceptions = {NullPointerException.class})
-    public void saveTrainerWithNullFirstnameTest() {
-        Trainer trainerx = new Trainer();
-        trainerx.setFirstName(null);
-        trainerx.setLastName("Smith");
-        Date dob = new Calendar.Builder().setDate(1997, 7, 2).build().getTime();
-        trainerx.setDateOfBirth(dob);
-        trainerx.setUserName("Smithy");
-        when(trainerDao.save(trainerx)).thenThrow(NullPointerException.class);
-        trainerService.save(trainerx);
-        verify(trainerDao).save(trainerx);
-    }
-
-    @Test(expectedExceptions = {NullPointerException.class})
-    public void saveTrainerWithNullLastnameTest() {
-        Trainer trainerx = new Trainer();
-        trainerx.setFirstName("Peter");
-        trainerx.setLastName(null);
-        Date dob = new Calendar.Builder().setDate(1997, 7, 2).build().getTime();
-        trainerx.setDateOfBirth(dob);
-        trainerx.setUserName("Smithy");
-        when(trainerDao.save(trainerx)).thenThrow(NullPointerException.class);
-        trainerService.save(trainerx);
-        verify(trainerDao).save(trainerx);
-    }
-
-    @Test(expectedExceptions = {NullPointerException.class})
-    public void saveTrainerWithNullDateOfBirthTest() {
-        Trainer trainerx = new Trainer();
-        trainerx.setFirstName("Peter");
-        trainerx.setLastName("Smith");
-        trainerx.setDateOfBirth(null);
-        trainerx.setUserName("Smithy");
-        when(trainerDao.save(trainerx)).thenThrow(NullPointerException.class);
-        trainerService.save(trainerx);
-        verify(trainerDao).save(trainerx);
-    }
-
-    @Test(expectedExceptions = {NullPointerException.class})
-    public void saveTrainerWithNullFirstAndLastNameTest() {
-        Trainer trainerx = new Trainer();
-        trainerx.setFirstName(null);
-        trainerx.setLastName(null);
-        Date dob = new Calendar.Builder().setDate(1997, 7, 2).build().getTime();
-        trainerx.setDateOfBirth(dob);
-        trainerx.setUserName("Smithy");
-        when(trainerDao.save(trainerx)).thenThrow(NullPointerException.class);
-        trainerService.save(trainerx);
-        verify(trainerDao).save(trainerx);
-    }
-
-    @Test(expectedExceptions = {NullPointerException.class})
-    public void saveTrainerWithNullUserNameTest() {
-        Trainer trainerx = new Trainer();
-        trainerx.setFirstName("Peter");
-        trainerx.setLastName("Smith");
-        Date dob = new Calendar.Builder().setDate(1997, 7, 2).build().getTime();
-        trainerx.setDateOfBirth(dob);
-        trainerx.setUserName(null);
-        when(trainerDao.save(trainerx)).thenThrow(NullPointerException.class);
-        trainerService.save(trainerx);
-        verify(trainerDao).save(trainerx);
     }
 
     @Test
@@ -318,6 +196,125 @@ public class TrainerServiceTest extends AbstractTransactionalTestNGSpringContext
         verify(trainerDao).findAll();
     }
 
+    @Test
+    public void registerTest() {
+        Trainer trainer3 = new Trainer();
+        trainer3.setFirstName("Gustav");
+        trainer3.setLastName("Martinson");
+        Date dob = new Calendar.Builder().setDate(1944, 10, 11).build().getTime();
+        trainer3.setDateOfBirth(dob);
+        trainer3.setUserName("Gusto");
+        when(trainerService.register(trainer3, "topsecret4")).thenReturn(true);
+        Boolean result = trainerService.register(trainer3, "topsecret4");
+        assertThat(result, is(true));
+    }
+
+    @Test
+    public void loginTest() {
+        when(trainerService.login("Bobby", "heslo1")).thenReturn(true);
+        Boolean result = trainerService.login("Bobby", "heslo1");
+        assertThat(result, is(true));
+    }
+
+    @Test(expectedExceptions = {NullPointerException.class})
+    public void addPokemonTest() {
+        Pokemon gloom = new Pokemon(PokemonName.GLOOM);
+        gloom.setLevel(9);
+        gloom.setNickname("Sadboy");
+        gloom.setTrainer(trainer1);
+        trainer1.addPokemon(gloom);
+        assertThat(trainer1.getPokemons(), contains(gloom));
+    }
+
+    @Test(expectedExceptions = {NullPointerException.class})
+    public void addBadgeTest() {
+        Badge badge = new Badge();
+        badge.setName("Super badge");
+        badge.setGym(gym1);
+        badge.setTrainer(trainer1);
+        trainer1.addBadge(badge);
+        assertThat(trainer1.getBadges(), contains(badge));
+    }
+
+    @Test
+    public void saveCorrectTest() {
+        when(trainerDao.save(trainer1)).thenReturn(trainer1);
+        trainerService.save(trainer1);
+        verify(trainerDao).save(trainer1);
+    }
+
+    @Test(expectedExceptions = {NullPointerException.class})
+    public void saveNullTrainerTest() {
+        Trainer trainerx = null;
+        when(trainerDao.save(trainerx)).thenThrow(NullPointerException.class);
+        trainerService.save(trainerx);
+        verify(trainerDao).save(trainerx);
+    }
+
+    @Test(expectedExceptions = {NullPointerException.class})
+    public void saveTrainerWithNullFirstnameTest() {
+        Trainer trainerx = new Trainer();
+        trainerx.setFirstName(null);
+        trainerx.setLastName("Smith");
+        Date dob = new Calendar.Builder().setDate(1997, 7, 2).build().getTime();
+        trainerx.setDateOfBirth(dob);
+        trainerx.setUserName("Smithy");
+        when(trainerDao.save(trainerx)).thenThrow(NullPointerException.class);
+        trainerService.save(trainerx);
+        verify(trainerDao).save(trainerx);
+    }
+
+    @Test(expectedExceptions = {NullPointerException.class})
+    public void saveTrainerWithNullLastnameTest() {
+        Trainer trainerx = new Trainer();
+        trainerx.setFirstName("Peter");
+        trainerx.setLastName(null);
+        Date dob = new Calendar.Builder().setDate(1997, 7, 2).build().getTime();
+        trainerx.setDateOfBirth(dob);
+        trainerx.setUserName("Smithy");
+        when(trainerDao.save(trainerx)).thenThrow(NullPointerException.class);
+        trainerService.save(trainerx);
+        verify(trainerDao).save(trainerx);
+    }
+
+    @Test(expectedExceptions = {NullPointerException.class})
+    public void saveTrainerWithNullDateOfBirthTest() {
+        Trainer trainerx = new Trainer();
+        trainerx.setFirstName("Peter");
+        trainerx.setLastName("Smith");
+        trainerx.setDateOfBirth(null);
+        trainerx.setUserName("Smithy");
+        when(trainerDao.save(trainerx)).thenThrow(NullPointerException.class);
+        trainerService.save(trainerx);
+        verify(trainerDao).save(trainerx);
+    }
+
+    @Test(expectedExceptions = {NullPointerException.class})
+    public void saveTrainerWithNullFirstAndLastNameTest() {
+        Trainer trainerx = new Trainer();
+        trainerx.setFirstName(null);
+        trainerx.setLastName(null);
+        Date dob = new Calendar.Builder().setDate(1997, 7, 2).build().getTime();
+        trainerx.setDateOfBirth(dob);
+        trainerx.setUserName("Smithy");
+        when(trainerDao.save(trainerx)).thenThrow(NullPointerException.class);
+        trainerService.save(trainerx);
+        verify(trainerDao).save(trainerx);
+    }
+
+    @Test(expectedExceptions = {NullPointerException.class})
+    public void saveTrainerWithNullUserNameTest() {
+        Trainer trainerx = new Trainer();
+        trainerx.setFirstName("Peter");
+        trainerx.setLastName("Smith");
+        Date dob = new Calendar.Builder().setDate(1997, 7, 2).build().getTime();
+        trainerx.setDateOfBirth(dob);
+        trainerx.setUserName(null);
+        when(trainerDao.save(trainerx)).thenThrow(NullPointerException.class);
+        trainerService.save(trainerx);
+        verify(trainerDao).save(trainerx);
+    }
+/*
     @Test(expectedExceptions = {NullPointerException.class})
     public void deleteCorrectTest() {
         Trainer trainerx = new Trainer();
@@ -328,5 +325,5 @@ public class TrainerServiceTest extends AbstractTransactionalTestNGSpringContext
         trainerService.save(trainerx);
         trainerService.delete(trainerx);
         assertThat(trainerService.findAll(), not(contains(trainerx)));
-    }
+    }*/
 }
