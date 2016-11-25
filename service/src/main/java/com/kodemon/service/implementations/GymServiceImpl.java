@@ -14,6 +14,7 @@ import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.persistence.enums.PokemonType;
 import com.kodemon.persistence.enums.PokemonName;
 import com.kodemon.service.interfaces.GymService;
+import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import java.util.*;
@@ -28,6 +29,7 @@ import java.util.*;
  * 
  * @author Miso Romanek
  */
+@Service
 public class GymServiceImpl implements GymService {
 
     @Inject
