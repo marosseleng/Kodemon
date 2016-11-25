@@ -116,7 +116,7 @@ public class Trainer {
     }
 
     public Set<Badge> getBadges() {
-        return Collections.unmodifiableSet(badges);
+        return badges;
     }
 
     public void addBadge(Badge badge) {
@@ -124,7 +124,7 @@ public class Trainer {
     }
 
     public List<Pokemon> getPokemons() {
-        return Collections.unmodifiableList(pokemons);
+        return pokemons;
     }
 
     public void addPokemon(Pokemon pokemon) {

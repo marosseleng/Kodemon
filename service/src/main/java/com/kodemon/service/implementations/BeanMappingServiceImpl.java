@@ -2,6 +2,7 @@ package com.kodemon.service.implementations;
 
 import com.kodemon.service.interfaces.BeanMappingService;
 import org.dozer.Mapper;
+import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
  *
  * @author <a href="mailto:xseleng@fi.muni.cz">Maros Seleng, 422624</a>
  */
+@Service
 public class BeanMappingServiceImpl implements BeanMappingService {
 
     @Inject
