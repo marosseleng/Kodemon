@@ -276,16 +276,13 @@ public class TrainerServiceTest extends AbstractTransactionalTestNGSpringContext
         verify(trainerDao).save(trainerx);
     }
 
-    public void deleteCorrectTest() {
-        Trainer trainerx = new Trainer();
-        trainerx.setFirstName("Peter");
-        trainerx.setLastName("Smith");
-        Date dob = new Calendar.Builder().setDate(1977, 7, 2).build().getTime();
-        trainerx.setDateOfBirth(dob);
-        trainerx.setUserName("Smithy");
-        trainerService.save(trainerx);
-        doNothing().when(trainerDao).delete(trainerx);
-        trainerService.delete(trainerx);
+    public void addBadgeTest() {
+        Badge badge = new Badge();
+        badge.setName("Super badge");
+        badge.setGym(gym1);
+        badge.setTrainer(trainer1);
+        trainer1.addBadge(badge);
+        assertThat(trainer1.getBadges(), contains(badge));
     }
 
     public void addPokemonTest() {
@@ -297,35 +294,15 @@ public class TrainerServiceTest extends AbstractTransactionalTestNGSpringContext
         assertThat(trainer1.getPokemons(), contains(gloom));
     }
 
-    public void addBadgeTest() {
-        Badge badge = new Badge();
-        badge.setName("Super badge");
-        badge.setGym(gym1);
-        badge.setTrainer(trainer1);
-        trainer1.addBadge(badge);
-        assertThat(trainer1.getBadges(), contains(badge));
+    public void deleteCorrectTest() {
+        Trainer trainerx = new Trainer();
+        trainerx.setFirstName("Peter");
+        trainerx.setLastName("Smith");
+        Date dob = new Calendar.Builder().setDate(1977, 7, 2).build().getTime();
+        trainerx.setDateOfBirth(dob);
+        trainerx.setUserName("Smithy");
+        trainerService.save(trainerx);
+        doNothing().when(trainerDao).delete(trainerx);
+        trainerService.delete(trainerx);
     }
-
-/* Additional tests that could be added in the future
-    @Test
-    public void loginTest() {
-        doNothing().when(trainerService.login("Bobby", "heslo1"));
-        when(trainerService.login("Bobby", "heslo1")).thenReturn(true);
-        trainerService.login("Bobby", "heslo1");
-        Boolean result = trainerService.login("Bobby", "heslo1");
-        assertThat(result, is(true));
-    }
-
-    @Test
-    public void registerTest() {
-        Trainer trainer3 = new Trainer();
-        trainer3.setFirstName("Gustav");
-        trainer3.setLastName("Martinson");
-        Date dob = new Calendar.Builder().setDate(1944, 10, 11).build().getTime();
-        trainer3.setDateOfBirth(dob);
-        trainer3.setUserName("Gusto");
-        when(trainerService.register(trainer3, "topsecret4")).thenReturn(true);
-        Boolean result = trainerService.register(trainer3, "topsecret4");
-        assertThat(result, is(true));
-    }*/
 }
