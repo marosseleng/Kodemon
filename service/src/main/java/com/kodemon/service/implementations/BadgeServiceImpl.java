@@ -4,13 +4,11 @@ import com.kodemon.persistence.dao.BadgeDao;
 import com.kodemon.persistence.entity.Badge;
 import com.kodemon.persistence.entity.Gym;
 import com.kodemon.persistence.entity.Trainer;
-import com.kodemon.persistence.enums.PokemonType;
 import com.kodemon.service.interfaces.BadgeService;
-import java.util.HashSet;
+import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Badge service implementation
@@ -19,6 +17,7 @@ import java.util.Set;
  * 
  * @author Miso Romanek
  */
+@Service
 public class BadgeServiceImpl implements BadgeService {
   
     @Inject

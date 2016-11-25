@@ -6,11 +6,14 @@ import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.persistence.enums.PokemonName;
 import com.kodemon.persistence.enums.PokemonType;
 import com.kodemon.service.interfaces.PokemonService;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Pokemon Service implementation
@@ -19,6 +22,7 @@ import java.util.*;
  *
  * @author Matej Poklemba
  */
+@Service
 public class PokemonServiceImpl implements PokemonService {
 
     @Inject
