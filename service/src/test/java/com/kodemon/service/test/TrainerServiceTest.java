@@ -23,6 +23,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -314,7 +315,7 @@ public class TrainerServiceTest extends AbstractTransactionalTestNGSpringContext
         badge.setTrainer(trainer1);
         trainer1.addBadge(badge);
         assertThat(trainer1.getBadges(), contains(badge));
-    }
+    }*/
 
     @Test(expectedExceptions = {NullPointerException.class})
     public void deleteCorrectTest() {
@@ -323,8 +324,10 @@ public class TrainerServiceTest extends AbstractTransactionalTestNGSpringContext
         trainerx.setLastName("Smith");
         Date dob = new Calendar.Builder().setDate(1977, 7, 2).build().getTime();
         trainerx.setDateOfBirth(dob);
+        trainerx.setUserName("Smithy");
         trainerService.save(trainerx);
+        doNothing().when(trainerDao).delete(trainerx);
         trainerService.delete(trainerx);
-        assertThat(trainerService.findAll(), not(contains(trainerx)));
-    }*/
+        verify(trainerDao).delete(trainerx);
+    }
 }
