@@ -36,32 +36,20 @@ import static org.mockito.Mockito.when;
 @ContextConfiguration(classes=ServiceConfig.class)
 public class TimeServiceTest extends AbstractTransactionalTestNGSpringContextTests {
 
-    @Inject
-    @InjectMocks
-    private TimeService timeService;
-/*
-    @BeforeClass
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-    }*/
-
     @Test
     public void currentDateTest() {
-        Date dayz = new Date();
-        assertThat(timeService.currentDate(), equalTo(dayz));
+        assertThat(timeService.currentDate(), is(equalTo(new Date())));
     }
 
     @Test
     public void startOfTheDayTest() {
-        Date dayz = new Date();
-        DateTime dt = new DateTime(dayz);
-        assertThat(timeService.startOfTheDay(dayz), equalTo(dt.withTimeAtStartOfDay().toDate()));
+        //DateTime dt = new DateTime(new Date());
+        assertThat(timeService.startOfTheDay(dayz), equalTo((new DateTime(new Date())).withTimeAtStartOfDay().toDate()));
     }
 
     @Test
     public void endOfTheDayTest() {
-        Date dayz = new Date();
-        DateTime dt = new DateTime(dayz);
-        assertThat(timeService.endOfTheDay(dayz), equalTo(dt.plusDays(1).withTimeAtStartOfDay().toDate()));
+        //DateTime dt = new DateTime(new Date());
+        assertThat(timeService.endOfTheDay(dayz), equalTo((new DateTime(new Date())).plusDays(1).withTimeAtStartOfDay().toDate()));
     }
 }
