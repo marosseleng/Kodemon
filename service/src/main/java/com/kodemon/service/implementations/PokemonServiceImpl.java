@@ -6,12 +6,14 @@ import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.persistence.enums.PokemonName;
 import com.kodemon.persistence.enums.PokemonType;
 import com.kodemon.service.interfaces.PokemonService;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Pokemon Service implementation
@@ -31,11 +33,11 @@ public class PokemonServiceImpl implements PokemonService {
     public Pokemon generateWildPokemon(@Nullable PokemonType type) {
         Pokemon pokemon;
         if (type == null) {
-            int i = RANDOM.nextInt(PokemonName.class.getEnumConstants().length);
-            pokemon = new Pokemon(PokemonName.class.getEnumConstants()[i]);
+            int i = RANDOM.nextInt(PokemonName.values().length);
+            pokemon = new Pokemon(PokemonName.values()[i]);
         }
         else {
-            List<PokemonName> pokemons = Arrays.asList(PokemonName.class.getEnumConstants());
+            List<PokemonName> pokemons = Arrays.asList(PokemonName.values());
             List<PokemonName> pokemonsOfWantedType = new ArrayList<>();
             for (int i = 0; i < pokemons.size(); i++) {
                 PokemonName p = pokemons.get(i);
