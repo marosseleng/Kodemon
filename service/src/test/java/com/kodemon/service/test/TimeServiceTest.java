@@ -35,6 +35,8 @@ import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes=ServiceConfig.class)
 public class TimeServiceTest extends AbstractTransactionalTestNGSpringContextTests {
+    
+    private TimeService timeService;
 
     @Test
     public void currentDateTest() {
@@ -44,12 +46,12 @@ public class TimeServiceTest extends AbstractTransactionalTestNGSpringContextTes
     @Test
     public void startOfTheDayTest() {
         DateTime dt = new DateTime(new Date());
-        assertThat(timeService.startOfTheDay(dayz), equalTo(dt.withTimeAtStartOfDay().toDate()));
+        assertThat(timeService.startOfTheDay(new Date()), equalTo(dt.withTimeAtStartOfDay().toDate()));
     }
 
     @Test
     public void endOfTheDayTest() {
         DateTime dt = new DateTime(new Date());
-        assertThat(timeService.endOfTheDay(dayz), equalTo(dt.plusDays(1).withTimeAtStartOfDay().toDate()));
+        assertThat(timeService.endOfTheDay(new Date()), equalTo(dt.plusDays(1).withTimeAtStartOfDay().toDate()));
     }
 }
