@@ -1,8 +1,5 @@
 package com.kodemon.api.dto;
 
-import com.kodemon.persistence.entity.Badge;
-import com.kodemon.persistence.entity.Pokemon;
-
 import java.util.*;
 
 /**
@@ -15,8 +12,8 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private Date dateOfBirth;
-    private Set<Badge> badges = new HashSet<>();
-    private List<Pokemon> pokemons = new ArrayList<>();
+    private Set<BadgeDTO> badges = new HashSet<>();
+    private List<PokemonDTO> pokemons = new ArrayList<>();
 
     public String getUserName() {
         return userName;
@@ -50,23 +47,23 @@ public class UserDTO {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Set<Badge> getBadges() {
-        return Collections.unmodifiableSet(badges);
+    public Set<BadgeDTO> getBadges() {
+        return badges;
     }
 
-    public void addBadge(Badge badge) {
+    public void addBadge(BadgeDTO badge) {
         badges.add(badge);
     }
 
-    public List<Pokemon> getPokemons() {
-        return Collections.unmodifiableList(pokemons);
+    public List<PokemonDTO> getPokemons() {
+        return pokemons;
     }
 
-    public void addPokemon(Pokemon pokemon) {
+    public void addPokemon(PokemonDTO pokemon) {
         pokemons.add(pokemon);
     }
 
-    public boolean removePokemon(Pokemon pokemon) {
+    public boolean removePokemon(PokemonDTO pokemon) {
         return pokemons.remove(pokemon);
     }
 

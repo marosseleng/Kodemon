@@ -6,17 +6,14 @@ import com.kodemon.service.config.ServiceConfig;
 import com.kodemon.service.interfaces.PokemonFightAdvantageService;
 import com.kodemon.service.interfaces.PokemonFightService;
 import com.kodemon.service.util.Pair;
-import org.hibernate.service.spi.ServiceException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.internal.matchers.Null;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.ExpectedExceptions;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
@@ -54,7 +51,7 @@ public class PokemonFightServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @BeforeClass
-    public void setup() throws ServiceException {
+    public void setup() {
         MockitoAnnotations.initMocks(this);
     }
 
