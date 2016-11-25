@@ -195,46 +195,6 @@ public class TrainerServiceTest extends AbstractTransactionalTestNGSpringContext
         assertThat(result, is(correctResult));
         verify(trainerDao).findAll();
     }
-/*
-    @Test
-    public void registerTest() {
-        Trainer trainer3 = new Trainer();
-        trainer3.setFirstName("Gustav");
-        trainer3.setLastName("Martinson");
-        Date dob = new Calendar.Builder().setDate(1944, 10, 11).build().getTime();
-        trainer3.setDateOfBirth(dob);
-        trainer3.setUserName("Gusto");
-        when(trainerService.register(trainer3, "topsecret4")).thenReturn(true);
-        Boolean result = trainerService.register(trainer3, "topsecret4");
-        assertThat(result, is(true));
-    }
-
-    @Test
-    public void loginTest() {
-        when(trainerService.login("Bobby", "heslo1")).thenReturn(true);
-        Boolean result = trainerService.login("Bobby", "heslo1");
-        assertThat(result, is(true));
-    }*/
-
-    @Test(expectedExceptions = {NullPointerException.class})
-    public void addPokemonTest() {
-        Pokemon gloom = new Pokemon(PokemonName.GLOOM);
-        gloom.setLevel(9);
-        gloom.setNickname("Sadboy");
-        gloom.setTrainer(trainer1);
-        trainer1.addPokemon(gloom);
-        assertThat(trainer1.getPokemons(), contains(gloom));
-    }
-
-    @Test(expectedExceptions = {NullPointerException.class})
-    public void addBadgeTest() {
-        Badge badge = new Badge();
-        badge.setName("Super badge");
-        badge.setGym(gym1);
-        badge.setTrainer(trainer1);
-        trainer1.addBadge(badge);
-        assertThat(trainer1.getBadges(), contains(badge));
-    }
 
     @Test
     public void saveCorrectTest() {
@@ -314,7 +274,48 @@ public class TrainerServiceTest extends AbstractTransactionalTestNGSpringContext
         trainerService.save(trainerx);
         verify(trainerDao).save(trainerx);
     }
-/*
+
+/* Additional tests that could be added in the future
+    @Test
+    public void registerTest() {
+        Trainer trainer3 = new Trainer();
+        trainer3.setFirstName("Gustav");
+        trainer3.setLastName("Martinson");
+        Date dob = new Calendar.Builder().setDate(1944, 10, 11).build().getTime();
+        trainer3.setDateOfBirth(dob);
+        trainer3.setUserName("Gusto");
+        when(trainerService.register(trainer3, "topsecret4")).thenReturn(true);
+        Boolean result = trainerService.register(trainer3, "topsecret4");
+        assertThat(result, is(true));
+    }
+
+    @Test
+    public void loginTest() {
+        when(trainerService.login("Bobby", "heslo1")).thenReturn(true);
+        Boolean result = trainerService.login("Bobby", "heslo1");
+        assertThat(result, is(true));
+    }
+
+    @Test(expectedExceptions = {NullPointerException.class})
+    public void addPokemonTest() {
+        Pokemon gloom = new Pokemon(PokemonName.GLOOM);
+        gloom.setLevel(9);
+        gloom.setNickname("Sadboy");
+        gloom.setTrainer(trainer1);
+        trainer1.addPokemon(gloom);
+        assertThat(trainer1.getPokemons(), contains(gloom));
+    }
+
+    @Test(expectedExceptions = {NullPointerException.class})
+    public void addBadgeTest() {
+        Badge badge = new Badge();
+        badge.setName("Super badge");
+        badge.setGym(gym1);
+        badge.setTrainer(trainer1);
+        trainer1.addBadge(badge);
+        assertThat(trainer1.getBadges(), contains(badge));
+    }
+
     @Test(expectedExceptions = {NullPointerException.class})
     public void deleteCorrectTest() {
         Trainer trainerx = new Trainer();
