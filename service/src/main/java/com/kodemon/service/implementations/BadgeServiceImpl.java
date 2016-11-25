@@ -6,7 +6,6 @@ import com.kodemon.persistence.entity.Gym;
 import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.service.interfaces.BadgeService;
 import org.springframework.stereotype.Service;
-
 import javax.inject.Inject;
 import java.util.List;
 
