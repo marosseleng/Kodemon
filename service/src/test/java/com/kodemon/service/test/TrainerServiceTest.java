@@ -286,10 +286,36 @@ public class TrainerServiceTest extends AbstractTransactionalTestNGSpringContext
         trainerService.save(trainerx);
         doNothing().when(trainerDao).delete(trainerx);
         trainerService.delete(trainerx);
-        //verify(trainerDao).delete(trainerx);
+    }
+
+    public void addPokemonTest() {
+        Pokemon gloom = new Pokemon(PokemonName.GLOOM);
+        gloom.setLevel(9);
+        gloom.setNickname("Sadboy");
+        gloom.setTrainer(trainer1);
+        trainer1.addPokemon(gloom);
+        assertThat(trainer1.getPokemons(), contains(gloom));
+    }
+
+    public void addBadgeTest() {
+        Badge badge = new Badge();
+        badge.setName("Super badge");
+        badge.setGym(gym1);
+        badge.setTrainer(trainer1);
+        trainer1.addBadge(badge);
+        assertThat(trainer1.getBadges(), contains(badge));
     }
 
 /* Additional tests that could be added in the future
+    @Test
+    public void loginTest() {
+        doNothing().when(trainerService.login("Bobby", "heslo1"));
+        when(trainerService.login("Bobby", "heslo1")).thenReturn(true);
+        trainerService.login("Bobby", "heslo1");
+        Boolean result = trainerService.login("Bobby", "heslo1");
+        assertThat(result, is(true));
+    }
+
     @Test
     public void registerTest() {
         Trainer trainer3 = new Trainer();
@@ -301,32 +327,5 @@ public class TrainerServiceTest extends AbstractTransactionalTestNGSpringContext
         when(trainerService.register(trainer3, "topsecret4")).thenReturn(true);
         Boolean result = trainerService.register(trainer3, "topsecret4");
         assertThat(result, is(true));
-    }
-
-    @Test
-    public void loginTest() {
-        when(trainerService.login("Bobby", "heslo1")).thenReturn(true);
-        Boolean result = trainerService.login("Bobby", "heslo1");
-        assertThat(result, is(true));
-    }
-
-    @Test(expectedExceptions = {NullPointerException.class})
-    public void addPokemonTest() {
-        Pokemon gloom = new Pokemon(PokemonName.GLOOM);
-        gloom.setLevel(9);
-        gloom.setNickname("Sadboy");
-        gloom.setTrainer(trainer1);
-        trainer1.addPokemon(gloom);
-        assertThat(trainer1.getPokemons(), contains(gloom));
-    }
-
-    @Test(expectedExceptions = {NullPointerException.class})
-    public void addBadgeTest() {
-        Badge badge = new Badge();
-        badge.setName("Super badge");
-        badge.setGym(gym1);
-        badge.setTrainer(trainer1);
-        trainer1.addBadge(badge);
-        assertThat(trainer1.getBadges(), contains(badge));
     }*/
 }
