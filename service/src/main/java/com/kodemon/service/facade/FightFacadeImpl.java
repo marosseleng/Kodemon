@@ -8,7 +8,6 @@ import com.kodemon.api.facade.FightFacade;
 import com.kodemon.persistence.entity.*;
 import com.kodemon.service.interfaces.*;
 import com.kodemon.service.util.Pair;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,27 +23,32 @@ import java.util.List;
 @Service
 @Transactional
 public class FightFacadeImpl implements FightFacade {
-    @Inject
+
     private BeanMappingService beanMappingService;
-
-    @Inject
     private TrainerFightService trainerFightService;
-
-    @Inject
     private PokemonFightService pokemonFightService;
-
-    @Inject
     private PokemonService pokemonService;
-
-    @Inject
     private TrainerService trainerService;
-
-    @Inject
     private BadgeService badgeService;
-
-    @Inject
     private TimeService timeService;
 
+    @Inject
+    public FightFacadeImpl(
+            BeanMappingService beanMappingService,
+            TrainerFightService trainerFightService,
+            PokemonFightService pokemonFightService,
+            PokemonService pokemonService,
+            TrainerService trainerService,
+            BadgeService badgeService,
+            TimeService timeService) {
+        this.beanMappingService = beanMappingService;
+        this.trainerFightService = trainerFightService;
+        this.pokemonFightService = pokemonFightService;
+        this.pokemonService = pokemonService;
+        this.trainerService = trainerService;
+        this.badgeService = badgeService;
+        this.timeService = timeService;
+    }
 
     @Override
     public void fightForBadge(UserDTO user, GymDTO gym) {
@@ -52,7 +56,7 @@ public class FightFacadeImpl implements FightFacade {
         Gym targetGym = beanMappingService.mapTo(gym, Gym.class);
 
         boolean wasChallengerSuccessful = false;
-        if(trainerFightService.wasFightForBadgeSuccessful(challengingTrainer, targetGym.getTrainer())) {
+        if (trainerFightService.wasFightForBadgeSuccessful(challengingTrainer, targetGym.getTrainer())) {
             Badge badge = badgeService.createBadgeOfGym(targetGym);
             badgeService.assignTrainerToBadge(challengingTrainer, badge);
             trainerService.addBadge(badge, challengingTrainer);
@@ -75,10 +79,10 @@ public class FightFacadeImpl implements FightFacade {
 
         Pair<Double, Double> fightScore = pokemonFightService.getScorePair(trainersPokemon, wildPokemon);
 
-        if(fightScore.getX() > fightScore.getY()) {
-            if(mode == WildPokemonFightMode.TRAIN) {
+        if (fightScore.getX() > fightScore.getY()) {
+            if (mode == WildPokemonFightMode.TRAIN) {
                 pokemonService.levelPokemonUp(trainersPokemon);
-            } else if(mode == WildPokemonFightMode.CATCH) {
+            } else if (mode == WildPokemonFightMode.CATCH) {
                 pokemonService.save(wildPokemon);
                 trainerService.addPokemon(wildPokemon, trainer);
             }

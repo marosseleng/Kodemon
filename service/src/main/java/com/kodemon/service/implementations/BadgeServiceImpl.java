@@ -6,6 +6,7 @@ import com.kodemon.persistence.entity.Gym;
 import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.service.interfaces.BadgeService;
 import org.springframework.stereotype.Service;
+
 import javax.inject.Inject;
 import java.util.List;
 
@@ -18,9 +19,13 @@ import java.util.List;
  */
 @Service
 public class BadgeServiceImpl implements BadgeService {
-  
-    @Inject
+
     private BadgeDao badgeDao;
+
+    @Inject
+    public BadgeServiceImpl(BadgeDao badgeDao) {
+        this.badgeDao = badgeDao;
+    }
 
     @Override
     public Badge createBadgeOfGym(Gym gym) {

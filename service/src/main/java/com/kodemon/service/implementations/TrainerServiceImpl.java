@@ -21,8 +21,12 @@ import java.util.List;
 @Service
 public class TrainerServiceImpl implements TrainerService {
 
-    @Inject
     private TrainerDao trainerDao;
+
+    @Inject
+    public TrainerServiceImpl(TrainerDao trainerDao) {
+        this.trainerDao = trainerDao;
+    }
 
     @Override
     public boolean register(Trainer trainer, String password) {

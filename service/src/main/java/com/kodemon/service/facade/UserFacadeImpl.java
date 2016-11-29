@@ -9,7 +9,6 @@ import com.kodemon.service.interfaces.TrainerService;
 
 import javax.inject.Inject;
 import java.util.List;
-import java.util.Set;
 
 /**
  * User Facade Implementation
@@ -19,11 +18,17 @@ import java.util.Set;
  * @author Matej Poklemba
  */
 public class UserFacadeImpl implements UserFacade {
-    @Inject
+
     private BeanMappingService beanMappingService;
+    private TrainerService trainerService;
 
     @Inject
-    private TrainerService trainerService;
+    public UserFacadeImpl(
+            BeanMappingService beanMappingService,
+            TrainerService trainerService) {
+        this.beanMappingService = beanMappingService;
+        this.trainerService = trainerService;
+    }
 
     @Override
     public boolean register(UserDTO user, String pwdHash) {

@@ -17,8 +17,12 @@ import java.util.List;
 @Service
 public class BeanMappingServiceImpl implements BeanMappingService {
 
-    @Inject
     private Mapper mapper;
+
+    @Inject
+    public BeanMappingServiceImpl(Mapper mapper) {
+        this.mapper = mapper;
+    }
 
     @Override
     public <T> List<T> mapTo(Collection<?> objects, Class<T> mapToClass) {

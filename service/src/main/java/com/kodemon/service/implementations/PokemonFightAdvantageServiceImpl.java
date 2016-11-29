@@ -16,9 +16,9 @@ import java.util.Set;
  *
  * @author Oliver Roch
  */
-
 @Service
 public class PokemonFightAdvantageServiceImpl  implements PokemonFightAdvantageService {
+
     @Override
     public double computePokemonFightAdvantage(PokemonName challenger, PokemonName target) {
         PokemonType[] challengerTypes = challenger.getTypes();
