@@ -23,13 +23,17 @@ import java.util.List;
 
 @Service
 public class TrainerFightServiceImpl implements TrainerFightService {
-    @Inject
-    private TrainerFightDao trainerFightDao;
-
-    @Inject
-    private PokemonFightService pokemonFightService;
 
     public static final int AMOUNT_OF_POKEMONS_FOR_MATCH = 6;
+
+    private TrainerFightDao trainerFightDao;
+    private PokemonFightService pokemonFightService;
+
+    @Inject
+    public TrainerFightServiceImpl(TrainerFightDao trainerFightDao, PokemonFightService pokemonFightService) {
+        this.trainerFightDao = trainerFightDao;
+        this.pokemonFightService = pokemonFightService;
+    }
 
     @Override
     public boolean wasFightForBadgeSuccessful(Trainer challenger, Trainer defender) {
@@ -81,6 +85,4 @@ public class TrainerFightServiceImpl implements TrainerFightService {
     public void save(TrainerFight trainerFight) {
         trainerFightDao.save(trainerFight);
     }
-
-
 }

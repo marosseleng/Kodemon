@@ -25,10 +25,15 @@ import java.util.Random;
 @Service
 public class PokemonServiceImpl implements PokemonService {
 
-    @Inject
+    private static final Random RANDOM = new Random();
+
     private PokemonDao pokemonDao;
 
-    private static final Random RANDOM = new Random();
+    @Inject
+    public PokemonServiceImpl(PokemonDao pokemonDao) {
+        this.pokemonDao = pokemonDao;
+    }
+
     @Override
     public Pokemon generateWildPokemon(@Nullable PokemonType type) {
         Pokemon pokemon;
