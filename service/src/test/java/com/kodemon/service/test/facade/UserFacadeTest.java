@@ -11,9 +11,11 @@ import com.kodemon.service.interfaces.BeanMappingService;
 import com.kodemon.service.interfaces.TrainerService;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -43,11 +45,6 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
 
     private UserDTO user, user2;
     private Trainer trainer, trainer2;
-
-    /*@BeforeClass
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-    }*/
 
     @BeforeMethod
     public void prepare() {
@@ -88,16 +85,14 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
     public void registerTest() {
         when(beanMappingService.mapTo(user, Trainer.class)).thenReturn(trainer);
         when(trainerService.register(trainer, "password")).thenReturn(true);
-        boolean result = userFacade.register(user, "password");
-        assertThat(result, is(true));
+        assertThat(userFacade.register(user, "password"), is(true));
     }
 
     @Test
     public void loginTest() {
         when(beanMappingService.mapTo(user, Trainer.class)).thenReturn(trainer);
         when(trainerService.register(trainer, "password")).thenReturn(true);
-        boolean prerequisite = userFacade.register(user, "password");
-        assertThat(prerequisite, is(true));
+        assertThat(userFacade.register(user, "password"), is(true));
 
         UserAuthDTO userAuth = new UserAuthDTO();
         userAuth.setUserName(trainer.getUserName());
@@ -110,12 +105,12 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void findUserByUserNameTest() {
-        List<Trainer> trainerListE = new ArrayList<>();
-        trainerListE.add(trainer);
-        List<UserDTO> trainerList = new ArrayList<>();
-        trainerList.add(user);
-        when(trainerService.findByUserName(trainer.getUserName())).thenReturn(trainerListE);
-        when(beanMappingService.mapTo(trainerListE, UserDTO.class)).thenReturn(trainerList);
+        List<Trainer> trainerList = new ArrayList<>();
+        trainerList.add(trainer);
+        List<UserDTO> userList = new ArrayList<>();
+        userList.add(user);
+        when(trainerService.findByUserName(trainer.getUserName())).thenReturn(trainerList);
+        when(beanMappingService.mapTo(trainerList, UserDTO.class)).thenReturn(userList);
         List<UserDTO> result = userFacade.findUserByUserName(user.getUserName());
         assertThat(result.size(), is(1));
         assertThat(result.get(0), is(user));
@@ -123,15 +118,22 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void findAllUsersTest() {
-        List<Trainer> allTrainersE = new ArrayList<>();
-        allTrainersE.add(trainer);
-        allTrainersE.add(trainer2);
-        List<UserDTO> allTrainers = new ArrayList<>();
-        allTrainers.add(user);
-        allTrainers.add(user2);
-        when(trainerService.findAll()).thenReturn(allTrainersE);
-        when(beanMappingService.mapTo(allTrainersE, UserDTO.class)).thenReturn(allTrainers);
+        List<Trainer> allTrainers = new ArrayList<>();
+        allTrainers.add(trainer);
+        allTrainers.add(trainer2);
+        List<UserDTO> allUsers = new ArrayList<>();
+        allUsers.add(user);
+        allUsers.add(user2);
+        when(trainerService.findAll()).thenReturn(allTrainers);
+        when(beanMappingService.mapTo(allTrainers, UserDTO.class)).thenReturn(allUsers);
         List<UserDTO> result = userFacade.findAllUsers();
         assertThat(result.size(), is(2));
+        assertThat(result.contains(user) && result.contains(user2), is(true));
         }
+
+    @AfterMethod
+    void resetMocks() {
+        Mockito.reset(beanMappingService);
+        Mockito.reset(trainerService);
+    }
 }
