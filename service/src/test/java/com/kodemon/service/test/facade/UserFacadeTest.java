@@ -1,10 +1,12 @@
 package com.kodemon.service.test.facade;
 
+import com.kodemon.api.dto.UserAuthDTO;
 import com.kodemon.api.dto.UserDTO;
 import com.kodemon.api.facade.FightFacade;
 import com.kodemon.api.facade.UserFacade;
 import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.service.config.ServiceConfig;
+import com.kodemon.service.facade.UserFacadeImpl;
 import com.kodemon.service.interfaces.BeanMappingService;
 import com.kodemon.service.interfaces.TrainerService;
 import org.mockito.InjectMocks;
@@ -24,6 +26,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
@@ -33,23 +36,25 @@ import static org.mockito.Mockito.when;
  */
 @ContextConfiguration(classes=ServiceConfig.class)
 public class UserFacadeTest extends AbstractTestNGSpringContextTests {
-    @Mock
-    private TrainerService trainerService;
 
-    @Inject
-    @InjectMocks
     private UserFacade userFacade;
+    private BeanMappingService beanMappingService;
+    private TrainerService trainerService;
 
     private UserDTO user, user2;
     private Trainer trainer, trainer2;
 
-    @BeforeClass
+    /*@BeforeClass
     public void setup() {
         MockitoAnnotations.initMocks(this);
-    }
+    }*/
 
     @BeforeMethod
     public void prepare() {
+        beanMappingService = mock(BeanMappingService.class);
+        trainerService = mock(TrainerService.class);
+        userFacade = new UserFacadeImpl(beanMappingService, trainerService);
+
         trainer = new Trainer();
         trainer.setUserName("brock1999");
         trainer.setFirstName("Brock");
@@ -79,13 +84,28 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
         user2.setDateOfBirth(born);
     }
 
-    //@Test
+    @Test
     public void registerTest() {
         when(trainerService.register(trainer, "password")).thenReturn(true);
-        userFacade.register(user, "password");
+        boolean result = userFacade.register(user, "password");
+        assertThat(result, is(true));
     }
 
-    //@Test
+    @Test
+    public void loginTest() {
+        when(trainerService.register(trainer, "password")).thenReturn(true);
+        userFacade.register(user, "password");
+
+        UserAuthDTO userAuth = new UserAuthDTO();
+        userAuth.setUserName(trainer.getUserName());
+        userAuth.setPwdHash(trainer.getPwdHash());
+
+        when(trainerService.login(trainer.getUserName(), "password")).thenReturn(true);
+        boolean result = userFacade.login(userAuth);
+        assertThat(result, is(true));
+    }
+
+    @Test
      public void listAllUsers() {
         List<Trainer> allTrainersE = new ArrayList<>();
         allTrainersE.add(trainer);
@@ -94,7 +114,7 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
         allTrainers.add(user);
         allTrainers.add(user2);
         when(trainerService.findAll()).thenReturn(allTrainersE);
-        //when(beanMappingService.mapTo(allFightsE, FightDTO.class)).thenReturn(allFights);
+        when(beanMappingService.mapTo(allTrainersE, UserDTO.class)).thenReturn(allTrainers);
         List<UserDTO> result = userFacade.findAllUsers();
         assertThat(result.size(), is(2));
         }
