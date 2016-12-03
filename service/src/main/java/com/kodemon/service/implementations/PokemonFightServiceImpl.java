@@ -14,11 +14,15 @@ import javax.inject.Inject;
  *
  * @author Oliver Roch
  */
-
 @Service
 public class PokemonFightServiceImpl implements PokemonFightService {
-    @Inject
+
     private PokemonFightAdvantageService pokemonFightAdvantageService;
+
+    @Inject
+    public PokemonFightServiceImpl(PokemonFightAdvantageService pokemonFightAdvantageService) {
+        this.pokemonFightAdvantageService = pokemonFightAdvantageService;
+    }
 
     @Override
     public Pair<Double, Double> getScorePair(Pokemon challenger, Pokemon target) {

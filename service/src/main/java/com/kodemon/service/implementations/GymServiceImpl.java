@@ -6,18 +6,20 @@
 package com.kodemon.service.implementations;
 
 import com.kodemon.persistence.dao.GymDao;
-import com.kodemon.persistence.dao.TrainerDao;
 import com.kodemon.persistence.dao.PokemonDao;
-import com.kodemon.persistence.entity.Pokemon;
+import com.kodemon.persistence.dao.TrainerDao;
 import com.kodemon.persistence.entity.Gym;
+import com.kodemon.persistence.entity.Pokemon;
 import com.kodemon.persistence.entity.Trainer;
-import com.kodemon.persistence.enums.PokemonType;
 import com.kodemon.persistence.enums.PokemonName;
+import com.kodemon.persistence.enums.PokemonType;
 import com.kodemon.service.interfaces.GymService;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -32,14 +34,19 @@ import java.util.*;
 @Service
 public class GymServiceImpl implements GymService {
 
-    @Inject
     private GymDao gymDao;
-
-    @Inject
     private TrainerDao trainerDao;
+    private PokemonDao pokemonDao;
 
     @Inject
-    private PokemonDao pokemonDao;
+    public GymServiceImpl(
+            GymDao gymDao,
+            TrainerDao trainerDao,
+            PokemonDao pokemonDao) {
+        this.gymDao = gymDao;
+        this.trainerDao = trainerDao;
+        this.pokemonDao = pokemonDao;
+    }
 
     @Override
     public void initializeGyms() {

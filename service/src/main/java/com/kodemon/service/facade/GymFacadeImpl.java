@@ -20,11 +20,17 @@ import java.util.List;
 @Service
 @Transactional
 public class GymFacadeImpl implements GymFacade {
-    @Inject
+
     private BeanMappingService beanMappingService;
+    private GymService gymService;
 
     @Inject
-    private GymService gymService;
+    public GymFacadeImpl(
+            BeanMappingService beanMappingService,
+            GymService gymService) {
+        this.beanMappingService = beanMappingService;
+        this.gymService = gymService;
+    }
 
     @Override
     public List<GymDTO> findAll() {
