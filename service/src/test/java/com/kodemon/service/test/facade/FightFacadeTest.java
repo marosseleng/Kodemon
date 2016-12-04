@@ -3,36 +3,26 @@ package com.kodemon.service.test.facade;
 import com.kodemon.api.dto.*;
 import com.kodemon.api.enums.WildPokemonFightMode;
 import com.kodemon.api.facade.FightFacade;
-import com.kodemon.persistence.dao.GymDao;
-import com.kodemon.persistence.dao.PokemonDao;
-import com.kodemon.persistence.dao.TrainerDao;
-import com.kodemon.persistence.dao.TrainerFightDao;
 import com.kodemon.persistence.entity.*;
 import com.kodemon.persistence.enums.PokemonName;
 import com.kodemon.persistence.enums.PokemonType;
 import com.kodemon.service.config.ServiceConfig;
 import com.kodemon.service.facade.FightFacadeImpl;
-import com.kodemon.service.implementations.BeanMappingServiceImpl;
 import com.kodemon.service.interfaces.*;
 import com.kodemon.service.util.Pair;
 import org.joda.time.DateTime;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import javax.inject.Inject;
 import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 /**
@@ -89,6 +79,18 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
     public void fightForBadgeTest() {
         Date today = new Calendar.Builder().setDate(2015, 4, 1).build().getTime();
 
+        when(beanMappingService.mapTo(pikachuDTO, Pokemon.class)).thenReturn(pikachu);
+        when(beanMappingService.mapTo(pikachu, PokemonDTO.class)).thenReturn(pikachuDTO);
+        when(beanMappingService.mapTo(challengerDTO, Trainer.class)).thenReturn(challenger);
+        when(beanMappingService.mapTo(challenger, UserDTO.class)).thenReturn(challengerDTO);
+
+        when(beanMappingService.mapTo(onixDTO, Pokemon.class)).thenReturn(onix);
+        when(beanMappingService.mapTo(onix, PokemonDTO.class)).thenReturn(onixDTO);
+        when(beanMappingService.mapTo(defenderDTO, Trainer.class)).thenReturn(defender);
+        when(beanMappingService.mapTo(defender, UserDTO.class)).thenReturn(defenderDTO);
+
+        when(beanMappingService.mapTo(targetGymDTO, Gym.class)).thenReturn(targetGym);
+        when(beanMappingService.mapTo(targetGym, GymDTO.class)).thenReturn(targetGymDTO);
         when(trainerFightService.wasFightForBadgeSuccessful(challenger, defender)).thenReturn(true);
         Badge badge = new Badge();
         badge.setGym(targetGym);
@@ -110,12 +112,17 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
 
         when(beanMappingService.mapTo(newFightDTO, TrainerFight.class)).thenReturn(newFight);
 
-        Mockito.verify(badgeService, times(1)).assignTrainerToBadge(challenger, badge);
-        Mockito.verify(trainerService, times(1)).addBadge(badge, challenger);
+        Mockito.verify(badgeService).assignTrainerToBadge(challenger, badge);
+        Mockito.verify(trainerService).addBadge(badge, challenger);
     }
 
     @Test
     public void fightWildPokemonTest() {
+        when(beanMappingService.mapTo(pikachuDTO, Pokemon.class)).thenReturn(pikachu);
+        when(beanMappingService.mapTo(pikachu, PokemonDTO.class)).thenReturn(pikachuDTO);
+        when(beanMappingService.mapTo(challengerDTO, Trainer.class)).thenReturn(challenger);
+        when(beanMappingService.mapTo(challenger, UserDTO.class)).thenReturn(challengerDTO);
+
         Pokemon randomWildPokemon = new Pokemon();
         randomWildPokemon.setName(PokemonName.ABRA);
         randomWildPokemon.setLevel(1);
@@ -128,11 +135,12 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
         when(pokemonFightService.getScorePair(pikachu, randomWildPokemon)).thenReturn(new Pair<Double, Double>(20.0, 1.0));
 
         fightFacade.fightWildPokemon(challengerDTO, WildPokemonFightMode.TRAIN);
-        Mockito.verify(pokemonService, times(1)).levelPokemonUp(pikachu);
+        Mockito.verify(pokemonService).levelPokemonUp(pikachu);
     }
 
     @Test
     public void listFightsBetweenTest() {
+        when(beanMappingService.mapTo(trainerFights, FightDTO.class)).thenReturn(fights);
         Date from = new Calendar.Builder().setDate(2015, 4, 1).build().getTime();
         Date to = new Calendar.Builder().setDate(2015, 4, 3).build().getTime();
         when(trainerFightService.findByFightTimeBetween(from, to)).thenReturn(trainerFights);
@@ -158,6 +166,7 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void listAllFightsTest() {
+        when(beanMappingService.mapTo(trainerFights, FightDTO.class)).thenReturn(fights);
         when(trainerFightService.findAll()).thenReturn(trainerFights);
         List<FightDTO> allFights = fightFacade.listAllFights();
         assertThat(allFights.size(), is(2));
@@ -165,15 +174,19 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void listFightsOfTrainerTest() {
+        when(beanMappingService.mapTo(challengerDTO, Trainer.class)).thenReturn(challenger);
+        when(beanMappingService.mapTo(trainerFights, FightDTO.class)).thenReturn(fights);
         when(trainerFightService.findByChallenger(challenger)).thenReturn(trainerFights);
-        List<FightDTO> fights = fightFacade.listAllFights();
+        List<FightDTO> fights = fightFacade.listFightsOfTrainer(challengerDTO);
         assertThat(fights.size(), is(2));
     }
 
     @Test
     public void listFightsOfGymTest() {
+        when(beanMappingService.mapTo(targetGymDTO, Gym.class)).thenReturn(targetGym);
+        when(beanMappingService.mapTo(trainerFights, FightDTO.class)).thenReturn(fights);
         when(trainerFightService.findByTargetGym(targetGym)).thenReturn(trainerFights);
-        List<FightDTO> fights = fightFacade.listAllFights();
+        List<FightDTO> fights = fightFacade.listFightsOfGym(targetGymDTO);
         assertThat(fights.size(), is(2));
     }
 
@@ -206,11 +219,6 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
         pikachu.setTrainer(challenger);
         pikachuDTO.setTrainer(challengerDTO);
 
-        when(beanMappingService.mapTo(pikachuDTO, Pokemon.class)).thenReturn(pikachu);
-        when(beanMappingService.mapTo(pikachu, PokemonDTO.class)).thenReturn(pikachuDTO);
-        when(beanMappingService.mapTo(challengerDTO, Trainer.class)).thenReturn(challenger);
-        when(beanMappingService.mapTo(challenger, UserDTO.class)).thenReturn(challengerDTO);
-
         onix = new Pokemon();
         onix.setName(PokemonName.ONIX);
         onix.setLevel(5);
@@ -238,11 +246,6 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
 
         onix.setTrainer(defender);
         onixDTO.setTrainer(defenderDTO);
-
-        when(beanMappingService.mapTo(onixDTO, Pokemon.class)).thenReturn(onix);
-        when(beanMappingService.mapTo(onix, PokemonDTO.class)).thenReturn(onixDTO);
-        when(beanMappingService.mapTo(defenderDTO, Trainer.class)).thenReturn(defender);
-        when(beanMappingService.mapTo(defender, UserDTO.class)).thenReturn(defenderDTO);
     }
 
     private void prepareGym() {
@@ -255,9 +258,6 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
         targetGymDTO.setTrainer(defenderDTO);
         targetGymDTO.setCity("Violet city");
         targetGymDTO.setType(PokemonType.GROUND);
-
-        when(beanMappingService.mapTo(targetGymDTO, Gym.class)).thenReturn(targetGym);
-        when(beanMappingService.mapTo(targetGym, GymDTO.class)).thenReturn(targetGymDTO);
     }
 
     private void prepareFights() {
@@ -295,7 +295,16 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
 
         fights.add(fight1);
         fights.add(fight2);
+    }
 
-        when(beanMappingService.mapTo(trainerFights, FightDTO.class)).thenReturn(fights);
+    @AfterMethod
+    void resetMocks() {
+        Mockito.reset(beanMappingService);
+        Mockito.reset(trainerService);
+        Mockito.reset(pokemonFightService);
+        Mockito.reset(trainerFightService);
+        Mockito.reset(timeService);
+        Mockito.reset(pokemonService);
+        Mockito.reset(badgeService);
     }
 }
