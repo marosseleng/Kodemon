@@ -39,8 +39,10 @@ public class GymFacadeTest extends AbstractTestNGSpringContextTests {
     private BeanMappingService beanMappingService;
     private GymService gymService;
 
-    private Gym gym1, gym2;
-    private GymDTO gymdto1, gymdto2;
+    private Gym gym1;
+    private Gym gym2;
+    private GymDTO gymdto1;
+    private GymDTO gymdto2;
 
     @BeforeMethod
     public void prepare() {
@@ -108,7 +110,7 @@ public class GymFacadeTest extends AbstractTestNGSpringContextTests {
         allGymDTOs.add(gymdto1);
         allGymDTOs.add(gymdto2);
         when(gymService.findAll()).thenReturn(allGyms);
-        when(beanMappingService.mapTo(allGyms, GymDTO.class)).thenReturn(allGymDTOs);
+        when(beanMappingService.mapTo(gymService.findAll(), GymDTO.class)).thenReturn(allGymDTOs);
         List<GymDTO> result = gymFacade.findAll();
         assertThat(result.size(), is(2));
         assertThat(result.contains(gymdto1) && result.contains(gymdto2), is(true));
@@ -116,7 +118,6 @@ public class GymFacadeTest extends AbstractTestNGSpringContextTests {
 
     @AfterMethod
     void resetMocks() {
-        Mockito.reset(beanMappingService);
-        Mockito.reset(gymService);
+        Mockito.reset(beanMappingService, gymService);
     }
 }
