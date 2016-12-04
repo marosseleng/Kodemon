@@ -1,6 +1,7 @@
 package com.kodemon.service.test.facade;
 
 import com.kodemon.api.dto.*;
+import com.kodemon.api.enums.WildPokemonFightMode;
 import com.kodemon.api.facade.FightFacade;
 import com.kodemon.persistence.dao.GymDao;
 import com.kodemon.persistence.dao.PokemonDao;
@@ -13,72 +14,72 @@ import com.kodemon.service.config.ServiceConfig;
 import com.kodemon.service.facade.FightFacadeImpl;
 import com.kodemon.service.implementations.BeanMappingServiceImpl;
 import com.kodemon.service.interfaces.*;
+import com.kodemon.service.util.Pair;
+import org.joda.time.DateTime;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Oliver Roch
  */
 
-@ContextConfiguration(classes=ServiceConfig.class)
+@ContextConfiguration(classes = ServiceConfig.class)
 public class FightFacadeTest extends AbstractTestNGSpringContextTests {
-    @Inject
+
     private BeanMappingService beanMappingService;
-
-    @Inject
     private TrainerFightService trainerFightService;
-
-    @Inject
     private PokemonFightService pokemonFightService;
-
-    @Inject
     private PokemonService pokemonService;
-
-    @Inject
     private TrainerService trainerService;
-
-    @Inject
     private BadgeService badgeService;
-
-    @Inject
     private TimeService timeService;
-
-    @Inject
     private FightFacade fightFacade;
 
-    @Inject
-    private TrainerDao trainerDao;
-
-    @Inject
-    private PokemonDao pokemonDao;
-
-    @Inject
-    private GymDao gymDao;
-
-    @Inject
-    private TrainerFightDao trainerFightDao;
-
-    private UserDTO challenger;
-    private UserDTO defender;
-    private GymDTO targetGym;
-    private PokemonDTO pikachu;
-    private PokemonDTO onix;
+    private Trainer challenger;
+    private Trainer defender;
+    private UserDTO challengerDTO;
+    private UserDTO defenderDTO;
+    private Gym targetGym;
+    private GymDTO targetGymDTO;
+    private Pokemon pikachu;
+    private Pokemon onix;
+    private PokemonDTO pikachuDTO;
+    private PokemonDTO onixDTO;
+    private FightDTO fight1;
+    private FightDTO fight2;
     private TrainerFight fight1e;
     private TrainerFight fight2e;
+    private List<TrainerFight> trainerFights;
+    private List<FightDTO> fights;
 
-    @BeforeMethod
+    @BeforeClass
     public void prepare() {
+        beanMappingService = mock(BeanMappingService.class);
+        trainerService = mock(TrainerService.class);
+        trainerFightService = mock(TrainerFightService.class);
+        pokemonFightService = mock(PokemonFightService.class);
+        pokemonService = mock(PokemonService.class);
+        badgeService = mock(BadgeService.class);
+        timeService = mock(TimeService.class);
+        fightFacade = new FightFacadeImpl(beanMappingService, trainerFightService, pokemonFightService, pokemonService,
+                trainerService, badgeService, timeService);
+
         prepareTrainers();
         prepareGym();
         prepareFights();
@@ -86,34 +87,108 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void fightForBadgeTest() {
-        Set<BadgeDTO> badgeSet = challenger.getBadges();
-        List<TrainerFight> fights = trainerFightService.findAll();
-        fightFacade.fightForBadge(challenger, targetGym);
+        Date today = new Calendar.Builder().setDate(2015, 4, 1).build().getTime();
+
+        when(trainerFightService.wasFightForBadgeSuccessful(challenger, defender)).thenReturn(true);
+        Badge badge = new Badge();
+        badge.setGym(targetGym);
+        when(badgeService.createBadgeOfGym(targetGym)).thenReturn(badge);
+        when(timeService.currentDate()).thenReturn(today);
+        fightFacade.fightForBadge(challengerDTO, targetGymDTO);
+
+        FightDTO newFightDTO = new FightDTO();
+        newFightDTO.setTargetGym(targetGymDTO);
+        newFightDTO.setChallenger(challengerDTO);
+        newFightDTO.setFightTime(today);
+        newFightDTO.setWasChallengerSuccessful(true);
+
+        TrainerFight newFight = new TrainerFight();
+        newFight.setTargetGym(targetGym);
+        newFight.setChallenger(challenger);
+        newFight.setFightTime(today);
+        newFight.setWasChallengerSuccessful(true);
+
+        when(beanMappingService.mapTo(newFightDTO, TrainerFight.class)).thenReturn(newFight);
+
+        Mockito.verify(badgeService, times(1)).assignTrainerToBadge(challenger, badge);
+        Mockito.verify(trainerService, times(1)).addBadge(badge, challenger);
     }
 
     @Test
     public void fightWildPokemonTest() {
+        Pokemon randomWildPokemon = new Pokemon();
+        randomWildPokemon.setName(PokemonName.ABRA);
+        randomWildPokemon.setLevel(1);
+        randomWildPokemon.setNickname("Teleportabra");
+        when(pokemonService.generateWildPokemon(null)).thenReturn(randomWildPokemon);
 
+        List<Pokemon> trainersPokemons = new ArrayList<>();
+        trainersPokemons.add(pikachu);
+        when(pokemonService.findByTrainer(challenger)).thenReturn(trainersPokemons);
+        when(pokemonFightService.getScorePair(pikachu, randomWildPokemon)).thenReturn(new Pair<Double, Double>(20.0, 1.0));
+
+        fightFacade.fightWildPokemon(challengerDTO, WildPokemonFightMode.TRAIN);
+        Mockito.verify(pokemonService, times(1)).levelPokemonUp(pikachu);
     }
 
     @Test
     public void listFightsBetweenTest() {
-        Date from = new Calendar.Builder().setDate(1987, 4, 1).build().getTime();
-        Date to = new Calendar.Builder().setDate(1984, 2, 3).build().getTime();
+        Date from = new Calendar.Builder().setDate(2015, 4, 1).build().getTime();
+        Date to = new Calendar.Builder().setDate(2015, 4, 3).build().getTime();
+        when(trainerFightService.findByFightTimeBetween(from, to)).thenReturn(trainerFights);
         List<FightDTO> fights = fightFacade.listFightsBetween(from, to);
         assertThat(fights.size(), is(2));
     }
 
+    @Test
+    public void listTodaysFightTest() {
+        Date today = new Calendar.Builder().setDate(2015, 4, 1).build().getTime();
+        DateTime currentDate = new DateTime(today);
+        Date dayStart = currentDate.withTimeAtStartOfDay().toDate();
+        Date dayEnd = currentDate.plusDays(1).withTimeAtStartOfDay().toDate();
+        when(timeService.currentDate()).thenReturn(today);
+        when(timeService.startOfTheDay(today)).thenReturn(dayStart);
+        when(timeService.endOfTheDay(today)).thenReturn(dayEnd);
+        when(trainerFightService.findByFightTimeBetween(dayStart, dayEnd)).thenReturn(Collections.singletonList(fight1e));
+        when(beanMappingService.mapTo(Collections.singletonList(fight1e), FightDTO.class)).thenReturn(Collections.singletonList(fight1));
+
+        List<FightDTO> todaysFights = fightFacade.listTodaysFights();
+        assertThat(todaysFights.size(), is(1));
+    }
+
+    @Test
+    public void listAllFightsTest() {
+        when(trainerFightService.findAll()).thenReturn(trainerFights);
+        List<FightDTO> allFights = fightFacade.listAllFights();
+        assertThat(allFights.size(), is(2));
+    }
+
+    @Test
+    public void listFightsOfTrainerTest() {
+        when(trainerFightService.findByChallenger(challenger)).thenReturn(trainerFights);
+        List<FightDTO> fights = fightFacade.listAllFights();
+        assertThat(fights.size(), is(2));
+    }
+
+    @Test
+    public void listFightsOfGymTest() {
+        when(trainerFightService.findByTargetGym(targetGym)).thenReturn(trainerFights);
+        List<FightDTO> fights = fightFacade.listAllFights();
+        assertThat(fights.size(), is(2));
+    }
 
     private void prepareTrainers() {
-        pikachu = new PokemonDTO();
+        pikachu = new Pokemon();
         pikachu.setName(PokemonName.PIKACHU);
         pikachu.setLevel(20);
         pikachu.setNickname("Yellow mouse");
 
-        pokemonDao.save(beanMappingService.mapTo(pikachu, Pokemon.class));
+        pikachuDTO = new PokemonDTO();
+        pikachuDTO.setName(PokemonName.PIKACHU);
+        pikachuDTO.setLevel(20);
+        pikachuDTO.setNickname("Yellow mouse");
 
-        challenger = new UserDTO();
+        challenger = new Trainer();
         challenger.setFirstName("Ash");
         challenger.setLastName("Ketchum");
         Date dob = new Calendar.Builder().setDate(1987, 4, 1).build().getTime();
@@ -121,18 +196,32 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
         challenger.setUserName("Ash123");
         challenger.addPokemon(pikachu);
 
-        trainerDao.save(beanMappingService.mapTo(challenger, Trainer.class));
+        challengerDTO = new UserDTO();
+        challengerDTO.setFirstName("Ash");
+        challengerDTO.setLastName("Ketchum");
+        challengerDTO.setDateOfBirth(dob);
+        challengerDTO.setUserName("Ash123");
+        challengerDTO.addPokemon(pikachuDTO);
 
         pikachu.setTrainer(challenger);
+        pikachuDTO.setTrainer(challengerDTO);
 
-        onix = new PokemonDTO();
+        when(beanMappingService.mapTo(pikachuDTO, Pokemon.class)).thenReturn(pikachu);
+        when(beanMappingService.mapTo(pikachu, PokemonDTO.class)).thenReturn(pikachuDTO);
+        when(beanMappingService.mapTo(challengerDTO, Trainer.class)).thenReturn(challenger);
+        when(beanMappingService.mapTo(challenger, UserDTO.class)).thenReturn(challengerDTO);
+
+        onix = new Pokemon();
         onix.setName(PokemonName.ONIX);
         onix.setLevel(5);
         onix.setNickname("The Rock");
 
-        pokemonDao.save(beanMappingService.mapTo(onix, Pokemon.class));
+        onixDTO = new PokemonDTO();
+        onixDTO.setName(PokemonName.ONIX);
+        onixDTO.setLevel(5);
+        onixDTO.setNickname("The Rock");
 
-        defender = new UserDTO();
+        defender = new Trainer();
         defender.setFirstName("Brock");
         defender.setLastName("Takechi");
         Date dob2 = new Calendar.Builder().setDate(1984, 2, 3).build().getTime();
@@ -140,37 +229,73 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
         defender.setUserName("Brocky123");
         defender.addPokemon(onix);
 
-        trainerDao.save(beanMappingService.mapTo(defender, Trainer.class));
+        defenderDTO = new UserDTO();
+        defenderDTO.setFirstName("Brock");
+        defenderDTO.setLastName("Takechi");
+        defenderDTO.setDateOfBirth(dob2);
+        defenderDTO.setUserName("Brocky123");
+        defenderDTO.addPokemon(onixDTO);
 
         onix.setTrainer(defender);
+        onixDTO.setTrainer(defenderDTO);
+
+        when(beanMappingService.mapTo(onixDTO, Pokemon.class)).thenReturn(onix);
+        when(beanMappingService.mapTo(onix, PokemonDTO.class)).thenReturn(onixDTO);
+        when(beanMappingService.mapTo(defenderDTO, Trainer.class)).thenReturn(defender);
+        when(beanMappingService.mapTo(defender, UserDTO.class)).thenReturn(defenderDTO);
     }
 
     private void prepareGym() {
-        targetGym = new GymDTO();
+        targetGym = new Gym();
         targetGym.setTrainer(defender);
         targetGym.setCity("Violet city");
         targetGym.setType(PokemonType.GROUND);
 
-        gymDao.save(beanMappingService.mapTo(targetGym, Gym.class));
+        targetGymDTO = new GymDTO();
+        targetGymDTO.setTrainer(defenderDTO);
+        targetGymDTO.setCity("Violet city");
+        targetGymDTO.setType(PokemonType.GROUND);
+
+        when(beanMappingService.mapTo(targetGymDTO, Gym.class)).thenReturn(targetGym);
+        when(beanMappingService.mapTo(targetGym, GymDTO.class)).thenReturn(targetGymDTO);
     }
 
     private void prepareFights() {
+        fight1 = new FightDTO();
+        fight1.setWasChallengerSuccessful(false);
+        Date dof1 = new Calendar.Builder().setDate(2015, 4, 1).build().getTime();
+        fight1.setFightTime(dof1);
+        fight1.setChallenger(challengerDTO);
+        fight1.setTargetGym(targetGymDTO);
+
+        fight2 = new FightDTO();
+        fight2.setWasChallengerSuccessful(false);
+        Date dof2 = new Calendar.Builder().setDate(2015, 4, 3).build().getTime();
+        fight2.setFightTime(dof2);
+        fight2.setChallenger(challengerDTO);
+        fight2.setTargetGym(targetGymDTO);
+
         fight1e = new TrainerFight();
         fight1e.setWasChallengerSuccessful(false);
-        Date dof1e = new Calendar.Builder().setDate(2015, 4, 1).build().getTime();
-        fight1e.setFightTime(dof1e);
-        fight1e.setChallenger(beanMappingService.mapTo(challenger, Trainer.class));
-        fight1e.setTargetGym(beanMappingService.mapTo(targetGym, Gym.class));
-
-        trainerFightDao.save(fight1e);
+        fight1e.setFightTime(dof1);
+        fight1e.setChallenger(challenger);
+        fight1e.setTargetGym(targetGym);
 
         fight2e = new TrainerFight();
         fight2e.setWasChallengerSuccessful(false);
-        Date dof2e = new Calendar.Builder().setDate(2015, 4, 3).build().getTime();
-        fight2e.setFightTime(dof2e);
-        fight2e.setChallenger(beanMappingService.mapTo(challenger, Trainer.class));
-        fight2e.setTargetGym(beanMappingService.mapTo(targetGym, Gym.class));
+        fight2e.setFightTime(dof2);
+        fight2e.setChallenger(challenger);
+        fight2e.setTargetGym(targetGym);
 
-        trainerFightDao.save(fight2e);
+        trainerFights = new ArrayList<>();
+        fights = new ArrayList<>();
+
+        trainerFights.add(fight1e);
+        trainerFights.add(fight2e);
+
+        fights.add(fight1);
+        fights.add(fight2);
+
+        when(beanMappingService.mapTo(trainerFights, FightDTO.class)).thenReturn(fights);
     }
 }
