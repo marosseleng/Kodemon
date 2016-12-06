@@ -6,6 +6,8 @@ import com.kodemon.api.facade.UserFacade;
 import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.service.interfaces.BeanMappingService;
 import com.kodemon.service.interfaces.TrainerService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -17,6 +19,8 @@ import java.util.List;
  *
  * @author Matej Poklemba
  */
+@Service
+@Transactional
 public class UserFacadeImpl implements UserFacade {
 
     private BeanMappingService beanMappingService;
