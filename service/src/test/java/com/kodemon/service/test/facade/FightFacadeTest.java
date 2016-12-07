@@ -1,6 +1,9 @@
 package com.kodemon.service.test.facade;
 
-import com.kodemon.api.dto.*;
+import com.kodemon.api.dto.FightDTO;
+import com.kodemon.api.dto.GymDTO;
+import com.kodemon.api.dto.PokemonDTO;
+import com.kodemon.api.dto.UserDTO;
 import com.kodemon.api.enums.WildPokemonFightMode;
 import com.kodemon.api.facade.FightFacade;
 import com.kodemon.persistence.entity.*;
