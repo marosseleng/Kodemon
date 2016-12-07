@@ -1,12 +1,14 @@
 package com.kodemon.service.test;
 
 import com.kodemon.persistence.dao.TrainerDao;
-import com.kodemon.persistence.entity.*;
+import com.kodemon.persistence.entity.Badge;
+import com.kodemon.persistence.entity.Gym;
+import com.kodemon.persistence.entity.Pokemon;
+import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.persistence.enums.PokemonName;
 import com.kodemon.persistence.enums.PokemonType;
 import com.kodemon.service.config.ServiceConfig;
 import com.kodemon.service.interfaces.TrainerService;
-import com.kodemon.service.util.Pair;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -22,10 +24,7 @@ import java.util.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Tests for the Trainer Service.

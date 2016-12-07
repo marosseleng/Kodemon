@@ -1,31 +1,18 @@
 package com.kodemon.service.test;
 
-import java.util.Date;
-
-import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.service.config.ServiceConfig;
-import com.kodemon.service.interfaces.PokemonFightService;
 import com.kodemon.service.interfaces.TimeService;
-import com.kodemon.service.interfaces.TrainerFightService;
 import org.joda.time.DateTime;
-import com.kodemon.service.util.Pair;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
-import java.util.*;
+import java.util.Date;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * Tests for time service.

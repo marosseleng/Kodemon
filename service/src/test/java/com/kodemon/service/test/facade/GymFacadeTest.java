@@ -17,10 +17,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -110,8 +107,8 @@ public class GymFacadeTest extends AbstractTestNGSpringContextTests {
         allGymDTOs.add(gymdto1);
         allGymDTOs.add(gymdto2);
         when(gymService.findAll()).thenReturn(allGyms);
-        when(beanMappingService.mapTo(gymService.findAll(), GymDTO.class)).thenReturn(allGymDTOs);
-        List<GymDTO> result = gymFacade.findAll();
+        when(beanMappingService.mapCollectionTo(gymService.findAll(), GymDTO.class)).thenReturn(allGymDTOs);
+        Collection<GymDTO> result = gymFacade.findAll();
         assertThat(result.size(), is(2));
         assertThat(result.contains(gymdto1) && result.contains(gymdto2), is(true));
         }

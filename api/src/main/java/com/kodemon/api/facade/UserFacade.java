@@ -3,7 +3,7 @@ package com.kodemon.api.facade;
 import com.kodemon.api.dto.UserAuthDTO;
 import com.kodemon.api.dto.UserDTO;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Facade providing access to the user administration
@@ -33,11 +33,11 @@ public interface UserFacade {
      * @param userName
      * @return
      */
-    List<UserDTO> findUserByUserName(String userName);
+    Collection<UserDTO> findUserByUserName(String userName);
 
     /**
      *
      * @return Set of use
      */
-    List<UserDTO> findAllUsers();
+    Collection<UserDTO> findAllUsers();
 }

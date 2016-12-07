@@ -147,9 +147,7 @@ public class Trainer {
         return !(!getUserName().equals(trainer.getUserName()) ||
                 !getFirstName().equals(trainer.getFirstName()) ||
                 !getLastName().equals(trainer.getLastName()) ||
-                !getDateOfBirth().equals(trainer.getDateOfBirth()) ||
-                !getBadges().equals(trainer.getBadges()) ||
-                !getPokemons().equals(trainer.getPokemons()));
+                !getDateOfBirth().equals(trainer.getDateOfBirth()));
     }
 
     @Override
@@ -159,8 +157,6 @@ public class Trainer {
         result = 31 * result + getFirstName().hashCode();
         result = 31 * result + getLastName().hashCode();
         result = 31 * result + getDateOfBirth().hashCode();
-        result = 31 * result + getBadges().hashCode();
-        result = 31 * result + getPokemons().hashCode();
         return result;
     }
 }
