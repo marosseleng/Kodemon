@@ -117,7 +117,7 @@ public class BeanMappingServiceTest extends AbstractTestNGSpringContextTests {
             iterated.add(service.mapTo(trainer, UserDTO.class));
         }
 
-        List<UserDTO> users = service.mapTo(trainers, UserDTO.class);
+        List<UserDTO> users = service.mapCollectionTo(trainers, UserDTO.class);
 
         assertThat(users, is(equalTo(iterated)));
     }

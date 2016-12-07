@@ -2,25 +2,19 @@ package com.kodemon.service.test.facade;
 
 import com.kodemon.api.dto.UserAuthDTO;
 import com.kodemon.api.dto.UserDTO;
-import com.kodemon.api.facade.FightFacade;
 import com.kodemon.api.facade.UserFacade;
 import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.service.config.ServiceConfig;
 import com.kodemon.service.facade.UserFacadeImpl;
 import com.kodemon.service.interfaces.BeanMappingService;
 import com.kodemon.service.interfaces.TrainerService;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -110,7 +104,7 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
         List<UserDTO> userList = new ArrayList<>();
         userList.add(user);
         when(trainerService.findByUserName(trainer.getUserName())).thenReturn(trainerList);
-        when(beanMappingService.mapTo(trainerList, UserDTO.class)).thenReturn(userList);
+        when(beanMappingService.mapCollectionTo(trainerList, UserDTO.class)).thenReturn(userList);
         List<UserDTO> result = userFacade.findUserByUserName(user.getUserName());
         assertThat(result.size(), is(1));
         assertThat(result.get(0), is(user));
@@ -125,7 +119,7 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
         allUsers.add(user);
         allUsers.add(user2);
         when(trainerService.findAll()).thenReturn(allTrainers);
-        when(beanMappingService.mapTo(allTrainers, UserDTO.class)).thenReturn(allUsers);
+        when(beanMappingService.mapCollectionTo(allTrainers, UserDTO.class)).thenReturn(allUsers);
         List<UserDTO> result = userFacade.findAllUsers();
         assertThat(result.size(), is(2));
         assertThat(result.contains(user) && result.contains(user2), is(true));

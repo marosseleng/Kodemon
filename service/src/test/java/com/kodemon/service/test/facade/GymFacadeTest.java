@@ -110,7 +110,7 @@ public class GymFacadeTest extends AbstractTestNGSpringContextTests {
         allGymDTOs.add(gymdto1);
         allGymDTOs.add(gymdto2);
         when(gymService.findAll()).thenReturn(allGyms);
-        when(beanMappingService.mapTo(gymService.findAll(), GymDTO.class)).thenReturn(allGymDTOs);
+        when(beanMappingService.mapCollectionTo(gymService.findAll(), GymDTO.class)).thenReturn(allGymDTOs);
         List<GymDTO> result = gymFacade.findAll();
         assertThat(result.size(), is(2));
         assertThat(result.contains(gymdto1) && result.contains(gymdto2), is(true));

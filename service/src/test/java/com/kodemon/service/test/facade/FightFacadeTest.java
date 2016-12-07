@@ -140,7 +140,7 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void listFightsBetweenTest() {
-        when(beanMappingService.mapTo(trainerFights, FightDTO.class)).thenReturn(fights);
+        when(beanMappingService.mapCollectionTo(trainerFights, FightDTO.class)).thenReturn(fights);
         Date from = new Calendar.Builder().setDate(2015, 4, 1).build().getTime();
         Date to = new Calendar.Builder().setDate(2015, 4, 3).build().getTime();
         when(trainerFightService.findByFightTimeBetween(from, to)).thenReturn(trainerFights);
@@ -158,7 +158,7 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
         when(timeService.startOfTheDay(today)).thenReturn(dayStart);
         when(timeService.endOfTheDay(today)).thenReturn(dayEnd);
         when(trainerFightService.findByFightTimeBetween(dayStart, dayEnd)).thenReturn(Collections.singletonList(fight1e));
-        when(beanMappingService.mapTo(Collections.singletonList(fight1e), FightDTO.class)).thenReturn(Collections.singletonList(fight1));
+        when(beanMappingService.mapCollectionTo(Collections.singletonList(fight1e), FightDTO.class)).thenReturn(Collections.singletonList(fight1));
 
         List<FightDTO> todaysFights = fightFacade.listTodaysFights();
         assertThat(todaysFights.size(), is(1));
@@ -166,7 +166,7 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void listAllFightsTest() {
-        when(beanMappingService.mapTo(trainerFights, FightDTO.class)).thenReturn(fights);
+        when(beanMappingService.mapCollectionTo(trainerFights, FightDTO.class)).thenReturn(fights);
         when(trainerFightService.findAll()).thenReturn(trainerFights);
         List<FightDTO> allFights = fightFacade.listAllFights();
         assertThat(allFights.size(), is(2));
@@ -175,7 +175,7 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
     @Test
     public void listFightsOfTrainerTest() {
         when(beanMappingService.mapTo(challengerDTO, Trainer.class)).thenReturn(challenger);
-        when(beanMappingService.mapTo(trainerFights, FightDTO.class)).thenReturn(fights);
+        when(beanMappingService.mapCollectionTo(trainerFights, FightDTO.class)).thenReturn(fights);
         when(trainerFightService.findByChallenger(challenger)).thenReturn(trainerFights);
         List<FightDTO> fights = fightFacade.listFightsOfTrainer(challengerDTO);
         assertThat(fights.size(), is(2));
@@ -184,7 +184,7 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
     @Test
     public void listFightsOfGymTest() {
         when(beanMappingService.mapTo(targetGymDTO, Gym.class)).thenReturn(targetGym);
-        when(beanMappingService.mapTo(trainerFights, FightDTO.class)).thenReturn(fights);
+        when(beanMappingService.mapCollectionTo(trainerFights, FightDTO.class)).thenReturn(fights);
         when(trainerFightService.findByTargetGym(targetGym)).thenReturn(trainerFights);
         List<FightDTO> fights = fightFacade.listFightsOfGym(targetGymDTO);
         assertThat(fights.size(), is(2));
