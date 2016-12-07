@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author Oliver Roch
@@ -90,12 +90,12 @@ public class FightFacadeImpl implements FightFacade {
     }
 
     @Override
-    public List<FightDTO> listTodaysFights() {
+    public Collection<FightDTO> listTodaysFights() {
         return listFightsBetween(timeService.startOfTheDay(timeService.currentDate()), timeService.endOfTheDay(timeService.currentDate()));
     }
 
     @Override
-    public List<FightDTO> listThisMonthsFights() {
+    public Collection<FightDTO> listThisMonthsFights() {
         int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         Date from = new Calendar.Builder().setDate(currentYear, currentMonth, 1).build().getTime();
@@ -103,30 +103,30 @@ public class FightFacadeImpl implements FightFacade {
     }
 
     @Override
-    public List<FightDTO> listThisYearsFights() {
+    public Collection<FightDTO> listThisYearsFights() {
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         Date from = new Calendar.Builder().setDate(currentYear, 1, 1).build().getTime();
         return listFightsBetween(from, timeService.currentDate());
     }
 
     @Override
-    public List<FightDTO> listFightsBetween(Date from, Date to) {
+    public Collection<FightDTO> listFightsBetween(Date from, Date to) {
         return beanMappingService.mapCollectionTo(trainerFightService.findByFightTimeBetween(from, to), FightDTO.class);
     }
 
     @Override
-    public List<FightDTO> listAllFights() {
+    public Collection<FightDTO> listAllFights() {
         return beanMappingService.mapCollectionTo(trainerFightService.findAll(), FightDTO.class);
     }
 
     @Override
-    public List<FightDTO> listFightsOfTrainer(UserDTO user) {
+    public Collection<FightDTO> listFightsOfTrainer(UserDTO user) {
         Trainer challenger = beanMappingService.mapTo(user, Trainer.class);
         return beanMappingService.mapCollectionTo(trainerFightService.findByChallenger(challenger), FightDTO.class);
     }
 
     @Override
-    public List<FightDTO> listFightsOfGym(GymDTO gym) {
+    public Collection<FightDTO> listFightsOfGym(GymDTO gym) {
         Gym targetGym = beanMappingService.mapTo(gym, Gym.class);
         return beanMappingService.mapCollectionTo(trainerFightService.findByTargetGym(targetGym), FightDTO.class);
     }

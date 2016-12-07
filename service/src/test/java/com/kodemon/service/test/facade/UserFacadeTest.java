@@ -15,12 +15,10 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -105,9 +103,9 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
         userList.add(user);
         when(trainerService.findByUserName(trainer.getUserName())).thenReturn(trainerList);
         when(beanMappingService.mapCollectionTo(trainerList, UserDTO.class)).thenReturn(userList);
-        List<UserDTO> result = userFacade.findUserByUserName(user.getUserName());
+        Collection<UserDTO> result = userFacade.findUserByUserName(user.getUserName());
         assertThat(result.size(), is(1));
-        assertThat(result.get(0), is(user));
+        assertThat(result, is(equalTo(userList)));
     }
 
     @Test
@@ -120,7 +118,7 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
         allUsers.add(user2);
         when(trainerService.findAll()).thenReturn(allTrainers);
         when(beanMappingService.mapCollectionTo(allTrainers, UserDTO.class)).thenReturn(allUsers);
-        List<UserDTO> result = userFacade.findAllUsers();
+        Collection<UserDTO> result = userFacade.findAllUsers();
         assertThat(result.size(), is(2));
         assertThat(result.contains(user) && result.contains(user2), is(true));
         }

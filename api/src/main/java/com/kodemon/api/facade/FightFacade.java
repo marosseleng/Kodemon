@@ -5,6 +5,7 @@ import com.kodemon.api.dto.GymDTO;
 import com.kodemon.api.dto.UserDTO;
 import com.kodemon.api.enums.WildPokemonFightMode;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -42,21 +43,21 @@ public interface FightFacade {
      *
      * @return a {@link List} of {@link FightDTO}s
      */
-    List<FightDTO> listTodaysFights();
+    Collection<FightDTO> listTodaysFights();
 
     /**
      * Returns fights, which has been played this month
      *
      * @return a {@link List} of {@link FightDTO}s
      */
-    List<FightDTO> listThisMonthsFights();
+    Collection<FightDTO> listThisMonthsFights();
 
     /**
      * Returns fights, which has been played this year
      *
      * @return a {@link List} of {@link FightDTO}s
      */
-    List<FightDTO> listThisYearsFights();
+    Collection<FightDTO> listThisYearsFights();
 
     /**
      * Returns fights that happened between two specified dates
@@ -65,14 +66,14 @@ public interface FightFacade {
      * @param to end date to which to list fights
      * @return a {@link List} of {@link FightDTO}s
      */
-    List<FightDTO> listFightsBetween(Date from, Date to);
+    Collection<FightDTO> listFightsBetween(Date from, Date to);
 
     /**
      * Returns all fights that ever ocurred
      *
      * @return a {@link List} of {@link FightDTO}s
      */
-    List<FightDTO> listAllFights();
+    Collection<FightDTO> listAllFights();
 
     /**
      * Returns all fights of the given user
@@ -80,7 +81,7 @@ public interface FightFacade {
      * @param user user, whose fights we want to find
      * @return a {@link List} of {@link FightDTO}s
      */
-    List<FightDTO> listFightsOfTrainer(UserDTO user);
+    Collection<FightDTO> listFightsOfTrainer(UserDTO user);
 
     /**
      * Returns all fights that was hosted in the given {@link com.kodemon.persistence.entity.Gym}
@@ -88,6 +89,6 @@ public interface FightFacade {
      * @param gym gym that hosted the fights
      * @return a {@link List} of {@link FightDTO}s
      */
-    List<FightDTO> listFightsOfGym(GymDTO gym);
+    Collection<FightDTO> listFightsOfGym(GymDTO gym);
 }
 

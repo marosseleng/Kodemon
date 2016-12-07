@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * User Facade Implementation
@@ -45,12 +45,12 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public List<UserDTO> findUserByUserName(String userName) {
+    public Collection<UserDTO> findUserByUserName(String userName) {
         return beanMappingService.mapCollectionTo(trainerService.findByUserName(userName), UserDTO.class);
     }
 
     @Override
-    public List<UserDTO> findAllUsers() {
+    public Collection<UserDTO> findAllUsers() {
         return beanMappingService.mapCollectionTo(trainerService.findAll(), UserDTO.class);
     }
 }
