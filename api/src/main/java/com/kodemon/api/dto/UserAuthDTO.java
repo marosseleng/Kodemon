@@ -34,15 +34,15 @@ public class UserAuthDTO {
 
         UserAuthDTO that = (UserAuthDTO) o;
 
-        if (!userName.equals(that.userName)) return false;
-        return pwdHash.equals(that.pwdHash);
+        if (!getUserName().equals(that.getUserName())) return false;
+        return getPwdHash().equals(that.getPwdHash());
 
     }
 
     @Override
     public int hashCode() {
-        int result = userName.hashCode();
-        result = 31 * result + pwdHash.hashCode();
+        int result = getUserName().hashCode();
+        result = 31 * result + getPwdHash().hashCode();
         return result;
     }
 }
