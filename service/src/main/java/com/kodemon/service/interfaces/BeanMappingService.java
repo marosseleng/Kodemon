@@ -1,7 +1,5 @@
 package com.kodemon.service.interfaces;
 
-import org.dozer.Mapper;
-
 import java.util.Collection;
 
 /**
@@ -9,6 +7,6 @@ import java.util.Collection;
  */
 public interface BeanMappingService {
 
-    <T> Collection<T> mapCollectionTo(Collection<?> objects, Class<T> mapToClass);
-    <T> T mapTo(Object u, Class<T> mapToClass);
+    <T> Collection<T> mapCollectionTo(Collection<?> source, Class<T> mapToClass);
+    <T> T mapTo(Object source, Class<T> mapToClass);
 }
