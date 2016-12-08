@@ -276,6 +276,7 @@ public class TrainerServiceTest extends AbstractTransactionalTestNGSpringContext
         verify(trainerDao).save(trainerx);
     }
 
+    @Test
     public void addBadgeTest() {
         Badge badge = new Badge();
         badge.setName("Super badge");
@@ -285,15 +286,7 @@ public class TrainerServiceTest extends AbstractTransactionalTestNGSpringContext
         assertThat(trainer1.getBadges(), contains(badge));
     }
 
-    public void addPokemonTest() {
-        Pokemon gloom = new Pokemon(PokemonName.GLOOM);
-        gloom.setLevel(9);
-        gloom.setNickname("Sadboy");
-        gloom.setTrainer(trainer1);
-        trainer1.addPokemon(gloom);
-        assertThat(trainer1.getPokemons(), contains(gloom));
-    }
-
+    @Test
     public void deleteCorrectTest() {
         Trainer trainerx = new Trainer();
         trainerx.setFirstName("Peter");
