@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,12 +26,18 @@ public class BeanMappingServiceImpl implements BeanMappingService {
     }
 
     @Override
-    public <T> List<T> mapTo(Collection<?> objects, Class<T> mapToClass) {
-        return mapper.mapAsList(objects, mapToClass);
+    public <T> Collection<T> mapCollectionTo(Collection<?> source, Class<T> mapToClass) {
+        if (mapToClass == null) {
+            return Collections.emptyList();
+        }
+        return mapper.mapAsList(source, mapToClass);
     }
 
     @Override
-    public <T> T mapTo(Object u, Class<T> mapToClass) {
-        return mapper.map(u, mapToClass);
+    public <T> T mapTo(Object source, Class<T> targetClass) {
+        if (source == null || targetClass == null) {
+            return null;
+        }
+        return mapper.map(source, targetClass);
     }
 }

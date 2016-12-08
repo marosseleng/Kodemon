@@ -1,13 +1,7 @@
 package com.kodemon.service.test;
 
-import com.kodemon.api.dto.FightDTO;
-import com.kodemon.api.dto.GymDTO;
-import com.kodemon.api.dto.PokemonDTO;
-import com.kodemon.api.dto.UserDTO;
-import com.kodemon.persistence.entity.Gym;
-import com.kodemon.persistence.entity.Pokemon;
-import com.kodemon.persistence.entity.Trainer;
-import com.kodemon.persistence.entity.TrainerFight;
+import com.kodemon.api.dto.*;
+import com.kodemon.persistence.entity.*;
 import com.kodemon.persistence.enums.PokemonName;
 import com.kodemon.persistence.enums.PokemonType;
 import com.kodemon.service.config.ServiceConfig;
@@ -43,6 +37,7 @@ public class BeanMappingServiceTest extends AbstractTestNGSpringContextTests {
 
     @Test
     void testMapTrainerToUserDTO() {
+        prepareGymAndGymDTO();
         prepareTrainerAndUserDTO();
 
         UserDTO got = service.mapTo(trainer, UserDTO.class);
@@ -56,6 +51,7 @@ public class BeanMappingServiceTest extends AbstractTestNGSpringContextTests {
 
     @Test
     void testMapUserDTOToTrainer() {
+        prepareGymAndGymDTO();
         prepareTrainerAndUserDTO();
 
         Trainer got = service.mapTo(userDTO, Trainer.class);
@@ -99,6 +95,25 @@ public class BeanMappingServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
+    void testMapBadgeToBadgeDTO() {
+        prepareGymAndGymDTO();
+        prepareTrainerAndUserDTO();
+
+        Badge badge = new Badge(gym, trainer);
+        badge.setName("Some badge");
+
+        BadgeDTO badgeDTO = new BadgeDTO();
+        badgeDTO.setName("Some badge");
+        badgeDTO.setTrainer(userDTO);
+        badgeDTO.setGym(gymDTO);
+
+        BadgeDTO got = service.mapTo(badge, BadgeDTO.class);
+        assertThat(got.getTrainer(), is(equalTo(badgeDTO.getTrainer())));
+        assertThat(got.getGym(), is(equalTo(badgeDTO.getGym())));
+        assertThat(got.getName(), is(equalTo(badgeDTO.getName())));
+    }
+
+    @Test
     void testMapGymToGymDTO() {
         prepareGymAndGymDTO();
 
@@ -117,7 +132,7 @@ public class BeanMappingServiceTest extends AbstractTestNGSpringContextTests {
             iterated.add(service.mapTo(trainer, UserDTO.class));
         }
 
-        List<UserDTO> users = service.mapTo(trainers, UserDTO.class);
+        Collection<UserDTO> users = service.mapCollectionTo(trainers, UserDTO.class);
 
         assertThat(users, is(equalTo(iterated)));
     }
@@ -133,13 +148,25 @@ public class BeanMappingServiceTest extends AbstractTestNGSpringContextTests {
         Calendar calendar = Calendar.getInstance();
         calendar.set(1994, Calendar.JUNE, 6);
         trainer.setDateOfBirth(calendar.getTime());
+        Badge badge = new Badge();
+        badge.setName("A badge");
+        badge.setGym(gym);
+        badge.setTrainer(trainer);
+        trainer.addBadge(badge);
 
         userDTO = new UserDTO();
         userDTO.setUserName("MarosSeleng");
         userDTO.setFirstName("Maros");
         userDTO.setLastName("Seleng");
         userDTO.setDateOfBirth(calendar.getTime());
-        userDTO.addPokemon(service.mapTo(pokemon, PokemonDTO.class));
+        PokemonDTO pokemonDTO = new PokemonDTO();
+        pokemonDTO.setName(PokemonName.ABRA);
+        userDTO.addPokemon(pokemonDTO);
+        BadgeDTO badgeDTO = new BadgeDTO();
+        badgeDTO.setName("A badge");
+        badgeDTO.setGym(gymDTO);
+        badgeDTO.setTrainer(userDTO);
+        userDTO.addBadge(badgeDTO);
     }
 
     private void prepareTrainerFightAndFightDTO() {

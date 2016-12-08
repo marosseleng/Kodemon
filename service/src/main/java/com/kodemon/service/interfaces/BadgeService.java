@@ -3,7 +3,6 @@ package com.kodemon.service.interfaces;
 import com.kodemon.persistence.entity.Badge;
 import com.kodemon.persistence.entity.Gym;
 import com.kodemon.persistence.entity.Trainer;
-import com.kodemon.persistence.enums.PokemonType;
 
 import java.util.List;
 
