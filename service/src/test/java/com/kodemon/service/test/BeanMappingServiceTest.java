@@ -51,7 +51,7 @@ public class BeanMappingServiceTest extends AbstractTestNGSpringContextTests {
         assertThat(got.getUserName(), is(equalTo(trainer.getUserName())));
         assertThat(got.getBadges(), is(equalTo(trainer.getBadges())));
         assertThat(got.getDateOfBirth(), is(equalTo(trainer.getDateOfBirth())));
-        assertThat(got.getPokemons(), is(equalTo(trainer.getPokemons())));
+        assertThat(got.getPokemons(), is(equalTo(userDTO.getPokemons())));
     }
 
     @Test
@@ -64,7 +64,7 @@ public class BeanMappingServiceTest extends AbstractTestNGSpringContextTests {
         assertThat(got.getUserName(), is(equalTo(userDTO.getUserName())));
         assertThat(got.getBadges(), is(equalTo(userDTO.getBadges())));
         assertThat(got.getDateOfBirth(), is(equalTo(userDTO.getDateOfBirth())));
-        assertThat(got.getPokemons(), is(equalTo(userDTO.getPokemons())));
+        assertThat(got.getPokemons(), is(equalTo(trainer.getPokemons())));
     }
 
     @Test
