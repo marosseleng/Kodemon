@@ -13,8 +13,6 @@ import java.util.Collection;
 /**
  * Gym Facade Implementation
  *
- * Registers and logins users, finds user by userName and finds all users
- *
  * @author Miso Romanek
  */
 
