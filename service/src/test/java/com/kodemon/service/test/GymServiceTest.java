@@ -2,7 +2,6 @@ package com.kodemon.service.test;
 
 import com.kodemon.persistence.dao.GymDao;
 import com.kodemon.persistence.entity.Gym;
-import com.kodemon.persistence.entity.Gym;
 import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.persistence.enums.PokemonType;
 import com.kodemon.service.config.ServiceConfig;
@@ -26,7 +25,6 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.*;
 
 /**

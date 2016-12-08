@@ -43,11 +43,11 @@ public class BadgeDTO {
         BadgeDTO badgeDTO = (BadgeDTO) o;
         return Objects.equals(getName(), badgeDTO.getName()) &&
                 Objects.equals(getGym(), badgeDTO.getGym()) &&
-                Objects.equals(getTrainer(), badgeDTO.getTrainer());
+                Objects.equals(getTrainer().getUserName(), badgeDTO.getTrainer().getUserName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getGym(), getTrainer());
+        return Objects.hash(getName(), getGym(), getTrainer().getUserName());
     }
 }
