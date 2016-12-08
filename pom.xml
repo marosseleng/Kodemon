@@ -24,6 +24,9 @@
         <joda-time.version>2.9.6</joda-time.version>
         <jersey.version>2.24.1</jersey.version>
         <jackson.version>2.8.5</jackson.version>
+        <tomcat.version>8.5.8</tomcat.version>
+        <taglibs.version>1.2.5</taglibs.version>
+        <javax-validation.version>1.1.0.Final</javax-validation.version>
     </properties>
 
     <modules>
@@ -126,11 +129,21 @@
                 <artifactId>spring-web</artifactId>
                 <version>${spring.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
             <!--HIBERNATE DEPENDENCIES-->
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-core</artifactId>
                 <version>${hibernate.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${javax-validation.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.hibernate</groupId>
@@ -206,7 +219,6 @@
                 <artifactId>jackson-annotations</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
-
             <!--OTHERS-->
             <dependency>
                 <groupId>org.jetbrains</groupId>
@@ -223,7 +235,22 @@
                 <artifactId>joda-time</artifactId>
                 <version>${joda-time.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat</groupId>
+                <artifactId>tomcat-api</artifactId>
+                <version>${tomcat.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.taglibs</groupId>
+                <artifactId>taglibs-standard-spec</artifactId>
+                <version>${taglibs.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.taglibs</groupId>
+                <artifactId>taglibs-standard-impl</artifactId>
+                <version>${taglibs.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-
 </project>
