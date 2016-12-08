@@ -79,7 +79,9 @@ public class UserDTO {
         return !(!getUserName().equals(trainer.getUserName()) ||
                 !getFirstName().equals(trainer.getFirstName()) ||
                 !getLastName().equals(trainer.getLastName()) ||
-                !getDateOfBirth().equals(trainer.getDateOfBirth()));
+                !getDateOfBirth().equals(trainer.getDateOfBirth()) ||
+                !getBadges().equals(trainer.getBadges()) ||
+                !getPokemons().equals(trainer.getPokemons()));
     }
 
     @Override
@@ -89,6 +91,8 @@ public class UserDTO {
         result = 31 * result + getFirstName().hashCode();
         result = 31 * result + getLastName().hashCode();
         result = 31 * result + getDateOfBirth().hashCode();
+        result = 31 * result + getPokemons().hashCode();
+        result = 31 * result + getBadges().hashCode();
         return result;
     }
 }

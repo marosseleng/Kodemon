@@ -53,13 +53,13 @@ public class PokemonDTO {
         if (!(o instanceof PokemonDTO)) return false;
         PokemonDTO that = (PokemonDTO) o;
         return getLevel() == that.getLevel() &&
-                Objects.equals(getTrainer(), that.getTrainer()) &&
+                Objects.equals(getTrainer().getUserName(), that.getTrainer().getUserName()) &&
                 getName() == that.getName() &&
                 Objects.equals(getNickname(), that.getNickname());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getTrainer(), getName(), getNickname(), getLevel());
+        return Objects.hash(getTrainer().getUserName(), getName(), getNickname(), getLevel());
     }
 }
