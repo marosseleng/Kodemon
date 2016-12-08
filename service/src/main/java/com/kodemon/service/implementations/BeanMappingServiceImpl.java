@@ -5,10 +5,8 @@ import com.kodemon.service.util.OrikaMapper;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 /**
  * Implementation of BeanMappingService
