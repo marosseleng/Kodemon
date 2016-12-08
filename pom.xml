@@ -28,6 +28,8 @@
         <module>persistence</module>
         <module>service</module>
         <module>api</module>
+        <module>rest</module>
+        <module>spring-mvc</module>
     </modules>
 
     <build>
