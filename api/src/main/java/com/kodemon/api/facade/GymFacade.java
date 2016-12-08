@@ -2,6 +2,7 @@ package com.kodemon.api.facade;
 
 import com.kodemon.api.dto.GymDTO;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -15,5 +16,5 @@ public interface GymFacade {
      *
      * @return a {@link List} of {@link com.kodemon.persistence.entity.Gym}s
      */
-    List<GymDTO> findAll();
+    Collection<GymDTO> findAll();
 }

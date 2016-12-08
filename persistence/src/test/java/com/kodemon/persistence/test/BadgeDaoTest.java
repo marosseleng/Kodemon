@@ -2,11 +2,11 @@ package com.kodemon.persistence.test;
 
 import com.kodemon.persistence.config.PersistenceConfig;
 import com.kodemon.persistence.dao.BadgeDao;
-import com.kodemon.persistence.dao.TrainerDao;
 import com.kodemon.persistence.dao.GymDao;
+import com.kodemon.persistence.dao.TrainerDao;
 import com.kodemon.persistence.entity.Badge;
-import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.persistence.entity.Gym;
+import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.persistence.enums.PokemonType;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Example;

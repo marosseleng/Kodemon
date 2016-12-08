@@ -83,7 +83,7 @@ public class Badge {
 
         if (!getName().equals(badge.getName())) return false;
         if (!getGym().equals(badge.getGym())) return false;
-        return getTrainer().equals(badge.getTrainer());
+        return getTrainer().getUserName().equals(badge.getTrainer().getUserName());
 
     }
 
@@ -92,7 +92,7 @@ public class Badge {
         int result = 17;
         result = 31 * result + getName().hashCode();
         result = 31 * result + getGym().hashCode();
-        result = 31 * result + getTrainer().hashCode();
+        result = 31 * result + getTrainer().getUserName().hashCode();
         return result;
     }
 }

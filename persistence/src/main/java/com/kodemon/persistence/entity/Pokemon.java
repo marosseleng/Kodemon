@@ -98,7 +98,7 @@ public class Pokemon {
         Pokemon pokemon = (Pokemon) object;
 
         if (getLevel() != pokemon.getLevel()) return false;
-        if (getTrainer() != null ? !getTrainer().equals(pokemon.getTrainer()) : pokemon.getTrainer() != null) return false;
+        if (getTrainer() != null ? !getTrainer().getUserName().equals(pokemon.getTrainer().getUserName()) : pokemon.getTrainer() != null) return false;
         if (!getName().equals(pokemon.getName())) return false;
         if (getNickname() != null ? !getNickname().equals(pokemon.getNickname()) : pokemon.getNickname() != null) return false;
         return getType() == pokemon.getType();
@@ -108,7 +108,7 @@ public class Pokemon {
     @Override
     public int hashCode() {
         int result = 17;
-        result = 31 * result + (getTrainer() != null ? getTrainer().hashCode() : 0);
+        result = 31 * result + (getTrainer() != null ? getTrainer().getUserName().hashCode() : 0);
         result = 31 * result + getName().hashCode();
         result = 31 * result + (getNickname() != null ? getNickname().hashCode() : 0);
         result = 31 * result + getType().hashCode();

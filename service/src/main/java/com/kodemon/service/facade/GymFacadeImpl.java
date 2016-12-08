@@ -6,8 +6,9 @@ import com.kodemon.service.interfaces.BeanMappingService;
 import com.kodemon.service.interfaces.GymService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.inject.Inject;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Gym Facade Implementation
@@ -31,7 +32,7 @@ public class GymFacadeImpl implements GymFacade {
     }
 
     @Override
-    public List<GymDTO> findAll() {
-        return beanMappingService.mapTo(gymService.findAll(), GymDTO.class);
+    public Collection<GymDTO> findAll() {
+        return beanMappingService.mapCollectionTo(gymService.findAll(), GymDTO.class);
     }
 }

@@ -20,7 +20,7 @@
         <hamcrest.version>1.3</hamcrest.version>
         <mockito.version>2.2.21</mockito.version>
         <jetbrains.annotations.version>15.0</jetbrains.annotations.version>
-        <dozer.version>5.5.1</dozer.version>
+        <orika.version>1.4.6</orika.version>
         <joda-time.version>2.9.6</joda-time.version>
     </properties>
 
@@ -141,9 +141,9 @@
                 <version>${jetbrains.annotations.version}</version>
             </dependency>
             <dependency>
-                <groupId>net.sf.dozer</groupId>
-                <artifactId>dozer</artifactId>
-                <version>${dozer.version}</version>
+                <groupId>ma.glasnost.orika</groupId>
+                <artifactId>orika-core</artifactId>
+                <version>${orika.version}</version>
             </dependency>
             <dependency>
                 <groupId>joda-time</groupId>
