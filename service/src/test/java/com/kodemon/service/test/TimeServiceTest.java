@@ -31,7 +31,7 @@ public class TimeServiceTest extends AbstractTransactionalTestNGSpringContextTes
     public void currentDateTest() {
         long myDate = new Date().getTime();
         long serviceDate = timeService.currentDate().getTime();
-        assertThat(myDate-5L, is(lessThan(serviceDate);
+        assertThat(myDate-5L, is(lessThan(serviceDate)));
         assertThat(serviceDate, is(lessThan(myDate+5L)));
     }
 
