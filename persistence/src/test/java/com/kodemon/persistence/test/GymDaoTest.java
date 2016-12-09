@@ -268,6 +268,7 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
     void testUpdateCity() {
         gym = new Gym(trainer);
         gym.setCity("Some City");
+        gym.setBadgeName("Very Good Badge");
         gym.setType(PokemonType.DRAGON);
         gymDao.saveAndFlush(gym);
         String newCity = "another";
@@ -302,6 +303,7 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         gym = new Gym(trainer);
         gym.setCity("Rainbow");
         gym.setType(PokemonType.GRASS);
+        gym.setBadgeName("KappaPride Badge");
         gymDao.saveAndFlush(gym);
         assertThat(gymDao.count(), is(equalTo(1L)));
         PokemonType newType = PokemonType.DRAGON;
@@ -364,6 +366,7 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         gym.setType(PokemonType.values()[index % numberOfTypes]);
         String chars = "abcdefghijklmnopqrstuvxyzABCDEFGHIJKLMNOPQRSTUVXYZ ";
         gym.setCity(chars.substring(index % chars.length()));
+        gym.setBadgeName(chars.substring(index % chars.length()) + " Badge");
         return gym;
     }
 }

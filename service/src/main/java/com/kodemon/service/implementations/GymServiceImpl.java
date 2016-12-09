@@ -383,35 +383,43 @@ public class GymServiceImpl implements GymService {
         pokemonDao.save(pokemon76);
 
         Gym gym0 = new Gym(trainer0);
-        gym0.setCity("Pewter");
+        gym0.setCity("Pewter City");
+        gym0.setBadgeName("Boulder Badge");
         gym0.setType(PokemonType.ROCK);
 
         Gym gym1 = new Gym(trainer1);
-        gym1.setCity("Cerulean");
+        gym1.setCity("Cerulean City");
+        gym1.setBadgeName("Cascade Badge");
         gym1.setType(PokemonType.WATER);
 
         Gym gym2 = new Gym(trainer2);
-        gym2.setCity("Vermillion");
+        gym2.setCity("Vermillion City");
+        gym2.setBadgeName("Thunder Badge");
         gym2.setType(PokemonType.ELECTRIC);
 
         Gym gym3 = new Gym(trainer3);
-        gym3.setCity("Celadon");
+        gym3.setCity("Celadon City");
+        gym3.setBadgeName("Rainbow Badge");
         gym3.setType(PokemonType.GRASS);
 
         Gym gym4 = new Gym(trainer4);
-        gym4.setCity("Fuchsia");
+        gym4.setCity("Fuchsia City");
+        gym4.setBadgeName("Soul Badge");
         gym4.setType(PokemonType.POISON);
 
         Gym gym5 = new Gym(trainer5);
-        gym5.setCity("Saffron");
+        gym5.setCity("Saffron City");
+        gym5.setBadgeName("Marsh Badge");
         gym5.setType(PokemonType.PSYCHIC);
 
         Gym gym6 = new Gym(trainer6);
-        gym6.setCity("Cinnabar");
+        gym6.setCity("Cinnabar Island");
+        gym6.setBadgeName("Volcano Badge");
         gym6.setType(PokemonType.FIRE);
 
         Gym gym7 = new Gym(trainer7);
-        gym7.setCity("Viridian");
+        gym7.setCity("Viridian City");
+        gym7.setBadgeName("Earth Badge");
         gym7.setType(PokemonType.GROUND);
 
 
@@ -448,6 +456,21 @@ public class GymServiceImpl implements GymService {
     @Override
     public List<Gym> findByCityContaining(String string) {
         return gymDao.findByCityContaining(string);
+    }
+
+    @Override
+    public List<Gym> findByBadgeName(String badgeName) {
+        return gymDao.findByBadgeName(badgeName);
+    }
+
+    @Override
+    public List<Gym> findByBadgeNameLike(String badgeName) {
+        return gymDao.findByBadgeNameLike(badgeName);
+    }
+
+    @Override
+    public List<Gym> findByBadgeNameContaining(String string) {
+        return gymDao.findByBadgeNameContaining(string);
     }
 
     @Override
