@@ -8,6 +8,7 @@ import java.util.Date;
  * @author Oliver Roch
  */
 public class FightDTO {
+    private Long id;
     private UserDTO challenger;
     private GymDTO targetGym;
     private Date fightTime;
@@ -43,6 +44,14 @@ public class FightDTO {
 
     public void setWasChallengerSuccessful(boolean wasChallengerSuccessful) {
         this.wasChallengerSuccessful = wasChallengerSuccessful;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override

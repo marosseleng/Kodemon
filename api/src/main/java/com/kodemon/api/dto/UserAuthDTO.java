@@ -6,6 +6,7 @@ package com.kodemon.api.dto;
  * @author Matej Poklemba
  */
 public class UserAuthDTO {
+    private Long userId;
     private String userName;
     private String pwdHash;
 
@@ -23,6 +24,14 @@ public class UserAuthDTO {
 
     public void setPwdHash(String pwdHash) {
         this.pwdHash = pwdHash;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override

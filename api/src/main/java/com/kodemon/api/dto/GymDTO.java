@@ -10,7 +10,7 @@ import java.util.Objects;
  * @author <a href="mailto:xseleng@fi.muni.cz">Maros Seleng, 422624</a>
  */
 public class GymDTO {
-
+    private Long id;
     private String city;
     private PokemonType type;
     private UserDTO trainer;
@@ -37,6 +37,14 @@ public class GymDTO {
 
     public void setTrainer(UserDTO trainer) {
         this.trainer = trainer;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
