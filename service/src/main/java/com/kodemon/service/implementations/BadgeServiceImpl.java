@@ -29,8 +29,7 @@ public class BadgeServiceImpl implements BadgeService {
 
     @Override
     public Badge createBadgeOfGym(Gym gym) {
-        Badge badge = new Badge();
-        badge.setGym(gym);
+        Badge badge = new Badge(gym, gym.getTrainer());
         return badge;
     }
 

@@ -25,6 +25,10 @@ public class Gym {
     @NotNull
     private String city;
 
+    @Column(nullable = false)
+    @NotNull
+    private String badgeName;
+
     @Enumerated
     @NotNull
     private PokemonType type;
@@ -59,6 +63,14 @@ public class Gym {
         this.city = city;
     }
 
+    public String getBadgeName() {
+        return badgeName;
+    }
+
+    public void setBadgeName(String badgeName) {
+        this.badgeName = badgeName;
+    }
+
     public PokemonType getType() {
         return type;
     }
@@ -85,6 +97,7 @@ public class Gym {
         Gym gym = (Gym) object;
 
         return !(!getCity().equals(gym.getCity()) ||
+                 !getBadgeName().equals(gym.getBadgeName()) ||
                  !getType().equals(gym.getType()) ||
                  !getTrainer().equals(gym.getTrainer()));
     }
@@ -93,6 +106,7 @@ public class Gym {
     public int hashCode() {
         int result = 47;
         result = 31 * result + getCity().hashCode();
+        result = 31 * result + getBadgeName().hashCode();
         result = 31 * result + getType().hashCode();
         result = 31 * result + getTrainer().hashCode();
         return result;

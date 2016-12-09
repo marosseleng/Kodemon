@@ -335,6 +335,7 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
     private void prepareGym() {
         gym = new Gym(trainer);
         gym.setCity("Saffron City");
+        gym.setBadgeName("Saffron Badge");
         gym.setType(PokemonType.WATER);
         gym.setTrainer(trainer);
     }
