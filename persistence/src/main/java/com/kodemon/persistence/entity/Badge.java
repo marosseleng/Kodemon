@@ -44,6 +44,7 @@ public class Badge {
     public Badge(@NotNull Gym gym, @NotNull Trainer trainer) {
         this.gym = gym;
         this.trainer = trainer;
+        this.name = gym.getBadgeName();
     }
 
     public Long getId() {

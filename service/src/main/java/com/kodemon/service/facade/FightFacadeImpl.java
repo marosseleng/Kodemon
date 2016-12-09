@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * @author Oliver Roch
@@ -76,6 +77,8 @@ public class FightFacadeImpl implements FightFacade {
         Trainer trainer = beanMappingService.mapTo(user, Trainer.class);
         Pokemon wildPokemon = pokemonService.generateWildPokemon(null);
         Pokemon trainersPokemon = pokemonService.findByTrainer(trainer).get(0);
+        Random rand = new Random();
+        wildPokemon.setLevel(trainersPokemon.getLevel() - 5 + rand.nextInt(10));
 
         Pair<Double, Double> fightScore = pokemonFightService.getScorePair(trainersPokemon, wildPokemon);
 

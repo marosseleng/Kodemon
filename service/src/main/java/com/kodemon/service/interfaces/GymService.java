@@ -45,7 +45,7 @@ public interface GymService {
     /**
      * Returns a {@link List} of {@link Gym}s with similar cities to the given one.
      * <p/>
-     * Note: this method generates the following query: {@code … where x.userName like ?1}
+     * Note: this method generates the following query: {@code … where x.city like ?1}
      *
      * @param city City to search for.
      * @return {@link List} of {@link Gym}s with similar cities to the given one.
@@ -57,12 +57,42 @@ public interface GymService {
      * Returns a {@link List} of {@link Gym}s where the city contains the given string.
      * <p/>
      * Note: a parameter <b>must</b> be wrapped in {@code %} as the method generates the following query:
-     * {@code … where x.userName like ?1}
+     * {@code … where x.city like ?1}
      *
      * @param string String contained in {@link Gym}'s city.
      * @return {@link List} of {@link Gym}s with cities containing the given string.
      */
     List<Gym> findByCityContaining(String string);
+
+    /**
+     * Returns a {@link List} of {@link Gym}s with the given badge name.
+     *
+     * @param badgeName Badge name to search for.
+     * @return {@link List} of {@link Gym}s with the given badge name.
+     */
+    List<Gym> findByBadgeName(String badgeName);
+
+    /**
+     * Returns a {@link List} of {@link Gym}s with similar badge names to the given one.
+     * <p/>
+     * Note: this method generates the following query: {@code … where x.badgeName like ?1}
+     *
+     * @param badgeName Badge name to search for.
+     * @return {@link List} of {@link Gym}s with similar cities to the given one.
+     */
+    List<Gym> findByBadgeNameLike(String badgeName);
+
+
+    /**
+     * Returns a {@link List} of {@link Gym}s where the badge name contains the given string.
+     * <p/>
+     * Note: a parameter <b>must</b> be wrapped in {@code %} as the method generates the following query:
+     * {@code … where x.badgeName like ?1}
+     *
+     * @param string String contained in {@link Gym}'s badge name.
+     * @return {@link List} of {@link Gym}s with badge names containing the given string.
+     */
+    List<Gym> findByBadgeNameContaining(String string);
 
     /**
      * Returns a {@link List} of {@link Gym}s with given PokemonType.

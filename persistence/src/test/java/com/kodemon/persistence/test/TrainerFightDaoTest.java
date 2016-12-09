@@ -293,6 +293,7 @@ public class TrainerFightDaoTest extends AbstractTestNGSpringContextTests {
 
         Gym customGym = new Gym(trainer);
         customGym.setCity("Saffron City");
+        customGym.setBadgeName("Saffron Badge");
         customGym.setType(PokemonType.WATER);
         customGym.setTrainer(trainer);
 
@@ -330,6 +331,7 @@ public class TrainerFightDaoTest extends AbstractTestNGSpringContextTests {
     private void prepareGym() {
         gym = new Gym(trainer);
         gym.setCity("Saffron City");
+        gym.setBadgeName("Saffron Badge");
         gym.setType(PokemonType.WATER);
         gym.setTrainer(trainer);
     }

@@ -10,8 +10,9 @@ import java.util.Objects;
  * @author <a href="mailto:xseleng@fi.muni.cz">Maros Seleng, 422624</a>
  */
 public class GymDTO {
-
+    private Long id;
     private String city;
+    private String badgeName;
     private PokemonType type;
     private UserDTO trainer;
 
@@ -21,6 +22,14 @@ public class GymDTO {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getBadgeName() {
+        return badgeName;
+    }
+
+    public void setBadgeName(String badgeName) {
+        this.badgeName = badgeName;
     }
 
     public PokemonType getType() {
@@ -39,18 +48,27 @@ public class GymDTO {
         this.trainer = trainer;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof GymDTO)) return false;
         GymDTO gymDTO = (GymDTO) o;
         return Objects.equals(getCity(), gymDTO.getCity()) &&
+                Objects.equals(getBadgeName(), gymDTO.getBadgeName()) &&
                 getType() == gymDTO.getType() &&
                 Objects.equals(getTrainer(), gymDTO.getTrainer());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCity(), getType(), getTrainer());
+        return Objects.hash(getCity(), getBadgeName(), getType(), getTrainer());
     }
 }

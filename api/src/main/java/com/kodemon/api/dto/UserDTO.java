@@ -8,12 +8,21 @@ import java.util.*;
  * @author Matej Poklemba
  */
 public class UserDTO {
+    private Long id;
     private String userName;
     private String firstName;
     private String lastName;
     private Date dateOfBirth;
     private Set<BadgeDTO> badges = new HashSet<>();
     private List<PokemonDTO> pokemons = new ArrayList<>();
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getUserName() {
         return userName;
