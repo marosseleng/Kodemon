@@ -39,11 +39,19 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>com.kodemon</groupId>
+            <artifactId>sample-data</artifactId>
+            <version>0.9-SNAPSHOT</version>
+        </dependency>
+
         <!-- servlet, JSP, JSTL -->
         <!-- must be this instead of javaee-web for the springmvc-tests to succeed -->
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-api</artifactId>
+            <version>${tomcat.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.taglibs</groupId>
