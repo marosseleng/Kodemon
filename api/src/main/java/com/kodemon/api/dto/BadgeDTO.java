@@ -8,6 +8,7 @@ import java.util.Objects;
  * @author <a href="xseleng@fi.muni.cz">Maros Seleng, 422624</a>
  */
 public class BadgeDTO {
+    private Long id;
     private String name;
     private GymDTO gym;
     private UserDTO trainer;
@@ -34,6 +35,14 @@ public class BadgeDTO {
 
     public void setTrainer(UserDTO trainer) {
         this.trainer = trainer;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
