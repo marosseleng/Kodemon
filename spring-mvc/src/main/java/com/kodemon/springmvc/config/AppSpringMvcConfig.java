@@ -1,8 +1,10 @@
 package com.kodemon.springmvc.config;
 
+import com.kodemon.sampledata.SampleDataConfig;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.ViewResolver;
@@ -19,6 +21,7 @@ import javax.validation.Validator;
  */
 @EnableWebMvc
 @Configuration
+@Import({SampleDataConfig.class})
 public class AppSpringMvcConfig extends WebMvcConfigurerAdapter {
 
     public static final String TEXTS = "Texts";
