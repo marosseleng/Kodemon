@@ -29,10 +29,10 @@ public class TimeServiceTest extends AbstractTransactionalTestNGSpringContextTes
 
     @Test
     public void currentDateTest() {
+        long allowedReserve = 5L;
         long myDate = new Date().getTime();
         long serviceDate = timeService.currentDate().getTime();
-        assertThat(myDate-5L, is(lessThan(serviceDate)));
-        assertThat(serviceDate, is(lessThan(myDate+5L)));
+        assertThat(Math.abs(myDate - serviceDate), is(lessThan(allowedReserve)));
     }
 
     @Test
