@@ -19,6 +19,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.kodemon</groupId>
+            <artifactId>service</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
         </dependency>
@@ -32,11 +37,6 @@
         </dependency>
 
         <!--OTHER-->
-        <dependency>
-            <groupId>com.kodemon</groupId>
-            <artifactId>service</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
