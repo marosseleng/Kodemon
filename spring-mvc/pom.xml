@@ -42,7 +42,7 @@
         <dependency>
             <groupId>com.kodemon</groupId>
             <artifactId>sample-data</artifactId>
-            <version>0.9-SNAPSHOT</version>
+            <version>${project.parent.version}</version>
             <!-- this had to be excluded to avoid conflicts from tomcat and hibernate core -->
             <exclusions>
                 <exclusion>
