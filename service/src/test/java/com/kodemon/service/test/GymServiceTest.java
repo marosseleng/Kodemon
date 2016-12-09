@@ -43,7 +43,8 @@ public class GymServiceTest extends AbstractTestNGSpringContextTests {
 
     private Trainer trainer;
     private Gym gym;
-    private String gymcity = "Kosice";
+    private String gymCity = "Kosice";
+    private String gymBadgeName = "Vychodnarsky badge";
 
     @BeforeClass
     public void setup() {
@@ -60,7 +61,8 @@ public class GymServiceTest extends AbstractTestNGSpringContextTests {
         trainer.setDateOfBirth(born);
 
         gym = new Gym(trainer);
-        gym.setCity(gymcity);
+        gym.setCity(gymCity);
+        gym.setBadgeName(gymBadgeName);
         gym.setType(PokemonType.WATER);
         gym.setTrainer(trainer);
     }
@@ -72,35 +74,35 @@ public class GymServiceTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void findByCityTest() {
-        when(gymDao.findByCity(gymcity)).thenReturn(Collections.singletonList(gym));
+        when(gymDao.findByCity(gymCity)).thenReturn(Collections.singletonList(gym));
 
-        List<Gym> result = gymService.findByCity(gymcity);
+        List<Gym> result = gymService.findByCity(gymCity);
         assertThat(result.size(), is(1));
         assertThat(result.get(0), is(gym));
 
-        verify(gymDao).findByCity(gymcity);
+        verify(gymDao).findByCity(gymCity);
     }
 
     @Test
     public void findByCityLikeTest() {
-        when(gymDao.findByCityLike(gymcity.substring(0, 3))).thenReturn(Collections.singletonList(gym));
+        when(gymDao.findByCityLike(gymCity.substring(0, 3))).thenReturn(Collections.singletonList(gym));
 
-        List<Gym> result = gymService.findByCityLike(gymcity.substring(0, 3));
+        List<Gym> result = gymService.findByCityLike(gymCity.substring(0, 3));
         assertThat(result.size(), is(1));
         assertThat(result.get(0), is(gym));
 
-        verify(gymDao).findByCityLike(gymcity.substring(0, 3));
+        verify(gymDao).findByCityLike(gymCity.substring(0, 3));
     }
 
     @Test
     public void findByCityContainingTest() {
-        when(gymDao.findByCityContaining(gymcity.substring(0, 3) + "%")).thenReturn(Collections.singletonList(gym));
+        when(gymDao.findByCityContaining(gymCity.substring(0, 3) + "%")).thenReturn(Collections.singletonList(gym));
 
-        List<Gym> result = gymService.findByCityContaining(gymcity.substring(0, 3) + "%");
+        List<Gym> result = gymService.findByCityContaining(gymCity.substring(0, 3) + "%");
         assertThat(result.size(), is(1));
         assertThat(result.get(0), is(gym));
 
-        verify(gymDao).findByCityContaining(gymcity.substring(0, 3) + "%");
+        verify(gymDao).findByCityContaining(gymCity.substring(0, 3) + "%");
     }
 
     @Test
