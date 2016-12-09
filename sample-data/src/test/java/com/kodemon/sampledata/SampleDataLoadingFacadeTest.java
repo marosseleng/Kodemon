@@ -36,9 +36,6 @@ public class SampleDataLoadingFacadeTest extends AbstractTestNGSpringContextTest
     @Autowired
     private SampleDataLoadingFacade sampleDataLoadingFacade;
 
-    @PersistenceContext
-    private EntityManager em;
-
     @Test
     public void createSampleDataTest() {
         Assert.assertEquals(gymDao.findAll().size(), 8);
