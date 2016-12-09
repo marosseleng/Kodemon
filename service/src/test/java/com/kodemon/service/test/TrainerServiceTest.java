@@ -88,6 +88,7 @@ public class TrainerServiceTest extends AbstractTransactionalTestNGSpringContext
         gym1 = new Gym();
         gym1.setTrainer(trainer2);
         gym1.setCity("Gotham City");
+        gym1.setBadgeName("Gotham Badge");
         gym1.setType(PokemonType.NORMAL);
     }
 
