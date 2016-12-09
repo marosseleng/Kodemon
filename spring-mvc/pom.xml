@@ -39,6 +39,19 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>com.kodemon</groupId>
+            <artifactId>sample-data</artifactId>
+            <version>${project.parent.version}</version>
+            <!-- this had to be excluded to avoid conflicts from tomcat and hibernate core -->
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.el</groupId>
+                    <artifactId>el-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!-- servlet, JSP, JSTL -->
         <!-- must be this instead of javaee-web for the springmvc-tests to succeed -->
         <dependency>

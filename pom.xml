@@ -35,6 +35,7 @@
         <module>api</module>
         <module>rest</module>
         <module>spring-mvc</module>
+        <module>sample-data</module>
     </modules>
 
     <build>
