@@ -205,11 +205,13 @@ public class BeanMappingServiceTest extends AbstractTestNGSpringContextTests {
     private void prepareGymAndGymDTO() {
         gym = new Gym(defender);
         gym.setCity("Azure city");
+        gym.setBadgeName("Azure Badge");
         gym.setType(PokemonType.WATER);
 
         gymDTO = new GymDTO();
         gymDTO.setType(PokemonType.WATER);
         gymDTO.setCity("Azure city");
+        gymDTO.setBadgeName("Azure Badge");
         gymDTO.setTrainer(defenderDTO);
     }
 
