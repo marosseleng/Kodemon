@@ -13,6 +13,7 @@ import java.util.Date;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.lessThan;
 
 /**
  * Tests for time service.
@@ -28,7 +29,8 @@ public class TimeServiceTest extends AbstractTransactionalTestNGSpringContextTes
 
     @Test
     public void currentDateTest() {
-        assertThat(timeService.currentDate(), is(equalTo(new Date())));
+        assertThat(new Date().getTime()-5L, is(lessThan(timeService.currentDate().getTime())));
+        assertThat(timeService.currentDate().getTime(), is(lessThan(new Date().getTime()+5L)));
     }
 
     @Test
