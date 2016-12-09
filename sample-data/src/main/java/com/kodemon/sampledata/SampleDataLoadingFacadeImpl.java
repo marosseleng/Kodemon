@@ -1,9 +1,10 @@
 package com.kodemon.sampledata;
 
 import com.kodemon.service.interfaces.GymService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.inject.Inject;
 
 /**
  * @author Oliver Roch
@@ -12,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 @Transactional
 public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
-    @Autowired
+    @Inject
     private GymService gymService;
 
     @Override

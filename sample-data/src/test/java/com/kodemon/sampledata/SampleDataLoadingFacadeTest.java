@@ -3,7 +3,6 @@ package com.kodemon.sampledata;
 import com.kodemon.persistence.dao.GymDao;
 import com.kodemon.persistence.dao.PokemonDao;
 import com.kodemon.persistence.dao.TrainerDao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -12,8 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.inject.Inject;
 
 /**
  * @author Oliver Roch
@@ -24,16 +22,16 @@ import javax.persistence.PersistenceContext;
 @Transactional
 public class SampleDataLoadingFacadeTest extends AbstractTestNGSpringContextTests {
 
-    @Autowired
+    @Inject
     private GymDao gymDao;
 
-    @Autowired
+    @Inject
     private PokemonDao pokemonDao;
 
-    @Autowired
+    @Inject
     private TrainerDao trainerDao;
 
-    @Autowired
+    @Inject
     private SampleDataLoadingFacade sampleDataLoadingFacade;
 
     @Test
