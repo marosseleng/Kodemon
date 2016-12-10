@@ -3,6 +3,7 @@ package com.kodemon.sampledata;
 import com.kodemon.persistence.dao.GymDao;
 import com.kodemon.persistence.dao.PokemonDao;
 import com.kodemon.persistence.dao.TrainerDao;
+import com.kodemon.service.interfaces.TrainerService;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -37,7 +38,7 @@ public class SampleDataLoadingFacadeTest extends AbstractTestNGSpringContextTest
     @Test
     public void createSampleDataTest() {
         Assert.assertEquals(gymDao.findAll().size(), 8);
-        Assert.assertEquals(trainerDao.findAll().size(), 8);
-        Assert.assertEquals(pokemonDao.findAll().size(), 44);
+        Assert.assertEquals(trainerDao.findAll().size(), 9);
+        Assert.assertEquals(pokemonDao.findAll().size(), 45);
     }
 }
