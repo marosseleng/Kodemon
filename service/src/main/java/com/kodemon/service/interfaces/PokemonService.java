@@ -48,6 +48,13 @@ public interface PokemonService {
     void assignTrainerToPokemon(Trainer trainer, Pokemon pokemon);
 
     /**
+     * Renames given Pokemon and updates record in Pokemon table.
+     * @param pokemon Pokemon to be renamed
+     * @param newName Desired new nickname of the Pokemon
+     */
+    void renamePokemon(Pokemon pokemon, String newName);
+
+    /**
      * Saves the given Pokemon to the database
      *
      * @param pokemon Pokemon to be saved

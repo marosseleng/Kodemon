@@ -68,6 +68,12 @@ public class PokemonServiceImpl implements PokemonService {
     }
 
     @Override
+    public void renamePokemon(Pokemon pokemon, String newName) {
+        pokemon.setNickname(newName);
+        pokemonDao.save(pokemon);
+    }
+
+    @Override
     public void save(Pokemon pokemon) {
         pokemonDao.save(pokemon);
     }
