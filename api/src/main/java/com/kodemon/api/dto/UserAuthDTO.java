@@ -7,7 +7,7 @@ package com.kodemon.api.dto;
  */
 public class UserAuthDTO {
     private String userName;
-    private String pwdHash;
+    private String password;
 
     public String getUserName() {
         return userName;
@@ -17,12 +17,12 @@ public class UserAuthDTO {
         this.userName = userName;
     }
 
-    public String getPwdHash() {
-        return pwdHash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPwdHash(String pwdHash) {
-        this.pwdHash = pwdHash;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
@@ -35,14 +35,14 @@ public class UserAuthDTO {
         UserAuthDTO that = (UserAuthDTO) o;
 
         if (!getUserName().equals(that.getUserName())) return false;
-        return getPwdHash().equals(that.getPwdHash());
+        return getPassword().equals(that.getPassword());
 
     }
 
     @Override
     public int hashCode() {
         int result = getUserName().hashCode();
-        result = 31 * result + getPwdHash().hashCode();
+        result = 31 * result + getPassword().hashCode();
         return result;
     }
 }

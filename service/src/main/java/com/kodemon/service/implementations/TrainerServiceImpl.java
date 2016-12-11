@@ -6,6 +6,8 @@ import com.kodemon.persistence.entity.Pokemon;
 import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.service.interfaces.TrainerService;
 import com.kodemon.service.util.PasswordStorage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,8 @@ import java.util.List;
 @Service
 public class TrainerServiceImpl implements TrainerService {
 
+    private static final Logger LOG = LoggerFactory.getLogger(TrainerServiceImpl.class);
+
     private TrainerDao trainerDao;
 
     @Inject
@@ -34,9 +38,11 @@ public class TrainerServiceImpl implements TrainerService {
             trainer.setPwdHash(PasswordStorage.createHash(password));
             trainerDao.save(trainer);
         } catch (PasswordStorage.CannotPerformOperationException e) {
+            LOG.error("Error while hashing the password.", e);
             return false;
         } catch (DataAccessException e) {
             // probably a trainer with the given username exists
+            LOG.error("DataAccessException while saving the new Trainer to the db.", e);
             return false;
         }
         return true;
@@ -51,6 +57,7 @@ public class TrainerServiceImpl implements TrainerService {
         try {
             return PasswordStorage.verifyPassword(password, matchedTrainers.get(0).getPwdHash());
         } catch (PasswordStorage.CannotPerformOperationException | PasswordStorage.InvalidHashException e) {
+            LOG.error("Error while verifying the password.", e);
             return false;
         }
     }
