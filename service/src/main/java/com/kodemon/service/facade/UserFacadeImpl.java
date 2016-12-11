@@ -71,4 +71,15 @@ public class UserFacadeImpl implements UserFacade {
     public UserDTO findOneUser(Long id) {
         return beanMappingService.mapTo(trainerService.findById(id), UserDTO.class);
     }
+
+    @Override
+    public UserDTO update(Long id, UserDTO userDTO) {
+        Trainer toUpdate = beanMappingService.mapTo(userDTO, Trainer.class);
+        return beanMappingService.mapTo(trainerService.update(id, toUpdate), UserDTO.class);
+    }
+
+    @Override
+    public void delete(Long id) {
+        trainerService.delete(id);
+    }
 }

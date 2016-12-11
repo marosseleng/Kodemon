@@ -8,7 +8,6 @@ import com.kodemon.service.interfaces.TrainerService;
 import com.kodemon.service.util.PasswordStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -72,6 +71,33 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     public void delete(Trainer trainer) {
         trainerDao.delete(trainer);
+    }
+
+    @Override
+    public void delete(Long id) {
+        delete(findById(id));
+    }
+
+    @Override
+    public Trainer update(Long id, Trainer trainer) {
+        Trainer found = findById(id);
+        String firstName = trainer.getFirstName();
+        if (firstName != null &&
+                !firstName.equals(found.getFirstName()) &&
+                !firstName.isEmpty()) {
+            found.setFirstName(firstName);
+        }
+        String lastName = trainer.getLastName();
+        if (lastName != null &&
+                !lastName.equals(found.getFirstName()) &&
+                !lastName.isEmpty()) {
+            found.setLastName(lastName);
+        }
+        Date dob = trainer.getDateOfBirth();
+        if (dob != null && !dob.equals(found.getDateOfBirth())) {
+            found.setDateOfBirth(dob);
+        }
+        return save(found);
     }
 
     @Override

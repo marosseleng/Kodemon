@@ -77,6 +77,7 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
     @Test
     public void registerTest() throws PasswordStorage.CannotPerformOperationException {
         when(beanMappingService.mapTo(user, Trainer.class)).thenReturn(trainer);
+        when(beanMappingService.mapTo(trainer, UserDTO.class)).thenReturn(user);
         when(trainerService.register(trainer, "password")).thenReturn(trainer);
         assertThat(userFacade.register(user, "password"), is(equalTo(user)));
     }
@@ -84,6 +85,7 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
     @Test
     public void loginTest() throws PasswordStorage.CannotPerformOperationException {
         when(beanMappingService.mapTo(user, Trainer.class)).thenReturn(trainer);
+        when(beanMappingService.mapTo(trainer, UserDTO.class)).thenReturn(user);
         when(trainerService.register(trainer, "password")).thenReturn(trainer);
         assertThat(userFacade.register(user, "password"), is(equalTo(user)));
 

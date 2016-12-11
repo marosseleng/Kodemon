@@ -50,4 +50,20 @@ public interface UserFacade {
      * @return An user with the given id
      */
     UserDTO findOneUser(Long id);
+
+    /**
+     * Updates the user with the given id
+     *
+     * @param id id of the user to update
+     * @param userDTO new data of the user
+     * @return updated DTO
+     */
+    UserDTO update(Long id, UserDTO userDTO);
+
+    /**
+     * Deletes the user with the given id
+     *
+     * @param id id of the user we want to delete
+     */
+    void delete(Long id);
 }

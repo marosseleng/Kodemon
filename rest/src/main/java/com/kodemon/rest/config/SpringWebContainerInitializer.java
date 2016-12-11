@@ -19,9 +19,6 @@ public class SpringWebContainerInitializer implements WebApplicationInitializer 
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
-
-        // Set the Jersey used property to it won't load a ContextLoaderListener
-//        servletContext.setInitParameter("contextConfigLocation", "");
         registerContextLoaderListener(servletContext);
     }
 

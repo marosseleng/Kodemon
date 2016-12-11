@@ -7,7 +7,9 @@ import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 
 /**
- * Created by mseleng on 12/11/16.
+ * Provider for Jackson's {@link ObjectMapper}
+ *
+ * @author <a href="mailto:xseleng@fi.muni.cz">Maros Seleng, 422624</a>
  */
 @Provider
 public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {

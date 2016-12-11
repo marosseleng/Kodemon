@@ -72,6 +72,22 @@ public interface TrainerService {
     void delete(Trainer trainer);
 
     /**
+     * Deletes the trainer with the given id
+     *
+     * @param id id of the trainer to delete
+     */
+    void delete(Long id);
+
+    /**
+     * Updates the trainer with the given id
+     *
+     * @param id id of the trainer to update
+     * @param trainer new data of the trainer
+     * @return updated trainer
+     */
+    Trainer update(Long id, Trainer trainer);
+
+    /**
      * Returns one trainer with the given id
      *
      * @param id id to look for

@@ -19,7 +19,9 @@ public class UserDTO {
     private String lastName;
     @JsonProperty(required = true)
     private Date dateOfBirth;
+    @JsonProperty(required = false, defaultValue = "[]")
     private Set<BadgeDTO> badges = new HashSet<>();
+    @JsonProperty(required = false, defaultValue = "[]")
     private List<PokemonDTO> pokemons = new ArrayList<>();
 
     public Long getId() {

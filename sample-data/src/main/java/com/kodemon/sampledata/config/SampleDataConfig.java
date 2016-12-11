@@ -3,6 +3,7 @@ package com.kodemon.sampledata.config;
 import com.kodemon.sampledata.SampleDataLoadingFacade;
 import com.kodemon.sampledata.SampleDataLoadingFacadeImpl;
 import com.kodemon.service.config.ServiceConfig;
+import com.kodemon.service.util.PasswordStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.ComponentScan;
@@ -26,7 +27,7 @@ public class SampleDataConfig {
     final static Logger LOG = LoggerFactory.getLogger(SampleDataConfig.class);
 
     @PostConstruct
-    public void dataLoading() {
+    public void dataLoading() throws PasswordStorage.CannotPerformOperationException {
         LOG.debug("loading sample data");
         sampleDataLoadingFacade.loadData();
     }
