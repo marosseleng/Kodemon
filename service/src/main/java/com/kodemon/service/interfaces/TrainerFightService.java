@@ -38,10 +38,10 @@ public interface TrainerFightService {
     /**
      * Find all fights where challenger is specified trainer
      *
-     * @param challenger trainer, whose fights as challenger we want to find
+     * @param userName trainer's username, whose fights as challenger we want to find
      * @return all fights, where specified trainer was as challenger
      */
-    List<TrainerFight> findByChallenger(Trainer challenger);
+    List<TrainerFight> findByChallenger(String userName);
 
     /**
      * Find all fights for the specified gym

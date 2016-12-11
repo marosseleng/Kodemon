@@ -135,8 +135,7 @@ public class FightFacadeImpl implements FightFacade {
 
     @Override
     public Collection<FightDTO> listFightsOfTrainer(UserDTO user) {
-        Trainer challenger = beanMappingService.mapTo(user, Trainer.class);
-        return beanMappingService.mapCollectionTo(trainerFightService.findByChallenger(challenger), FightDTO.class);
+        return beanMappingService.mapCollectionTo(trainerFightService.findByChallenger(user.getUserName()), FightDTO.class);
     }
 
     @Override
