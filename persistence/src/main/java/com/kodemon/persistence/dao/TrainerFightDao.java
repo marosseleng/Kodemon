@@ -16,6 +16,7 @@ import java.util.List;
  */
 @Repository
 public interface TrainerFightDao extends JpaRepository<TrainerFight, Long> {
+
     /**
      * Find all fights where challenger is specified trainer
      *

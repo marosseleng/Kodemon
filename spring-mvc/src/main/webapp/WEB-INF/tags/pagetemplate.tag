@@ -33,7 +33,7 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li><kodemon:a href="/">Home</kodemon:a></li>
-                <li><kodemon:a href="/">Fight history</kodemon:a></li>
+                <li><kodemon:a href="/fight/list?period=all">Fight history</kodemon:a></li>
                 <li><kodemon:a href="/">Gyms</kodemon:a></li>
                 <li><kodemon:a href="/user/list">Trainers</kodemon:a></li>
                 <c:choose>

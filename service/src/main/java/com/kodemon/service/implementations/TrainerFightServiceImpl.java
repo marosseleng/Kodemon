@@ -62,6 +62,11 @@ public class TrainerFightServiceImpl implements TrainerFightService {
     }
 
     @Override
+    public TrainerFight findById(Long id) {
+        return trainerFightDao.findOne(id);
+    }
+
+    @Override
     public List<TrainerFight> findByChallenger(Trainer challenger) {
         return trainerFightDao.findByChallenger(challenger);
     }

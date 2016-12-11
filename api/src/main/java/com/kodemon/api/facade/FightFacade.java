@@ -90,5 +90,12 @@ public interface FightFacade {
      * @return a {@link List} of {@link FightDTO}s
      */
     Collection<FightDTO> listFightsOfGym(GymDTO gym);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    FightDTO findFightById(Long id);
 }
 
