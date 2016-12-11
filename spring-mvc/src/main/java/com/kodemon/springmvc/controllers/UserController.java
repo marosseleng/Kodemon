@@ -79,7 +79,7 @@ public class UserController {
             model.addAttribute("users", userFacade.findAllUsers());
             return "/user/list";
         }
-        model.addAttribute("trainer", userFacade.findUserByUserName(username).iterator().next());
+        model.addAttribute("trainer", user.iterator().next());
         return "/user/detail";
     }
 
