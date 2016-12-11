@@ -14,6 +14,8 @@ import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.persistence.enums.PokemonName;
 import com.kodemon.persistence.enums.PokemonType;
 import com.kodemon.service.interfaces.GymService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -34,6 +36,8 @@ import java.util.List;
 @Service
 public class GymServiceImpl implements GymService {
 
+    private static final Logger LOG = LoggerFactory.getLogger(GymServiceImpl.class);
+
     private GymDao gymDao;
     private TrainerDao trainerDao;
     private PokemonDao pokemonDao;
@@ -50,6 +54,7 @@ public class GymServiceImpl implements GymService {
 
     @Override
     public void initializeGyms() {
+        LOG.info("Initializing gyms.");
         Pokemon pokemon01 = new Pokemon(PokemonName.GEODUDE);
         Pokemon pokemon02 = new Pokemon(PokemonName.OMANYTE);
         Pokemon pokemon03 = new Pokemon(PokemonName.RHYHORN);
