@@ -324,7 +324,7 @@ public class TrainerFightDaoTest extends AbstractTestNGSpringContextTests {
         trainer.setFirstName("Ash");
         trainer.setLastName("Ketchum");
         trainer.setUserName("ashhhh");
-        Date born = new Calendar.Builder().setDate(1990, 12, 24).build().getTime();
+        Date born = new Calendar.Builder().setDate(1990, 11, 24).build().getTime();
         trainer.setDateOfBirth(born);
     }
 
@@ -349,7 +349,7 @@ public class TrainerFightDaoTest extends AbstractTestNGSpringContextTests {
         TrainerFight trainerFight = new TrainerFight();
         trainerFight.setChallenger(trainer);
         trainerFight.setTargetGym(gym);
-        Date fightTime = new Calendar.Builder().setDate(1990, 12, (index % 20)+1).build().getTime();
+        Date fightTime = new Calendar.Builder().setDate(1990, 11, (index % 20)+1).build().getTime();
         trainerFight.setFightTime(fightTime);
         trainerFight.setWasChallengerSuccessful((index % 2) == 0);
         return trainerFight;

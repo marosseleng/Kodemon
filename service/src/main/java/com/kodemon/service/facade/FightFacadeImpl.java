@@ -8,6 +8,8 @@ import com.kodemon.api.facade.FightFacade;
 import com.kodemon.persistence.entity.*;
 import com.kodemon.service.interfaces.*;
 import com.kodemon.service.util.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +26,8 @@ import java.util.Random;
 @Service
 @Transactional
 public class FightFacadeImpl implements FightFacade {
+
+    private static final Logger LOG = LoggerFactory.getLogger(FightFacadeImpl.class);
 
     private BeanMappingService beanMappingService;
     private TrainerFightService trainerFightService;
@@ -56,8 +60,11 @@ public class FightFacadeImpl implements FightFacade {
         Trainer challengingTrainer = beanMappingService.mapTo(user, Trainer.class);
         Gym targetGym = beanMappingService.mapTo(gym, Gym.class);
 
+        LOG.debug("Beginning fight. User id: {}; Target gym id: {}.", user.getId(), gym.getId());
+
         boolean wasChallengerSuccessful = false;
         if (trainerFightService.wasFightForBadgeSuccessful(challengingTrainer, targetGym.getTrainer())) {
+            LOG.debug("Fight of User with id {} vs Gym with id {} successful.", user.getId(), gym.getId());
             Badge badge = badgeService.createBadgeOfGym(targetGym);
             badgeService.assignTrainerToBadge(challengingTrainer, badge);
             trainerService.addBadge(badge, challengingTrainer);
@@ -67,8 +74,10 @@ public class FightFacadeImpl implements FightFacade {
         FightDTO fight = new FightDTO();
         fight.setTargetGym(gym);
         fight.setChallenger(user);
-        fight.setFightTime(timeService.currentDate());
         fight.setWasChallengerSuccessful(wasChallengerSuccessful);
+        Date fightTime = timeService.currentDate();
+        fight.setFightTime(fightTime);
+        LOG.debug("Storing the result of the fight between User {} and Gym {}. Fight time: {}.", user.getId(), gym.getId(), fightTime);
         trainerFightService.save(beanMappingService.mapTo(fight, TrainerFight.class));
     }
 
@@ -76,9 +85,10 @@ public class FightFacadeImpl implements FightFacade {
     public void fightWildPokemon(UserDTO user, WildPokemonFightMode mode) {
         Trainer trainer = beanMappingService.mapTo(user, Trainer.class);
         Pokemon wildPokemon = pokemonService.generateWildPokemon(null);
+        LOG.debug("User {} fighting wild Pokemon in mode {}.", user.getId(), mode);
         Pokemon trainersPokemon = pokemonService.findByTrainer(trainer).get(0);
         Random rand = new Random();
-        wildPokemon.setLevel(trainersPokemon.getLevel() - 5 + rand.nextInt(10));
+        wildPokemon.setLevel(Math.max(1, trainersPokemon.getLevel() - 5 + rand.nextInt(10)));
 
         Pair<Double, Double> fightScore = pokemonFightService.getScorePair(trainersPokemon, wildPokemon);
 
@@ -88,6 +98,7 @@ public class FightFacadeImpl implements FightFacade {
             } else if (mode == WildPokemonFightMode.CATCH) {
                 pokemonService.save(wildPokemon);
                 trainerService.addPokemon(wildPokemon, trainer);
+                LOG.debug("Adding Pokemon {} to the User {}.", wildPokemon.getId(), user.getId());
             }
         }
     }

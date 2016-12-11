@@ -88,9 +88,9 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
 
         UserAuthDTO userAuth = new UserAuthDTO();
         userAuth.setUserName(trainer.getUserName());
-        userAuth.setPwdHash(trainer.getPwdHash());
+        userAuth.setPassword(trainer.getPwdHash());
 
-        when(trainerService.login(userAuth.getUserName(), userAuth.getPwdHash())).thenReturn(true);
+        when(trainerService.login(userAuth.getUserName(), userAuth.getPassword())).thenReturn(true);
         boolean result = userFacade.login(userAuth);
         assertThat(result, is(true));
     }
