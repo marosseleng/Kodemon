@@ -1,7 +1,6 @@
 package com.kodemon.sampledata;
 
 import com.kodemon.service.config.ServiceConfig;
-import javassist.tools.reflect.Sample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.ComponentScan;

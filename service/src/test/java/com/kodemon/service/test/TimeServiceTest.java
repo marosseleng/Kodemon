@@ -11,9 +11,7 @@ import javax.inject.Inject;
 import java.util.Date;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.lessThan;
+import static org.hamcrest.Matchers.*;
 
 /**
  * Tests for time service.
