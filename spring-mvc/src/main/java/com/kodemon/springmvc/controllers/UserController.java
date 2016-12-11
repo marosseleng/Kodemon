@@ -95,7 +95,7 @@ public class UserController {
     public String login(@RequestParam String username, @RequestParam String password, ServletRequest r, Model model) {
         UserAuthDTO userAuthDTO = new UserAuthDTO();
         userAuthDTO.setUserName(username);
-        userAuthDTO.setPwdHash(password);
+        userAuthDTO.setPassword(password);
 
         HttpServletRequest request = (HttpServletRequest) r;
         if(userFacade.login(userAuthDTO)) {
