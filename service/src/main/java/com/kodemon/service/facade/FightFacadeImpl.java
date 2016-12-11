@@ -64,7 +64,7 @@ public class FightFacadeImpl implements FightFacade {
 
         boolean wasChallengerSuccessful = false;
         if (trainerFightService.wasFightForBadgeSuccessful(challengingTrainer, targetGym.getTrainer())) {
-            LOG.debug("Fight of User with id {} vs Gym with id {} successful.");
+            LOG.debug("Fight of User with id {} vs Gym with id {} successful.", user.getId(), gym.getId());
             Badge badge = badgeService.createBadgeOfGym(targetGym);
             badgeService.assignTrainerToBadge(challengingTrainer, badge);
             trainerService.addBadge(badge, challengingTrainer);
