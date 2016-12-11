@@ -1,6 +1,7 @@
 package com.kodemon.springmvc.config;
 
 import com.kodemon.sampledata.SampleDataConfig;
+import com.kodemon.springmvc.controllers.UserController;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -23,7 +24,7 @@ import javax.validation.Validator;
 @EnableWebMvc
 @Configuration
 @Import({SampleDataConfig.class})
-@ComponentScan(basePackages = "com.kodemon.springmvc.controllers")
+@ComponentScan(basePackageClasses  = UserController.class)
 public class AppSpringMvcConfig extends WebMvcConfigurerAdapter {
 
     public static final String TEXTS = "Texts";

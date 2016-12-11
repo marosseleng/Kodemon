@@ -14,6 +14,8 @@ import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.persistence.enums.PokemonName;
 import com.kodemon.persistence.enums.PokemonType;
 import com.kodemon.service.interfaces.GymService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -34,6 +36,8 @@ import java.util.List;
 @Service
 public class GymServiceImpl implements GymService {
 
+    private static final Logger LOG = LoggerFactory.getLogger(GymServiceImpl.class);
+
     private GymDao gymDao;
     private TrainerDao trainerDao;
     private PokemonDao pokemonDao;
@@ -50,6 +54,7 @@ public class GymServiceImpl implements GymService {
 
     @Override
     public void initializeGyms() {
+        LOG.info("Initializing gyms.");
         Pokemon pokemon01 = new Pokemon(PokemonName.GEODUDE);
         Pokemon pokemon02 = new Pokemon(PokemonName.OMANYTE);
         Pokemon pokemon03 = new Pokemon(PokemonName.RHYHORN);
@@ -199,7 +204,7 @@ public class GymServiceImpl implements GymService {
         trainer0.setFirstName("Brock");
         trainer0.setLastName("Blindman");
         trainer0.setUserName("Brock");
-        Date dob = new Calendar.Builder().setDate(1987, 24, 8).build().getTime();
+        Date dob = new Calendar.Builder().setDate(1987, 8, 24).build().getTime();
         trainer0.setDateOfBirth(dob);
 
         Trainer trainer1 = new Trainer(pokemon11);
@@ -222,7 +227,7 @@ public class GymServiceImpl implements GymService {
         trainer2.setFirstName("Lucius");
         trainer2.setLastName("Surge");
         trainer2.setUserName("Headsh0tman");
-        dob = new Calendar.Builder().setDate(1989, 20, 12).build().getTime();
+        dob = new Calendar.Builder().setDate(1989, 11, 20).build().getTime();
         trainer2.setDateOfBirth(dob);
 
         Trainer trainer3 = new Trainer(pokemon31);
@@ -233,7 +238,7 @@ public class GymServiceImpl implements GymService {
         trainer3.setFirstName("Erika");
         trainer3.setLastName("Nadilowska");
         trainer3.setUserName("Krowka227");
-        dob = new Calendar.Builder().setDate(1994, 15, 2).build().getTime();
+        dob = new Calendar.Builder().setDate(1994, 2, 15).build().getTime();
         trainer3.setDateOfBirth(dob);
 
         Trainer trainer4 = new Trainer(pokemon41);
@@ -245,7 +250,7 @@ public class GymServiceImpl implements GymService {
         trainer4.setFirstName("Janine");
         trainer4.setLastName("Poisoulous");
         trainer4.setUserName("MsPoIsON1997");
-        dob = new Calendar.Builder().setDate(1997, 2, 7).build().getTime();
+        dob = new Calendar.Builder().setDate(1997, 7, 2).build().getTime();
         trainer4.setDateOfBirth(dob);
 
         Trainer trainer5 = new Trainer(pokemon51);
@@ -256,7 +261,7 @@ public class GymServiceImpl implements GymService {
         trainer5.setFirstName("Sabrina");
         trainer5.setLastName("McGonagall");
         trainer5.setUserName("Psyxox");
-        dob = new Calendar.Builder().setDate(1991, 10, 1).build().getTime();
+        dob = new Calendar.Builder().setDate(1991, 1, 10).build().getTime();
         trainer5.setDateOfBirth(dob);
 
         Trainer trainer6 = new Trainer(pokemon61);
@@ -268,7 +273,7 @@ public class GymServiceImpl implements GymService {
         trainer6.setFirstName("Blaine");
         trainer6.setLastName("Oldman");
         trainer6.setUserName("Quizman999");
-        dob = new Calendar.Builder().setDate(1952, 27, 7).build().getTime();
+        dob = new Calendar.Builder().setDate(1952, 7, 27).build().getTime();
         trainer6.setDateOfBirth(dob);
 
         Trainer trainer7 = new Trainer(pokemon71);
@@ -280,7 +285,7 @@ public class GymServiceImpl implements GymService {
         trainer7.setFirstName("Giovanni");
         trainer7.setLastName("Margherita");
         trainer7.setUserName("BadGuy3");
-        dob = new Calendar.Builder().setDate(1988, 5, 10).build().getTime();
+        dob = new Calendar.Builder().setDate(1988, 10, 5).build().getTime();
         trainer7.setDateOfBirth(dob);
 
         trainerDao.save(trainer0);
