@@ -1,6 +1,9 @@
 package com.kodemon.sampledata;
 
 import com.kodemon.service.config.ServiceConfig;
+import javassist.tools.reflect.Sample;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -19,8 +22,11 @@ public class SampleDataConfig {
     @Inject
     SampleDataLoadingFacade sampleDataLoadingFacade;
 
+    final static Logger LOG = LoggerFactory.getLogger(SampleDataConfig.class);
+
     @PostConstruct
-    public void dataLoading(){
+    public void dataLoading() {
+        LOG.debug("loading sample data");
         sampleDataLoadingFacade.loadData();
     }
 }

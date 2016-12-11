@@ -3,6 +3,8 @@ package com.kodemon.springmvc.controllers;
 import com.kodemon.api.dto.UserAuthDTO;
 import com.kodemon.api.dto.UserDTO;
 import com.kodemon.api.facade.UserFacade;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +25,8 @@ import java.util.Collection;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
+    final static Logger LOG = LoggerFactory.getLogger(UserController.class);
 
     @Inject
     private UserFacade userFacade;
@@ -48,7 +52,14 @@ public class UserController {
      */
     @RequestMapping(value = "/detail/{username}", method = RequestMethod.GET)
     public String detail(@PathVariable String username, Model model) {
-        model.addAttribute("trainer", userFacade.findUserByUserName(username).iterator().next());
+        Collection<UserDTO> user = userFacade.findUserByUserName(username);
+        if(user.isEmpty()) {
+            LOG.warn("No trainer with such username found");
+            model.addAttribute("alert_warning", "No trainer with such username found");
+            model.addAttribute("users", userFacade.findAllUsers());
+            return "/user/list";
+        }
+        model.addAttribute("trainer", user.iterator().next());
         return "user/detail";
     }
 
@@ -63,6 +74,7 @@ public class UserController {
     public String find(@RequestParam String username, Model model) {
         Collection<UserDTO> user = userFacade.findUserByUserName(username);
         if(user.isEmpty()) {
+            LOG.warn("No trainer with such username found");
             model.addAttribute("alert_warning", "No trainer with such username found");
             model.addAttribute("users", userFacade.findAllUsers());
             return "/user/list";
@@ -71,6 +83,14 @@ public class UserController {
         return "/user/detail";
     }
 
+    /**
+     *
+     * @param username of trainer to be logged in
+     * @param password of trainer to be logged in
+     * @param r servlet request to create session
+     * @param model data to display
+     * @return JSP page name
+     */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(@RequestParam String username, @RequestParam String password, ServletRequest r, Model model) {
         UserAuthDTO userAuthDTO = new UserAuthDTO();
