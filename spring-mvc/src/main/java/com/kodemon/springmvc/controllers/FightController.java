@@ -1,11 +1,10 @@
 package com.kodemon.springmvc.controllers;
 
-import com.kodemon.api.dto.FightDTO;
-import com.kodemon.api.dto.GymDTO;
-import com.kodemon.api.dto.UserAuthDTO;
-import com.kodemon.api.dto.UserDTO;
+import com.kodemon.api.dto.*;
+import com.kodemon.api.enums.WildPokemonFightMode;
 import com.kodemon.api.facade.FightFacade;
 import com.kodemon.api.facade.GymFacade;
+import com.kodemon.api.facade.PokemonFacade;
 import com.kodemon.api.facade.UserFacade;
 import com.kodemon.persistence.entity.Gym;
 import org.springframework.stereotype.Controller;
@@ -38,6 +37,9 @@ public class FightController {
 
     @Inject
     private UserFacade userFacade;
+
+    @Inject
+    private PokemonFacade pokemonFacade;
 
     @Inject
     private GymFacade gymFacade;
@@ -111,6 +113,28 @@ public class FightController {
         LOG.debug("listFightsOfUser()");
         return "fight/list";
     }
+
+    /*@RequestMapping(value = "/grass", method = RequestMethod.GET)
+    public String grass(ServletRequest r, Model model) {
+        HttpServletRequest request = (HttpServletRequest) r;
+        HttpSession session = request.getSession();
+        PokemonDTO wildPokemon = pokemonFacade.generateWildPokemon((UserDTO)session.getAttribute("authenticatedUser"));
+        session.setAttribute("wildPokemon", wildPokemon);
+        model.addAttribute("wildPokemon", wildPokemon);
+        LOG.debug("grass()");
+        return "fight/wild";
+    }
+
+    @RequestMapping(value = "/fightWild", method = RequestMethod.GET)
+    public String fightWild(@RequestParam String s, ServletRequest r, Model model) {
+        HttpServletRequest request = (HttpServletRequest) r;
+        HttpSession session = request.getSession();
+        WildPokemonFightMode mode = (s == "fight") ? WildPokemonFightMode.TRAIN : WildPokemonFightMode.CATCH;
+        boolean fightResult = fightFacade.fightWildPokemon((UserDTO)session.getAttribute("authenticatedUser"), (PokemonDTO)session.getAttribute("wildPokemon"), mode);
+        model.addAttribute("fightResult", fightResult);
+        LOG.debug("fightWild()");
+        return "fight/list";
+    }*/
 
     /**
      * Show detail of fight specified by its id

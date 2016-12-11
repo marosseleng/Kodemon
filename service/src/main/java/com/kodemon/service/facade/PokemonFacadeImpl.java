@@ -1,6 +1,7 @@
 package com.kodemon.service.facade;
 
 import com.kodemon.api.dto.PokemonDTO;
+import com.kodemon.api.dto.UserDTO;
 import com.kodemon.api.facade.PokemonFacade;
 import com.kodemon.persistence.entity.Pokemon;
 import com.kodemon.service.interfaces.BeanMappingService;
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
+import java.util.Random;
 
 /**
  * Pokemon facade implementation
@@ -37,4 +39,14 @@ public class PokemonFacadeImpl implements PokemonFacade{
         LOG.debug("Renaming Pokemon {}. New name: {}", pokemon, newName);
         pokemonService.renamePokemon(beanMappingService.mapTo(pokemon, Pokemon.class), newName);
     }
+
+    @Override
+    public PokemonDTO generateWildPokemon(UserDTO user) {
+        Random rand = new Random();
+        Pokemon wildPokemon = pokemonService.generateWildPokemon(null);
+        PokemonDTO trainersPokemon = user.getPokemons().get(0);
+        wildPokemon.setLevel(Math.max(1, trainersPokemon.getLevel() - 5 + rand.nextInt(10)));
+        return beanMappingService.mapTo(wildPokemon, PokemonDTO.class);
+    }
+
 }

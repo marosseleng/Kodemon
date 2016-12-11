@@ -2,6 +2,7 @@ package com.kodemon.service.facade;
 
 import com.kodemon.api.dto.FightDTO;
 import com.kodemon.api.dto.GymDTO;
+import com.kodemon.api.dto.PokemonDTO;
 import com.kodemon.api.dto.UserDTO;
 import com.kodemon.api.enums.WildPokemonFightMode;
 import com.kodemon.api.facade.FightFacade;
@@ -82,25 +83,26 @@ public class FightFacadeImpl implements FightFacade {
     }
 
     @Override
-    public void fightWildPokemon(UserDTO user, WildPokemonFightMode mode) {
+    public boolean fightWildPokemon(UserDTO user, PokemonDTO pokemon, WildPokemonFightMode mode) {
         Trainer trainer = beanMappingService.mapTo(user, Trainer.class);
-        Pokemon wildPokemon = pokemonService.generateWildPokemon(null);
+        Pokemon wildPokemon = beanMappingService.mapTo(pokemon, Pokemon.class);
         LOG.debug("User {} fighting wild Pokemon in mode {}.", user.getId(), mode);
         Pokemon trainersPokemon = pokemonService.findByTrainer(trainer).get(0);
-        Random rand = new Random();
-        wildPokemon.setLevel(Math.max(1, trainersPokemon.getLevel() - 5 + rand.nextInt(10)));
 
         Pair<Double, Double> fightScore = pokemonFightService.getScorePair(trainersPokemon, wildPokemon);
 
         if (fightScore.getX() > fightScore.getY()) {
             if (mode == WildPokemonFightMode.TRAIN) {
                 pokemonService.levelPokemonUp(trainersPokemon);
+                return true;
             } else if (mode == WildPokemonFightMode.CATCH) {
                 pokemonService.save(wildPokemon);
                 trainerService.addPokemon(wildPokemon, trainer);
                 LOG.debug("Adding Pokemon {} to the User {}.", wildPokemon.getId(), user.getId());
+                return true;
             }
         }
+        return false;
     }
 
     @Override

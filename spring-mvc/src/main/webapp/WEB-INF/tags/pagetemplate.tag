@@ -38,6 +38,7 @@
                 <li><kodemon:a href="/user/list">Trainers</kodemon:a></li>
                 <c:choose>
                     <c:when test="${not empty authenticatedUser}">
+                        <li><kodemon:a href="/fight/grass">Visit grass</kodemon:a></li>
                         <li><kodemon:a href="/user/detail/${authenticatedUser.userName}">My profile</kodemon:a></li>
                     </c:when>
                     <c:otherwise>

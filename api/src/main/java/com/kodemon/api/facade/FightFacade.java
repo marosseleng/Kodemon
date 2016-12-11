@@ -2,6 +2,7 @@ package com.kodemon.api.facade;
 
 import com.kodemon.api.dto.FightDTO;
 import com.kodemon.api.dto.GymDTO;
+import com.kodemon.api.dto.PokemonDTO;
 import com.kodemon.api.dto.UserDTO;
 import com.kodemon.api.enums.WildPokemonFightMode;
 
@@ -36,7 +37,7 @@ public interface FightFacade {
      * @param user user wanting to fight a wild Pokemon
      * @param mode {@link WildPokemonFightMode} saying what the trainer wants
      */
-    void fightWildPokemon(UserDTO user, WildPokemonFightMode mode);
+    boolean fightWildPokemon(UserDTO user, PokemonDTO pokemon, WildPokemonFightMode mode);
 
     /**
      * Returns fights, which has been played today
