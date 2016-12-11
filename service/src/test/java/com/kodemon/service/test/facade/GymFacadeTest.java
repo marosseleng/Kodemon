@@ -60,7 +60,7 @@ public class GymFacadeTest extends AbstractTestNGSpringContextTests {
         trainer2.setUserName("Timmy");
         trainer2.setFirstName("Tim");
         trainer2.setLastName("Chan");
-        born = new Calendar.Builder().setDate(1991, 12, 11).build().getTime();
+        born = new Calendar.Builder().setDate(1991, 11, 12).build().getTime();
         trainer2.setDateOfBirth(born);
 
         user1 = new UserDTO();
@@ -74,7 +74,7 @@ public class GymFacadeTest extends AbstractTestNGSpringContextTests {
         user2.setUserName("Timmy");
         user2.setFirstName("Tim");
         user2.setLastName("Chan");
-        born = new Calendar.Builder().setDate(1991, 12, 11).build().getTime();
+        born = new Calendar.Builder().setDate(1991, 11, 12).build().getTime();
         user2.setDateOfBirth(born);
 
         gym1 = new Gym();
