@@ -1,5 +1,6 @@
 package com.kodemon.rest.config;
 
+import com.kodemon.rest.resources.TrainerResource;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
@@ -16,6 +17,6 @@ import javax.ws.rs.ApplicationPath;
 @ApplicationPath("/pa165/api")
 public class JerseyAppConfiguration extends ResourceConfig {
     public JerseyAppConfiguration() {
-        register(JacksonFeature.class);
+        registerClasses(JacksonFeature.class, TrainerResource.class);
     }
 }

@@ -31,7 +31,7 @@ public class SpringWebContainerInitializer implements WebApplicationInitializer 
         servletContext.addListener(new ContextLoaderListener(webContext));
     }
 
-    public WebApplicationContext createWebAplicationContext(Class... configClasses) {
+    private WebApplicationContext createWebAplicationContext(Class... configClasses) {
         AnnotationConfigWebApplicationContext context;
         context = new AnnotationConfigWebApplicationContext();
         context.register(configClasses);
