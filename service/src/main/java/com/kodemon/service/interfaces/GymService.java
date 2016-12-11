@@ -35,6 +35,14 @@ public interface GymService {
     void delete(Gym gym);
 
     /**
+     * Find gym with the specified id
+     *
+     * @param id id of specific gym
+     * @return gym with the specified id
+     */
+    Gym findById(Long id);
+
+    /**
      * Returns a {@link List} of {@link Gym}s with the given username.
      *
      * @param city City to search for.

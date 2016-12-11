@@ -9,9 +9,9 @@
 <jsp:attribute name="body">
 
     <form method="get" action="${pageContext.request.contextPath}/fight/list">
-        <button type="submit" class="btn btn-primary" name="period" value="year">This years fights</button>
-        <button type="submit" class="btn btn-primary" name="period" value="month">This months fights</button>
-        <button type="submit" class="btn btn-primary" name="period" value="today">Todays fights</button>
+        <button type="submit" class="btn btn-primary" name="period" value="year">This year's fights</button>
+        <button type="submit" class="btn btn-primary" name="period" value="month">This month's fights</button>
+        <button type="submit" class="btn btn-primary" name="period" value="today">Today's fights</button>
     </form>
 
     <h4>Click on fight to see details</h4>

@@ -92,6 +92,7 @@ public interface FightFacade {
     Collection<FightDTO> listFightsOfGym(GymDTO gym);
 
     /**
+     * Returns fight of given id
      *
      * @param id
      * @return
