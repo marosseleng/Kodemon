@@ -88,7 +88,7 @@ public class FightFacadeImpl implements FightFacade {
         LOG.debug("User {} fighting wild Pokemon in mode {}.", user.getId(), mode);
         Pokemon trainersPokemon = pokemonService.findByTrainer(trainer).get(0);
         Random rand = new Random();
-        wildPokemon.setLevel(trainersPokemon.getLevel() - 5 + rand.nextInt(10));
+        wildPokemon.setLevel(Math.max(1, trainersPokemon.getLevel() - 5 + rand.nextInt(10)));
 
         Pair<Double, Double> fightScore = pokemonFightService.getScorePair(trainersPokemon, wildPokemon);
 
