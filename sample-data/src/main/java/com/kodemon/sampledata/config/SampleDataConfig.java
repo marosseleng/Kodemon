@@ -1,5 +1,7 @@
-package com.kodemon.sampledata;
+package com.kodemon.sampledata.config;
 
+import com.kodemon.sampledata.SampleDataLoadingFacade;
+import com.kodemon.sampledata.SampleDataLoadingFacadeImpl;
 import com.kodemon.service.config.ServiceConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
