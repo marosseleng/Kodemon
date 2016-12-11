@@ -37,7 +37,7 @@ public class SampleDataLoadingFacadeTest extends AbstractTestNGSpringContextTest
     @Test
     public void createSampleDataTest() {
         Assert.assertEquals(gymDao.findAll().size(), 8);
-        Assert.assertEquals(trainerDao.findAll().size(), 8);
-        Assert.assertEquals(pokemonDao.findAll().size(), 44);
+        Assert.assertEquals(trainerDao.findAll().size(), 9);
+        Assert.assertEquals(pokemonDao.findAll().size(), 45);
     }
 }

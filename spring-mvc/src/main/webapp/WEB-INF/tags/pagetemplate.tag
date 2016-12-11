@@ -35,10 +35,10 @@
                 <li><kodemon:a href="/">Home</kodemon:a></li>
                 <li><kodemon:a href="/">Fight history</kodemon:a></li>
                 <li><kodemon:a href="/">Gyms</kodemon:a></li>
-                <li><kodemon:a href="/">Trainers</kodemon:a></li>
+                <li><kodemon:a href="/user/list">Trainers</kodemon:a></li>
                 <c:choose>
                     <c:when test="${not empty authenticatedUser}">
-                        <li><kodemon:a href="/">My profile</kodemon:a></li>
+                        <li><kodemon:a href="/user/detail/${authenticatedUser.userName}">My profile</kodemon:a></li>
                     </c:when>
                     <c:otherwise>
                         <li><kodemon:a href="/login">Login</kodemon:a></li>
@@ -52,20 +52,6 @@
     <c:if test="${not empty title}">
         <div class="page-header">
             <h1><c:out value="${title}"/></h1>
-        </div>
-    </c:if>
-
-    <!-- authenticated user info -->
-    <c:if test="${not empty authenticatedUser}">
-        <div class="row">
-            <div class="col-xs-6 col-sm-8 col-md-9 col-lg-10"></div>
-            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <c:out value="Welcome ${authenticatedUser.firstName} ${authenticatedUser.lastName}"/>
-                    </div>
-                </div>
-            </div>
         </div>
     </c:if>
 
