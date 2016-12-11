@@ -10,6 +10,7 @@
 #####Model classes used:
 * [UserDTO](https://github.com/mseleng/Kodemon/blob/master/api/src/main/java/com/kodemon/api/dto/UserDTO.java)
 * [UserAndPasswordDTO](https://github.com/mseleng/Kodemon/blob/master/api/src/main/java/com/kodemon/api/dto/UserAndPasswordDTO.java)
+
 #####Available endpoints:
 * `GET` `/users`
     - **Description:** returns the list of all users in the system, represented as a `UserDTO` JSON object
