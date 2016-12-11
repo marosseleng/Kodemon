@@ -6,6 +6,7 @@ import com.kodemon.api.facade.UserFacade;
 import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.service.interfaces.BeanMappingService;
 import com.kodemon.service.interfaces.TrainerService;
+import com.kodemon.service.util.PasswordStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -39,9 +40,15 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public boolean register(UserDTO user, String pwdHash) {
+    public UserDTO register(UserDTO user, String pwdHash) {
         LOG.debug("Registering user with userName {}.", user.getUserName());
-        return trainerService.register(beanMappingService.mapTo(user, Trainer.class), pwdHash);
+        try {
+            Trainer trainer = trainerService.register(beanMappingService.mapTo(user, Trainer.class), pwdHash);
+            return beanMappingService.mapTo(trainer, UserDTO.class);
+        } catch (PasswordStorage.CannotPerformOperationException e) {
+            LOG.error("Error while registering user", e);
+            return null;
+        }
     }
 
     @Override
@@ -58,5 +65,10 @@ public class UserFacadeImpl implements UserFacade {
     @Override
     public Collection<UserDTO> findAllUsers() {
         return beanMappingService.mapCollectionTo(trainerService.findAll(), UserDTO.class);
+    }
+
+    @Override
+    public UserDTO findOneUser(Long id) {
+        return beanMappingService.mapTo(trainerService.findById(id), UserDTO.class);
     }
 }

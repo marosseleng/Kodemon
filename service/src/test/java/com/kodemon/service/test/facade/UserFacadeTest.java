@@ -8,6 +8,7 @@ import com.kodemon.service.config.ServiceConfig;
 import com.kodemon.service.facade.UserFacadeImpl;
 import com.kodemon.service.interfaces.BeanMappingService;
 import com.kodemon.service.interfaces.TrainerService;
+import com.kodemon.service.util.PasswordStorage;
 import org.mockito.Mockito;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -74,17 +75,17 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void registerTest() {
+    public void registerTest() throws PasswordStorage.CannotPerformOperationException {
         when(beanMappingService.mapTo(user, Trainer.class)).thenReturn(trainer);
-        when(trainerService.register(trainer, "password")).thenReturn(true);
-        assertThat(userFacade.register(user, "password"), is(true));
+        when(trainerService.register(trainer, "password")).thenReturn(trainer);
+        assertThat(userFacade.register(user, "password"), is(equalTo(user)));
     }
 
     @Test
-    public void loginTest() {
+    public void loginTest() throws PasswordStorage.CannotPerformOperationException {
         when(beanMappingService.mapTo(user, Trainer.class)).thenReturn(trainer);
-        when(trainerService.register(trainer, "password")).thenReturn(true);
-        assertThat(userFacade.register(user, "password"), is(true));
+        when(trainerService.register(trainer, "password")).thenReturn(trainer);
+        assertThat(userFacade.register(user, "password"), is(equalTo(user)));
 
         UserAuthDTO userAuth = new UserAuthDTO();
         userAuth.setUserName(trainer.getUserName());

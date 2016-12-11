@@ -19,7 +19,7 @@ public interface UserFacade {
      * @param user User details
      * @param password user's password
      */
-    boolean register(UserDTO user, String password);
+    UserDTO register(UserDTO user, String password);
 
     /**
      * Authenticates the user with given credentials
@@ -29,15 +29,25 @@ public interface UserFacade {
     boolean login(UserAuthDTO auth);
 
     /**
+     * Finds users with the given username (should be 1)
      *
-     * @param userName
-     * @return
+     * @param userName username to find
+     * @return Collection of Users
      */
     Collection<UserDTO> findUserByUserName(String userName);
 
     /**
+     * Finds all users
      *
-     * @return Set of use
+     * @return Collection of Users
      */
     Collection<UserDTO> findAllUsers();
+
+    /**
+     * Finds an user with the given id
+     *
+     * @param id id to look for
+     * @return An user with the given id
+     */
+    UserDTO findOneUser(Long id);
 }

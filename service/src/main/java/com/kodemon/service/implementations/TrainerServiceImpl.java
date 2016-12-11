@@ -33,19 +33,9 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Override
-    public boolean register(Trainer trainer, String password) {
-        try {
-            trainer.setPwdHash(PasswordStorage.createHash(password));
-            trainerDao.save(trainer);
-        } catch (PasswordStorage.CannotPerformOperationException e) {
-            LOG.error("Error while hashing the password.", e);
-            return false;
-        } catch (DataAccessException e) {
-            // probably a trainer with the given username exists
-            LOG.error("DataAccessException while saving the new Trainer to the db.", e);
-            return false;
-        }
-        return true;
+    public Trainer register(Trainer trainer, String password) throws PasswordStorage.CannotPerformOperationException {
+        trainer.setPwdHash(PasswordStorage.createHash(password));
+        return trainerDao.save(trainer);
     }
 
     @Override
@@ -75,13 +65,18 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Override
-    public void save(Trainer trainer) {
-        trainerDao.save(trainer);
+    public Trainer save(Trainer trainer) {
+        return trainerDao.save(trainer);
     }
 
     @Override
     public void delete(Trainer trainer) {
         trainerDao.delete(trainer);
+    }
+
+    @Override
+    public Trainer findById(Long id) {
+        return trainerDao.findOne(id);
     }
 
     @Override

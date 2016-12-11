@@ -1,5 +1,7 @@
 package com.kodemon.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.*;
 
 /**
@@ -9,9 +11,13 @@ import java.util.*;
  */
 public class UserDTO {
     private Long id;
+    @JsonProperty(required = true)
     private String userName;
+    @JsonProperty(required = true)
     private String firstName;
+    @JsonProperty(required = true)
     private String lastName;
+    @JsonProperty(required = true)
     private Date dateOfBirth;
     private Set<BadgeDTO> badges = new HashSet<>();
     private List<PokemonDTO> pokemons = new ArrayList<>();

@@ -3,6 +3,7 @@ package com.kodemon.service.interfaces;
 import com.kodemon.persistence.entity.Badge;
 import com.kodemon.persistence.entity.Pokemon;
 import com.kodemon.persistence.entity.Trainer;
+import com.kodemon.service.util.PasswordStorage;
 
 import java.util.Date;
 import java.util.List;
@@ -20,9 +21,9 @@ public interface TrainerService {
      *
      * @param trainer trainer to be registered(created), eg. correct {@link Trainer} instance that can be saved into db
      * @param password hash of user's password
-     * @return {@code true} iff the user was successfully created, {@code false} otherwise
+     * @return an instance of {@link Trainer} when successful
      */
-    boolean register(Trainer trainer, String password);
+    Trainer register(Trainer trainer, String password) throws PasswordStorage.CannotPerformOperationException;
 
     /**
      * Authenticates the user with given credentials
@@ -59,8 +60,9 @@ public interface TrainerService {
      * Saves the given trainer to the database.
      *
      * @param trainer trainer to be saved
+     * @return an instance of {@link Trainer} when successful, {@code null} otherwise
      */
-    void save(Trainer trainer);
+    Trainer save(Trainer trainer);
 
     /**
      * Deletes the given trainer from the database.
@@ -68,6 +70,14 @@ public interface TrainerService {
      * @param trainer trainer to be deleted
      */
     void delete(Trainer trainer);
+
+    /**
+     * Returns one trainer with the given id
+     *
+     * @param id id to look for
+     * @return trainer found
+     */
+    Trainer findById(Long id);
 
     /**
      * Returns a {@link List} of {@link Trainer}s with the given username.
