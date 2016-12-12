@@ -1,5 +1,6 @@
 package com.kodemon.service.test;
 
+import com.kodemon.persistence.dao.GymDao;
 import com.kodemon.persistence.dao.TrainerDao;
 import com.kodemon.persistence.dao.TrainerFightDao;
 import com.kodemon.persistence.entity.Gym;
@@ -43,6 +44,9 @@ public class TrainerFightServiceTest extends AbstractTransactionalTestNGSpringCo
 
     @Mock
     private TrainerDao trainerDao;
+
+    @Mock
+    private GymDao gymDao;
 
     @Inject
     @InjectMocks
@@ -99,11 +103,13 @@ public class TrainerFightServiceTest extends AbstractTransactionalTestNGSpringCo
         targetGym1.setTrainer(defender);
         targetGym1.setCity("Violet city");
         targetGym1.setType(PokemonType.GROUND);
+        targetGym1.setBadgeName("Badge1");
 
         targetGym2 = new Gym();
         targetGym2.setTrainer(challenger);
         targetGym2.setCity("Saffron city");
         targetGym2.setType(PokemonType.ELECTRIC);
+        targetGym2.setBadgeName("Badge2");
 
         firstFight = new TrainerFight();
         firstFight.setChallenger(challenger);
@@ -174,8 +180,9 @@ public class TrainerFightServiceTest extends AbstractTransactionalTestNGSpringCo
     @Test
     public void findByTargetGymTest() {
         when(trainerFightDao.findByTargetGym(targetGym2)).thenReturn(Collections.singletonList(secondFight));
+        when(gymDao.findByBadgeName(targetGym2.getBadgeName())).thenReturn(Collections.singletonList(targetGym2));
 
-        List<TrainerFight> result = trainerFightService.findByTargetGym(targetGym2);
+        List<TrainerFight> result = trainerFightService.findByTargetGym(targetGym2.getBadgeName());
         assertThat(result.size(), is(1));
         assertThat(result.get(0), is(secondFight));
 

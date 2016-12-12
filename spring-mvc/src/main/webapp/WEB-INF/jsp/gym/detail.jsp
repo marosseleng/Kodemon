@@ -11,5 +11,13 @@
     <h4>Gym master <kodemon:a href="/user/detail/${gym.trainer.userName}"><c:out value="${gym.trainer.firstName} ${gym.trainer.lastName}"/> (<c:out value="${gym.trainer.userName}"/>)</kodemon:a></h2>
     <h4><c:out value="${gym.type}"/> type</h2>
     <h4>Awards <c:out value="${gym.badgeName}"/></h4>
+
+    <form method="get" action="${pageContext.request.contextPath}/fight/listFightsOfGym">
+        <button type="submit" class="btn btn-primary" name="id" value="${gym.id}">This gym's fights</button>
+    </form>
+    <form method="get" action="${pageContext.request.contextPath}/fight/fightGym">
+        <button type="submit" class="btn btn-primary" name="id" value="${gym.id}">FIGHT IT!</button>
+    </form>
+
 </jsp:attribute>
 </kodemon:pagetemplate>

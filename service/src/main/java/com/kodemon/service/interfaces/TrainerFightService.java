@@ -46,10 +46,10 @@ public interface TrainerFightService {
     /**
      * Find all fights for the specified gym
      *
-     * @param targetGym gym for which the fights were
+     * @param badgeName gym's badgename to identify gym for which the fights were
      * @return list of fights for the specified gym
      */
-    List<TrainerFight> findByTargetGym(Gym targetGym);
+    List<TrainerFight> findByTargetGym(String badgeName);
 
     /**
      * Find all fight between specified times

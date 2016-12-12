@@ -90,7 +90,14 @@ public class FightController {
     @RequestMapping(value = "/listFightsOfGym", method = RequestMethod.GET)
     public String listFightsOfGym(@RequestParam Long id, Model model) {
         GymDTO gym = gymFacade.findGymById(id);
-        model.addAttribute("fights", fightFacade.listFightsOfGym(gym));
+        Collection<FightDTO> fights = fightFacade.listFightsOfGym(gym);
+        if(fights.isEmpty()) {
+            model.addAttribute("alert_warning", "No fights of this gym found");
+            model.addAttribute("gym", gym);
+            LOG.debug("Tried to look up fights of '" + gym.getCity() +"' Gym - the gym doesn't have any fight history.");
+            return "/gym/detail";
+        }
+        model.addAttribute("fights", fights);
         LOG.debug("Viewing fights of '" + gym.getCity() + "' Gym");
         return "fight/list";
     }

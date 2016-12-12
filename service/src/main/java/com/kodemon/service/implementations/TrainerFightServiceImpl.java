@@ -1,5 +1,6 @@
 package com.kodemon.service.implementations;
 
+import com.kodemon.persistence.dao.GymDao;
 import com.kodemon.persistence.dao.TrainerDao;
 import com.kodemon.persistence.dao.TrainerFightDao;
 import com.kodemon.persistence.entity.Gym;
@@ -32,12 +33,14 @@ public class TrainerFightServiceImpl implements TrainerFightService {
     private TrainerDao trainerDao;
     private TrainerFightDao trainerFightDao;
     private PokemonFightService pokemonFightService;
+    private GymDao gymDao;
 
     @Inject
-    public TrainerFightServiceImpl(TrainerDao trainerDao, TrainerFightDao trainerFightDao, PokemonFightService pokemonFightService) {
+    public TrainerFightServiceImpl(TrainerDao trainerDao, TrainerFightDao trainerFightDao, PokemonFightService pokemonFightService, GymDao gymDao) {
         this.trainerDao = trainerDao;
         this.trainerFightDao = trainerFightDao;
         this.pokemonFightService = pokemonFightService;
+        this.gymDao = gymDao;
     }
 
     @Override
@@ -78,8 +81,11 @@ public class TrainerFightServiceImpl implements TrainerFightService {
     }
 
     @Override
-    public List<TrainerFight> findByTargetGym(Gym targetGym) {
-        return trainerFightDao.findByTargetGym(targetGym);
+    public List<TrainerFight> findByTargetGym(String badgeName) {
+        Collection<Gym> gyms = gymDao.findByBadgeName(badgeName);
+        if (gyms.isEmpty())
+            return null;
+        return trainerFightDao.findByTargetGym(gyms.iterator().next());
     }
 
     @Override
