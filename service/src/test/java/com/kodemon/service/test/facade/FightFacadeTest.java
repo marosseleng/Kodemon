@@ -141,6 +141,9 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
         wildPokemonDto.setName(randomWildPokemon.getName());
         when(beanMappingService.mapTo(wildPokemonDto, Pokemon.class)).thenReturn(randomWildPokemon);
         when(beanMappingService.mapTo(randomWildPokemon, PokemonDTO.class)).thenReturn(wildPokemonDto);
+        List<Trainer> trainers = new ArrayList<>();
+        trainers.add(challenger);
+        when(trainerService.findByUserName(challengerDTO.getUserName())).thenReturn(trainers);
         fightFacade.fightWildPokemon(challengerDTO, wildPokemonDto, WildPokemonFightMode.TRAIN);
         Mockito.verify(pokemonService).levelPokemonUp(pikachu);
     }

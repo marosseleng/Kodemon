@@ -84,7 +84,10 @@ public class FightFacadeImpl implements FightFacade {
 
     @Override
     public boolean fightWildPokemon(UserDTO user, PokemonDTO pokemon, WildPokemonFightMode mode) {
-        Trainer trainer = beanMappingService.mapTo(user, Trainer.class);
+        Collection<Trainer> trainers = trainerService.findByUserName(user.getUserName());
+        if (trainers.isEmpty())
+            return false;
+        Trainer trainer = trainers.iterator().next();
         Pokemon wildPokemon = beanMappingService.mapTo(pokemon, Pokemon.class);
         LOG.debug("User {} fighting wild Pokemon in mode {}.", user.getId(), mode);
         Pokemon trainersPokemon = pokemonService.findByTrainer(trainer).get(0);
@@ -96,7 +99,7 @@ public class FightFacadeImpl implements FightFacade {
                 pokemonService.levelPokemonUp(trainersPokemon);
                 return true;
             } else if (mode == WildPokemonFightMode.CATCH) {
-                pokemonService.save(wildPokemon);
+                pokemonService.assignTrainerToPokemon(trainer, wildPokemon);
                 trainerService.addPokemon(wildPokemon, trainer);
                 LOG.debug("Adding Pokemon {} to the User {}.", wildPokemon.getId(), user.getId());
                 return true;

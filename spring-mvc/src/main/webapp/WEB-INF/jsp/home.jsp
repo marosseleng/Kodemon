@@ -9,7 +9,7 @@
 <jsp:attribute name="body">
 
     <div class="jumbotron">
-        <h1>Welcome to Kodemon! Lets catch them all...!</h1>
+        <h1>Welcome to Kodemon! Lets catch them all!</h1>
     </div>
 
 </jsp:attribute>

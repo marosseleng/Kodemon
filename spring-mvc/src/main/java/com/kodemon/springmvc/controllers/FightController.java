@@ -7,6 +7,8 @@ import com.kodemon.api.facade.GymFacade;
 import com.kodemon.api.facade.PokemonFacade;
 import com.kodemon.api.facade.UserFacade;
 import com.kodemon.persistence.entity.Gym;
+import com.kodemon.persistence.entity.Pokemon;
+import org.omg.CORBA.TRANSACTION_MODE;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,17 +34,22 @@ public class FightController {
 
     final static Logger LOG = LoggerFactory.getLogger(FightController.class);
 
-    @Inject
     private FightFacade fightFacade;
-
-    @Inject
     private UserFacade userFacade;
-
-    @Inject
     private PokemonFacade pokemonFacade;
+    private GymFacade gymFacade;
 
     @Inject
-    private GymFacade gymFacade;
+    public FightController(
+            FightFacade fightFacade,
+            UserFacade userFacade,
+            PokemonFacade pokemonFacade,
+            GymFacade gymFacade) {
+        this.fightFacade = fightFacade;
+        this.userFacade = userFacade;
+        this.pokemonFacade = pokemonFacade;
+        this.gymFacade = gymFacade;
+    }
 
     /**
      * Show list of all fights.
@@ -114,27 +121,47 @@ public class FightController {
         return "fight/list";
     }
 
-    /*@RequestMapping(value = "/grass", method = RequestMethod.GET)
+    @RequestMapping(value = "/grass", method = RequestMethod.GET)
     public String grass(ServletRequest r, Model model) {
         HttpServletRequest request = (HttpServletRequest) r;
         HttpSession session = request.getSession();
-        PokemonDTO wildPokemon = pokemonFacade.generateWildPokemon((UserDTO)session.getAttribute("authenticatedUser"));
+        if ((UserDTO)session.getAttribute("authenticatedUser") == null)
+        {
+            model.addAttribute("alert_warning", "You are not logged in!");
+            return "home";
+        }
+        Collection<UserDTO> users = userFacade.findUserByUserName(((UserDTO)session.getAttribute("authenticatedUser")).getUserName());
+        UserDTO user = users.iterator().next();
+        PokemonDTO wildPokemon = pokemonFacade.generateWildPokemon(user);
         session.setAttribute("wildPokemon", wildPokemon);
         model.addAttribute("wildPokemon", wildPokemon);
-        LOG.debug("grass()");
-        return "fight/wild";
+        model.addAttribute("trainersPokemon", user.getPokemons().get(0));
+        LOG.debug("A wild " + wildPokemon.getName().getName() + " level " + wildPokemon.getLevel() + " appeared!");
+        return "fight/grass";
     }
 
     @RequestMapping(value = "/fightWild", method = RequestMethod.GET)
-    public String fightWild(@RequestParam String s, ServletRequest r, Model model) {
+    public String fightWild(@RequestParam String mode, ServletRequest r, Model model) {
         HttpServletRequest request = (HttpServletRequest) r;
         HttpSession session = request.getSession();
-        WildPokemonFightMode mode = (s == "fight") ? WildPokemonFightMode.TRAIN : WildPokemonFightMode.CATCH;
-        boolean fightResult = fightFacade.fightWildPokemon((UserDTO)session.getAttribute("authenticatedUser"), (PokemonDTO)session.getAttribute("wildPokemon"), mode);
+        WildPokemonFightMode mode_ = (mode.equals("fight")) ? WildPokemonFightMode.TRAIN : WildPokemonFightMode.CATCH;
+        PokemonDTO wildPokemon = (PokemonDTO)session.getAttribute("wildPokemon");
+        if ((UserDTO)session.getAttribute("authenticatedUser") == null)
+        {
+            model.addAttribute("alert_warning", "You are not logged in!");
+            return "home";
+        }
+        Collection<UserDTO> users = userFacade.findUserByUserName(((UserDTO)session.getAttribute("authenticatedUser")).getUserName());
+        UserDTO user = users.iterator().next();
+        boolean fightResult = fightFacade.fightWildPokemon(user, wildPokemon, mode_);
         model.addAttribute("fightResult", fightResult);
-        LOG.debug("fightWild()");
-        return "fight/list";
-    }*/
+        if (fightResult)
+            model.addAttribute("alert_success", (mode_ == WildPokemonFightMode.CATCH ? "Gotcha! " + wildPokemon.getName().getName() + " was caught!" : wildPokemon.getName().getName() + " fainted. " + user.getPokemons().get(0).getName().getName() + " leveled up to " + (user.getPokemons().get(0).getLevel() + 1)));
+        else
+            model.addAttribute("alert_warning", (mode_ == WildPokemonFightMode.CATCH ? wildPokemon.getName().getName() + " flew away!" : user.getPokemons().get(0).getName().getName() + " fainted! You ran to the nearest PokeCenter and healed your Pokemon."));
+        LOG.debug((mode_ == WildPokemonFightMode.CATCH ? "Catching" : "Fighting") + " wild " + wildPokemon.getName().getName() + " level " + wildPokemon.getLevel() + " -> " + (fightResult ? "Success!" : "Failed"));
+        return "home";
+    }
 
     /**
      * Show detail of fight specified by its id
