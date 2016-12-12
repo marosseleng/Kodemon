@@ -34,7 +34,7 @@
             <ul class="nav navbar-nav">
                 <li><kodemon:a href="/">Home</kodemon:a></li>
                 <li><kodemon:a href="/fight/list?period=all">Fight history</kodemon:a></li>
-                <li><kodemon:a href="/">Gyms</kodemon:a></li>
+                <li><kodemon:a href="/gym/list">Gyms</kodemon:a></li>
                 <li><kodemon:a href="/user/list">Trainers</kodemon:a></li>
                 <c:choose>
                     <c:when test="${not empty authenticatedUser}">

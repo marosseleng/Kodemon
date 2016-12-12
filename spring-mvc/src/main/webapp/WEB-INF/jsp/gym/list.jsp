@@ -15,9 +15,9 @@
         <button type="submit" class="btn btn-primary">Find gym by id</button>
     </form>
 
-    <h4>Click on name to see details</h4>
+    <h4>Click on gym to see its details</h4>
     <c:forEach items="${gyms}" var="gym">
-        <h3><kodemon:a href="detail/${gym.id}"><c:out value="${gym.id} ${trainer.lastName}" /></kodemon:a></h3>
+        <h3><kodemon:a href="detail/${gym.id}"><c:out value="${gym.id}": "${gym.city}" ("${gym.pokemonType}")/></kodemon:a></h3>
     </c:forEach>
 </jsp:attribute>
 </kodemon:pagetemplate>
