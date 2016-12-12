@@ -30,6 +30,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
     private PokemonDao pokemonDao;
     private TrainerFightDao trainerFightDao;
 
+    @Inject
     public SampleDataLoadingFacadeImpl(
             GymService gymService,
             TrainerService trainerService,

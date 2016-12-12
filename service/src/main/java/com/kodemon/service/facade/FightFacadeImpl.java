@@ -90,7 +90,10 @@ public class FightFacadeImpl implements FightFacade {
         Trainer trainer = trainers.iterator().next();
         Pokemon wildPokemon = beanMappingService.mapTo(pokemon, Pokemon.class);
         LOG.debug("User {} fighting wild Pokemon in mode {}.", user.getId(), mode);
-        Pokemon trainersPokemon = pokemonService.findByTrainer(trainer).get(0);
+        Collection<Pokemon> trainersPokemons = pokemonService.findByTrainer(trainer);
+        if (trainersPokemons.isEmpty())
+            return false;
+        Pokemon trainersPokemon = trainersPokemons.iterator().next();
 
         Pair<Double, Double> fightScore = pokemonFightService.getScorePair(trainersPokemon, wildPokemon);
 

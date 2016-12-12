@@ -46,12 +46,7 @@ public class PokemonFacadeImpl implements PokemonFacade{
 
     @Override
     public PokemonDTO generateWildPokemon(UserDTO user) {
-        Random rand = new Random();
-        Pokemon wildPokemon = pokemonService.generateWildPokemon(null);
-        PokemonDTO trainersPokemon = user.getPokemons().get(0);
-        wildPokemon.setLevel(Math.max(1, trainersPokemon.getLevel() - 5 + rand.nextInt(10)));
-        pokemonService.save(wildPokemon);
-        return beanMappingService.mapTo(wildPokemon, PokemonDTO.class);
+        return beanMappingService.mapTo(pokemonService.generateWildPokemon(null, user.getPokemons().get(0).getLevel() - 5, user.getPokemons().get(0).getLevel() + 5), PokemonDTO.class);
     }
 
 }

@@ -11,7 +11,7 @@
     <h1>${wildPokemon.name.name}</h1>
     <h2>Level ${wildPokemon.level}</h2>
     <form method="get" action="${pageContext.request.contextPath}/fight/fightWild">
-        <button type="submit" class="btn btn-primary" name="mode" value="fight">FIGHT IT!</button>
+        <button type="submit" class="btn btn-primary" name="mode" value="train">FIGHT IT!</button>
         <button type="submit" class="btn btn-primary" name="mode" value="catch">CATCH IT!</button>
     </form>
     <h4>You have:</h4>

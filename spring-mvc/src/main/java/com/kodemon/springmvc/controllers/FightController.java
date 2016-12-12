@@ -147,7 +147,7 @@ public class FightController {
     public String fightWild(@RequestParam String mode, ServletRequest r, Model model) {
         HttpServletRequest request = (HttpServletRequest) r;
         HttpSession session = request.getSession();
-        WildPokemonFightMode mode_ = (mode.equals("fight")) ? WildPokemonFightMode.TRAIN : WildPokemonFightMode.CATCH;
+        WildPokemonFightMode mode_ = (mode.equals("train")) ? WildPokemonFightMode.TRAIN : WildPokemonFightMode.CATCH;
         PokemonDTO wildPokemon = (PokemonDTO)session.getAttribute("wildPokemon");
         if ((UserDTO)session.getAttribute("authenticatedUser") == null)
         {
@@ -167,7 +167,7 @@ public class FightController {
     }
 
     @RequestMapping(value = "/fightGym", method = RequestMethod.GET)
-    public String fightWild(@RequestParam Long id, ServletRequest r, Model model) {
+    public String fightGym(@RequestParam Long id, ServletRequest r, Model model) {
         HttpServletRequest request = (HttpServletRequest) r;
         HttpSession session = request.getSession();
         if ((UserDTO)session.getAttribute("authenticatedUser") == null)

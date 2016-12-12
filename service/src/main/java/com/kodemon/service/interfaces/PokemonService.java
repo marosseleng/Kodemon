@@ -24,9 +24,11 @@ public interface PokemonService {
      * The only way a Pokemon can be created is through this method.
      *
      * @param type (optional) type of the Pokemon
+     * @param minLevel minimum level of the Pokemon
+     * @param maxLevel maximum level of the Pokemon
      * @return generated wild Pokemon
      */
-    Pokemon generateWildPokemon(@Nullable PokemonType type);
+    Pokemon generateWildPokemon(@Nullable PokemonType type, int minLevel, int maxLevel);
 
     /**
      * Levels up the given Pokemon

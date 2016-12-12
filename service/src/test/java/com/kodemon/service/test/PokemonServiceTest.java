@@ -107,7 +107,7 @@ public class PokemonServiceTest extends AbstractTestNGSpringContextTests {
     @Test
     void testGenerateRandomPokemonWithNullType() {
         for (int i = 0; i < NUMBER_OF_GENERATED_POKEMON; i++) {
-            Pokemon generated = service.generateWildPokemon(null);
+            Pokemon generated = service.generateWildPokemon(null, pokemon.getLevel() - 5, pokemon.getLevel() + 5);
             assertThat(generated, not(is(nullValue(Pokemon.class))));
             assertThat(generated.getTrainer(), is(nullValue(Trainer.class)));
             assertThat(generated.getName(), isIn(PokemonName.values()));
@@ -119,7 +119,7 @@ public class PokemonServiceTest extends AbstractTestNGSpringContextTests {
     void testGenerateRandomPokemonWithNonNullType() {
         for (int i = 0; i < NUMBER_OF_GENERATED_POKEMON; i++) {
             PokemonType desiredType = PokemonType.values()[NUMBER_OF_GENERATED_POKEMON % PokemonType.values().length];
-            Pokemon generated = service.generateWildPokemon(desiredType);
+            Pokemon generated = service.generateWildPokemon(desiredType, pokemon.getLevel() - 5, pokemon.getLevel() + 5);
             // not(is(nullValue(Pokemon.class))) is a workaround, because isNotNull() is probably too general
             assertThat(generated, not(is(nullValue(Pokemon.class))));
             assertThat(desiredType, isIn(generated.getType()));
