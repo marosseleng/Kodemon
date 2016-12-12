@@ -19,11 +19,10 @@ public interface FightFacade {
 
     /**
      * Represents an attempt to conquer the {@link com.kodemon.persistence.entity.Gym}
-     *
-     * @param user user that wants to conquer the gym
+     *  @param user user that wants to conquer the gym
      * @param gym gym to be challenged
      */
-    void fightForBadge(UserDTO user, GymDTO gym);
+    boolean fightForBadge(UserDTO user, GymDTO gym);
 
     /**
      * Fights a wild {@link com.kodemon.persistence.entity.Pokemon}

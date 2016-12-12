@@ -18,7 +18,6 @@ import javax.inject.Inject;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Random;
 
 /**
  * @author Oliver Roch
@@ -57,7 +56,7 @@ public class FightFacadeImpl implements FightFacade {
     }
 
     @Override
-    public void fightForBadge(UserDTO user, GymDTO gym) {
+    public boolean fightForBadge(UserDTO user, GymDTO gym) {
         Trainer challengingTrainer = beanMappingService.mapTo(user, Trainer.class);
         Gym targetGym = beanMappingService.mapTo(gym, Gym.class);
 
@@ -80,6 +79,7 @@ public class FightFacadeImpl implements FightFacade {
         fight.setFightTime(fightTime);
         LOG.debug("Storing the result of the fight between User {} and Gym {}. Fight time: {}.", user.getId(), gym.getId(), fightTime);
         trainerFightService.save(beanMappingService.mapTo(fight, TrainerFight.class));
+        return wasChallengerSuccessful;
     }
 
     @Override

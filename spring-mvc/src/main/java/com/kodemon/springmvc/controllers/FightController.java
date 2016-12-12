@@ -154,12 +154,33 @@ public class FightController {
         Collection<UserDTO> users = userFacade.findUserByUserName(((UserDTO)session.getAttribute("authenticatedUser")).getUserName());
         UserDTO user = users.iterator().next();
         boolean fightResult = fightFacade.fightWildPokemon(user, wildPokemon, mode_);
-        model.addAttribute("fightResult", fightResult);
         if (fightResult)
             model.addAttribute("alert_success", (mode_ == WildPokemonFightMode.CATCH ? "Gotcha! " + wildPokemon.getName().getName() + " was caught!" : wildPokemon.getName().getName() + " fainted. " + user.getPokemons().get(0).getName().getName() + " leveled up to " + (user.getPokemons().get(0).getLevel() + 1)));
         else
             model.addAttribute("alert_warning", (mode_ == WildPokemonFightMode.CATCH ? wildPokemon.getName().getName() + " flew away!" : user.getPokemons().get(0).getName().getName() + " fainted! You ran to the nearest PokeCenter and healed your Pokemon."));
         LOG.debug((mode_ == WildPokemonFightMode.CATCH ? "Catching" : "Fighting") + " wild " + wildPokemon.getName().getName() + " level " + wildPokemon.getLevel() + " -> " + (fightResult ? "Success!" : "Failed"));
+        return "home";
+    }
+
+    @RequestMapping(value = "/fightGym", method = RequestMethod.GET)
+    public String fightWild(@RequestParam Long id, ServletRequest r, Model model) {
+        HttpServletRequest request = (HttpServletRequest) r;
+        HttpSession session = request.getSession();
+        if ((UserDTO)session.getAttribute("authenticatedUser") == null)
+        {
+            model.addAttribute("alert_warning", "You are not logged in!");
+            return "home";
+        }
+        Collection<UserDTO> users = userFacade.findUserByUserName(((UserDTO)session.getAttribute("authenticatedUser")).getUserName());
+        UserDTO user = users.iterator().next();
+        GymDTO gym = gymFacade.findGymById(id);
+        boolean fightResult = fightFacade.fightForBadge(user, gym);
+        model.addAttribute("fightResult", fightResult);
+        if (fightResult)
+            model.addAttribute("alert_success", "You beat " + gym.getTrainer().getUserName() + "! You received " + gym.getBadgeName());
+        else
+            model.addAttribute("alert_warning", "You lost!");
+        LOG.debug("Fighting " + gym.getCity() + " Gym -> " + (fightResult ? "Success!" : "Failed"));
         return "home";
     }
 
