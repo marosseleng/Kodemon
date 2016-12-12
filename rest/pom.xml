@@ -24,7 +24,7 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <path>/pa165/rest</path>
+                    <path>/pa165</path>
                 </configuration>
             </plugin>
             <plugin>
@@ -68,6 +68,13 @@
         <dependency>
             <groupId>org.glassfish.jersey.ext</groupId>
             <artifactId>jersey-spring3</artifactId>
+            <exclusions>
+                <!--Colliding with hibernate-->
+                <exclusion>
+                    <groupId>org.glassfish.hk2.external</groupId>
+                    <artifactId>bean-validator</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--JACKSON-->
         <dependency>
@@ -82,12 +89,22 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
         </dependency>
-
+        <!--OTHER-->
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-            <scope>provided</scope>
+            <groupId>com.kodemon</groupId>
+            <artifactId>sample-data</artifactId>
+            <version>${project.parent.version}</version>
+            <!-- this had to be excluded to avoid conflicts from tomcat and hibernate core -->
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.el</groupId>
+                    <artifactId>el-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-api</artifactId>
         </dependency>
     </dependencies>
 </project>

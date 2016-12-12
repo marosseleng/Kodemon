@@ -7,6 +7,7 @@ import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.persistence.enums.PokemonName;
 import com.kodemon.service.interfaces.GymService;
 import com.kodemon.service.interfaces.TrainerService;
+import com.kodemon.service.util.PasswordStorage;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,20 +22,26 @@ import java.util.Date;
 @Component
 @Transactional
 public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
-    @Inject
     private GymService gymService;
-
-    @Inject
     private TrainerService trainerService;
-
-    @Inject
     private TrainerDao trainerDao;
-
-    @Inject
     private PokemonDao pokemonDao;
 
+    @Inject
+    public SampleDataLoadingFacadeImpl(
+            GymService gymService,
+            TrainerService trainerService,
+            TrainerDao trainerDao,
+            PokemonDao pokemonDao) {
+        this.gymService = gymService;
+        this.trainerService = trainerService;
+        this.trainerDao = trainerDao;
+        this.pokemonDao = pokemonDao;
+
+    }
+
     @Override
-    public void loadData() {
+    public void loadData() throws PasswordStorage.CannotPerformOperationException {
         gymService.initializeGyms();
 
         Pokemon pikachu = new Pokemon(PokemonName.PIKACHU);
@@ -53,6 +60,5 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 
         pikachu.setTrainer(ash);
         pokemonDao.save(pikachu);
-
     }
 }

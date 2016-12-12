@@ -1,6 +1,6 @@
 package com.kodemon.springmvc.config;
 
-import com.kodemon.sampledata.SampleDataConfig;
+import com.kodemon.sampledata.config.SampleDataConfig;
 import com.kodemon.springmvc.controllers.UserController;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
