@@ -8,8 +8,8 @@
 <kodemon:pagetemplate title="${gym.city} gym">
 <jsp:attribute name="body">
 
+    <h4>Gym master <kodemon:a href="/user/detail/${gym.trainer.userName}"><c:out value="${gym.trainer.firstName} ${gym.trainer.lastName}"/> (<c:out value="${gym.trainer.userName}"/>)</kodemon:a></h2>
     <h4><c:out value="${gym.type}"/> type</h2>
-    <h4>Gym master <c:out value="${gym.trainer.firstName} ${gym.trainer.lastName}"/> (<c:out value="${gym.trainer.userName}"/>)</h2>
     <h4>Awards <c:out value="${gym.badgeName}"/></h4>
 </jsp:attribute>
 </kodemon:pagetemplate>
