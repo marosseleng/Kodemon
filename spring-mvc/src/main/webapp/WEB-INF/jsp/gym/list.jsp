@@ -7,17 +7,9 @@
 
 <kodemon:pagetemplate title="List of all gyms">
 <jsp:attribute name="body">
-
-    <form method="get" action="${pageContext.request.contextPath}/gym/find">
-        <div class="form-group">
-            <input type="text" name="id" class="form-control" placeholder="Enter id" />
-        </div>
-        <button type="submit" class="btn btn-primary">Find gym by id</button>
-    </form>
-
     <h4>Click on gym to see its details</h4>
-    <c:forEach items="${gyms}" var="gym">
-        <h3><kodemon:a href="detail/${gym.id}"><c:out value="${gym.id}": "${gym.city}" ("${gym.pokemonType}")/></kodemon:a></h3>
-    </c:forEach>
+        <c:forEach items="${gyms}" var="gym">
+            <h3><kodemon:a href="detail/${gym.id}"><c:out value="${gym.id}: ${gym.city} (${gym.type})" /></kodemon:a></h3>
+        </c:forEach>
 </jsp:attribute>
 </kodemon:pagetemplate>

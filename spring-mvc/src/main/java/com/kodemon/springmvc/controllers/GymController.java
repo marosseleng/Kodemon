@@ -29,8 +29,12 @@ public class GymController {
 
     final static Logger LOG = LoggerFactory.getLogger(GymController.class);
 
-    @Inject
     private GymFacade gymFacade;
+
+    @Inject
+    public GymController(GymFacade gymFacade) {
+        this.gymFacade = gymFacade;
+    }
 
     /**
      * Show list of all gyms.
@@ -60,27 +64,7 @@ public class GymController {
             model.addAttribute("gyms", gymFacade.findAll());
             return "/gym/list";
         }
-        model.addAttribute("gym");
+        model.addAttribute("gym", gym);
         return "gym/detail";
-    }
-
-    /**
-     * Find gym by its id and show his detail page if exists or alert if not.
-     *
-     * @param id of the chosen gym
-     * @param model data to display
-     * @return JSP page name
-     */
-    @RequestMapping(value = "/find", method = RequestMethod.GET)
-    public String find(@RequestParam Long id, Model model) {
-        GymDTO gym = gymFacade.findGymById(id);
-        if(gym == null) {
-            LOG.warn("No gym with this id found");
-            model.addAttribute("alert_warning", "No gym with this id found");
-            model.addAttribute("gyms", gymFacade.findAll());
-            return "/gym/list";
-        }
-        model.addAttribute("gym");
-        return "/gym/detail";
     }
 }
