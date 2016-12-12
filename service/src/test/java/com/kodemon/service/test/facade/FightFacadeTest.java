@@ -130,14 +130,21 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
         randomWildPokemon.setName(PokemonName.ABRA);
         randomWildPokemon.setLevel(1);
         randomWildPokemon.setNickname("Teleportabra");
-        when(pokemonService.generateWildPokemon(null)).thenReturn(randomWildPokemon);
 
         List<Pokemon> trainersPokemons = new ArrayList<>();
         trainersPokemons.add(pikachu);
         when(pokemonService.findByTrainer(challenger)).thenReturn(trainersPokemons);
         when(pokemonFightService.getScorePair(pikachu, randomWildPokemon)).thenReturn(new Pair<Double, Double>(20.0, 1.0));
 
-        fightFacade.fightWildPokemon(challengerDTO, WildPokemonFightMode.TRAIN);
+        PokemonDTO wildPokemonDto = new PokemonDTO();
+        wildPokemonDto.setLevel(randomWildPokemon.getLevel());
+        wildPokemonDto.setName(randomWildPokemon.getName());
+        when(beanMappingService.mapTo(wildPokemonDto, Pokemon.class)).thenReturn(randomWildPokemon);
+        when(beanMappingService.mapTo(randomWildPokemon, PokemonDTO.class)).thenReturn(wildPokemonDto);
+        List<Trainer> trainers = new ArrayList<>();
+        trainers.add(challenger);
+        when(trainerService.findByUserName(challengerDTO.getUserName())).thenReturn(trainers);
+        fightFacade.fightWildPokemon(challengerDTO, wildPokemonDto, WildPokemonFightMode.TRAIN);
         Mockito.verify(pokemonService).levelPokemonUp(pikachu);
     }
 
@@ -179,7 +186,7 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
     public void listFightsOfTrainerTest() {
         when(beanMappingService.mapTo(challengerDTO, Trainer.class)).thenReturn(challenger);
         when(beanMappingService.mapCollectionTo(trainerFights, FightDTO.class)).thenReturn(fights);
-        when(trainerFightService.findByChallenger(challenger)).thenReturn(trainerFights);
+        when(trainerFightService.findByChallenger(challenger.getUserName())).thenReturn(trainerFights);
         Collection<FightDTO> fights = fightFacade.listFightsOfTrainer(challengerDTO);
         assertThat(fights.size(), is(2));
     }

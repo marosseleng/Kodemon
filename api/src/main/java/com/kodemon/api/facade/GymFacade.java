@@ -17,4 +17,12 @@ public interface GymFacade {
      * @return a {@link List} of {@link com.kodemon.persistence.entity.Gym}s
      */
     Collection<GymDTO> findAll();
+
+    /**
+     * Returns gym of given id
+     *
+     * @param id
+     * @return
+     */
+    GymDTO findGymById(Long id);
 }

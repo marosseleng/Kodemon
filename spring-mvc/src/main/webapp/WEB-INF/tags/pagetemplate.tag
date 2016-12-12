@@ -33,11 +33,12 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li><kodemon:a href="/">Home</kodemon:a></li>
-                <li><kodemon:a href="/">Fight history</kodemon:a></li>
+                <li><kodemon:a href="/fight/list?period=all">Fight history</kodemon:a></li>
                 <li><kodemon:a href="/">Gyms</kodemon:a></li>
                 <li><kodemon:a href="/user/list">Trainers</kodemon:a></li>
                 <c:choose>
                     <c:when test="${not empty authenticatedUser}">
+                        <li><kodemon:a href="/fight/grass">Visit grass</kodemon:a></li>
                         <li><kodemon:a href="/user/detail/${authenticatedUser.userName}">My profile</kodemon:a></li>
                     </c:when>
                     <c:otherwise>

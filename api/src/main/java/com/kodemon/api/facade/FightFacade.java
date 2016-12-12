@@ -2,6 +2,7 @@ package com.kodemon.api.facade;
 
 import com.kodemon.api.dto.FightDTO;
 import com.kodemon.api.dto.GymDTO;
+import com.kodemon.api.dto.PokemonDTO;
 import com.kodemon.api.dto.UserDTO;
 import com.kodemon.api.enums.WildPokemonFightMode;
 
@@ -18,11 +19,10 @@ public interface FightFacade {
 
     /**
      * Represents an attempt to conquer the {@link com.kodemon.persistence.entity.Gym}
-     *
-     * @param user user that wants to conquer the gym
+     *  @param user user that wants to conquer the gym
      * @param gym gym to be challenged
      */
-    void fightForBadge(UserDTO user, GymDTO gym);
+    boolean fightForBadge(UserDTO user, GymDTO gym);
 
     /**
      * Fights a wild {@link com.kodemon.persistence.entity.Pokemon}
@@ -36,7 +36,7 @@ public interface FightFacade {
      * @param user user wanting to fight a wild Pokemon
      * @param mode {@link WildPokemonFightMode} saying what the trainer wants
      */
-    void fightWildPokemon(UserDTO user, WildPokemonFightMode mode);
+    boolean fightWildPokemon(UserDTO user, PokemonDTO pokemon, WildPokemonFightMode mode);
 
     /**
      * Returns fights, which has been played today
@@ -90,5 +90,13 @@ public interface FightFacade {
      * @return a {@link List} of {@link FightDTO}s
      */
     Collection<FightDTO> listFightsOfGym(GymDTO gym);
+
+    /**
+     * Returns fight of given id
+     *
+     * @param id
+     * @return
+     */
+    FightDTO findFightById(Long id);
 }
 

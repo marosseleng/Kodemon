@@ -1,5 +1,6 @@
 package com.kodemon.service.implementations;
 
+import com.kodemon.persistence.dao.TrainerDao;
 import com.kodemon.persistence.dao.TrainerFightDao;
 import com.kodemon.persistence.entity.Gym;
 import com.kodemon.persistence.entity.Pokemon;
@@ -7,10 +8,12 @@ import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.persistence.entity.TrainerFight;
 import com.kodemon.service.interfaces.PokemonFightService;
 import com.kodemon.service.interfaces.TrainerFightService;
+import com.kodemon.service.interfaces.TrainerService;
 import com.kodemon.service.util.Pair;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -26,11 +29,13 @@ public class TrainerFightServiceImpl implements TrainerFightService {
 
     public static final int AMOUNT_OF_POKEMONS_FOR_MATCH = 6;
 
+    private TrainerDao trainerDao;
     private TrainerFightDao trainerFightDao;
     private PokemonFightService pokemonFightService;
 
     @Inject
-    public TrainerFightServiceImpl(TrainerFightDao trainerFightDao, PokemonFightService pokemonFightService) {
+    public TrainerFightServiceImpl(TrainerDao trainerDao, TrainerFightDao trainerFightDao, PokemonFightService pokemonFightService) {
+        this.trainerDao = trainerDao;
         this.trainerFightDao = trainerFightDao;
         this.pokemonFightService = pokemonFightService;
     }
@@ -62,8 +67,14 @@ public class TrainerFightServiceImpl implements TrainerFightService {
     }
 
     @Override
-    public List<TrainerFight> findByChallenger(Trainer challenger) {
-        return trainerFightDao.findByChallenger(challenger);
+    public TrainerFight findById(Long id) {
+        return trainerFightDao.findOne(id);
+    }
+
+    @Override
+    public List<TrainerFight> findByChallenger(String username) {
+        Collection<Trainer> challenger = trainerDao.findByUserName(username);
+        return trainerFightDao.findByChallenger(challenger.iterator().next());
     }
 
     @Override

@@ -2,8 +2,10 @@ package com.kodemon.sampledata;
 
 import com.kodemon.persistence.dao.PokemonDao;
 import com.kodemon.persistence.dao.TrainerDao;
+import com.kodemon.persistence.dao.TrainerFightDao;
 import com.kodemon.persistence.entity.Pokemon;
 import com.kodemon.persistence.entity.Trainer;
+import com.kodemon.persistence.entity.TrainerFight;
 import com.kodemon.persistence.enums.PokemonName;
 import com.kodemon.service.interfaces.GymService;
 import com.kodemon.service.interfaces.TrainerService;
@@ -26,18 +28,20 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
     private TrainerService trainerService;
     private TrainerDao trainerDao;
     private PokemonDao pokemonDao;
+    private TrainerFightDao trainerFightDao;
 
     @Inject
     public SampleDataLoadingFacadeImpl(
             GymService gymService,
             TrainerService trainerService,
             TrainerDao trainerDao,
-            PokemonDao pokemonDao) {
+            PokemonDao pokemonDao,
+            TrainerFightDao trainerFightDao) {
         this.gymService = gymService;
         this.trainerService = trainerService;
         this.trainerDao = trainerDao;
         this.pokemonDao = pokemonDao;
-
+        this.trainerFightDao = trainerFightDao;
     }
 
     @Override
@@ -60,5 +64,29 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 
         pikachu.setTrainer(ash);
         pokemonDao.save(pikachu);
+
+
+        TrainerFight fight;
+
+        fight = new TrainerFight();
+        fight.setChallenger(ash);
+        fight.setTargetGym(gymService.findAll().get(0));
+        fight.setFightTime(new Calendar.Builder().setDate(2016, 10, 23).build().getTime());
+        fight.setWasChallengerSuccessful(false);
+        trainerFightDao.save(fight);
+
+        fight = new TrainerFight();
+        fight.setChallenger(ash);
+        fight.setTargetGym(gymService.findAll().get(0));
+        fight.setFightTime(new Calendar.Builder().setDate(2016, 11, 2).build().getTime());
+        fight.setWasChallengerSuccessful(false);
+        trainerFightDao.save(fight);
+
+        fight = new TrainerFight();
+        fight.setChallenger(ash);
+        fight.setTargetGym(gymService.findAll().get(0));
+        fight.setFightTime(new Calendar.Builder().setDate(2016, 11, 11).build().getTime());
+        fight.setWasChallengerSuccessful(true);
+        trainerFightDao.save(fight);
     }
 }

@@ -2,6 +2,7 @@ package com.kodemon.service.facade;
 
 import com.kodemon.api.dto.FightDTO;
 import com.kodemon.api.dto.GymDTO;
+import com.kodemon.api.dto.PokemonDTO;
 import com.kodemon.api.dto.UserDTO;
 import com.kodemon.api.enums.WildPokemonFightMode;
 import com.kodemon.api.facade.FightFacade;
@@ -17,7 +18,6 @@ import javax.inject.Inject;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Random;
 
 /**
  * @author Oliver Roch
@@ -56,7 +56,7 @@ public class FightFacadeImpl implements FightFacade {
     }
 
     @Override
-    public void fightForBadge(UserDTO user, GymDTO gym) {
+    public boolean fightForBadge(UserDTO user, GymDTO gym) {
         Trainer challengingTrainer = beanMappingService.mapTo(user, Trainer.class);
         Gym targetGym = beanMappingService.mapTo(gym, Gym.class);
 
@@ -79,28 +79,36 @@ public class FightFacadeImpl implements FightFacade {
         fight.setFightTime(fightTime);
         LOG.debug("Storing the result of the fight between User {} and Gym {}. Fight time: {}.", user.getId(), gym.getId(), fightTime);
         trainerFightService.save(beanMappingService.mapTo(fight, TrainerFight.class));
+        return wasChallengerSuccessful;
     }
 
     @Override
-    public void fightWildPokemon(UserDTO user, WildPokemonFightMode mode) {
-        Trainer trainer = beanMappingService.mapTo(user, Trainer.class);
-        Pokemon wildPokemon = pokemonService.generateWildPokemon(null);
+    public boolean fightWildPokemon(UserDTO user, PokemonDTO pokemon, WildPokemonFightMode mode) {
+        Collection<Trainer> trainers = trainerService.findByUserName(user.getUserName());
+        if (trainers.isEmpty())
+            return false;
+        Trainer trainer = trainers.iterator().next();
+        Pokemon wildPokemon = beanMappingService.mapTo(pokemon, Pokemon.class);
         LOG.debug("User {} fighting wild Pokemon in mode {}.", user.getId(), mode);
-        Pokemon trainersPokemon = pokemonService.findByTrainer(trainer).get(0);
-        Random rand = new Random();
-        wildPokemon.setLevel(Math.max(1, trainersPokemon.getLevel() - 5 + rand.nextInt(10)));
+        Collection<Pokemon> trainersPokemons = pokemonService.findByTrainer(trainer);
+        if (trainersPokemons.isEmpty())
+            return false;
+        Pokemon trainersPokemon = trainersPokemons.iterator().next();
 
         Pair<Double, Double> fightScore = pokemonFightService.getScorePair(trainersPokemon, wildPokemon);
 
         if (fightScore.getX() > fightScore.getY()) {
             if (mode == WildPokemonFightMode.TRAIN) {
                 pokemonService.levelPokemonUp(trainersPokemon);
+                return true;
             } else if (mode == WildPokemonFightMode.CATCH) {
-                pokemonService.save(wildPokemon);
+                pokemonService.assignTrainerToPokemon(trainer, wildPokemon);
                 trainerService.addPokemon(wildPokemon, trainer);
                 LOG.debug("Adding Pokemon {} to the User {}.", wildPokemon.getId(), user.getId());
+                return true;
             }
         }
+        return false;
     }
 
     @Override
@@ -135,13 +143,17 @@ public class FightFacadeImpl implements FightFacade {
 
     @Override
     public Collection<FightDTO> listFightsOfTrainer(UserDTO user) {
-        Trainer challenger = beanMappingService.mapTo(user, Trainer.class);
-        return beanMappingService.mapCollectionTo(trainerFightService.findByChallenger(challenger), FightDTO.class);
+        return beanMappingService.mapCollectionTo(trainerFightService.findByChallenger(user.getUserName()), FightDTO.class);
     }
 
     @Override
     public Collection<FightDTO> listFightsOfGym(GymDTO gym) {
         Gym targetGym = beanMappingService.mapTo(gym, Gym.class);
         return beanMappingService.mapCollectionTo(trainerFightService.findByTargetGym(targetGym), FightDTO.class);
+    }
+
+    @Override
+    public FightDTO findFightById(Long id) {
+        return beanMappingService.mapTo(trainerFightService.findById(id), FightDTO.class);
     }
 }

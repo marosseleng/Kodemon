@@ -1,6 +1,7 @@
 package com.kodemon.api.facade;
 
 import com.kodemon.api.dto.PokemonDTO;
+import com.kodemon.api.dto.UserDTO;
 
 /**
  * Facade providing access to the Pokemon administration
@@ -15,5 +16,12 @@ public interface PokemonFacade {
      * @param newName Desired new nickname of the Pokemon
      */
     void renamePokemon(PokemonDTO pokemon, String newName);
+
+    /**
+     * Generates a wild pokemon with level around user's primary pokemon's level
+     * @param user User to be taken into consideration
+     * @return random Pokemon
+     */
+    PokemonDTO generateWildPokemon(UserDTO user);
 }
 

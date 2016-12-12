@@ -29,5 +29,8 @@
             </ul>
         </div>
     </div>
+    <form method="get" action="${pageContext.request.contextPath}/fight/listFightsOfUser">
+        <button type="submit" class="btn btn-primary" name="username" value="${trainer.userName}">This user's fights</button>
+    </form>
 </jsp:attribute>
 </kodemon:pagetemplate>

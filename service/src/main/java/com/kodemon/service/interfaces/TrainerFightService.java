@@ -28,12 +28,20 @@ public interface TrainerFightService {
     boolean wasFightForBadgeSuccessful(Trainer challenger, Trainer defender);
 
     /**
+     * Find fight with the specified id
+     *
+     * @param id id of specific fight
+     * @return fight with the specified id
+     */
+    TrainerFight findById(Long id);
+
+    /**
      * Find all fights where challenger is specified trainer
      *
-     * @param challenger trainer, whose fights as challenger we want to find
+     * @param userName trainer's username, whose fights as challenger we want to find
      * @return all fights, where specified trainer was as challenger
      */
-    List<TrainerFight> findByChallenger(Trainer challenger);
+    List<TrainerFight> findByChallenger(String userName);
 
     /**
      * Find all fights for the specified gym

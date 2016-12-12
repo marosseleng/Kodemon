@@ -1,5 +1,6 @@
 package com.kodemon.service.test;
 
+import com.kodemon.persistence.dao.TrainerDao;
 import com.kodemon.persistence.dao.TrainerFightDao;
 import com.kodemon.persistence.entity.Gym;
 import com.kodemon.persistence.entity.Pokemon;
@@ -39,6 +40,9 @@ public class TrainerFightServiceTest extends AbstractTransactionalTestNGSpringCo
 
     @Mock
     private TrainerFightDao trainerFightDao;
+
+    @Mock
+    private TrainerDao trainerDao;
 
     @Inject
     @InjectMocks
@@ -158,8 +162,9 @@ public class TrainerFightServiceTest extends AbstractTransactionalTestNGSpringCo
     @Test
     public void findByChallengerTest() {
         when(trainerFightDao.findByChallenger(challenger)).thenReturn(Collections.singletonList(firstFight));
+        when(trainerDao.findByUserName(challenger.getUserName())).thenReturn(Collections.singletonList(challenger));
 
-        List<TrainerFight> result = trainerFightService.findByChallenger(challenger);
+        List<TrainerFight> result = trainerFightService.findByChallenger(challenger.getUserName());
         assertThat(result.size(), is(1));
         assertThat(result.get(0), is(firstFight));
 

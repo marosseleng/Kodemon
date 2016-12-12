@@ -35,4 +35,9 @@ public class GymFacadeImpl implements GymFacade {
     public Collection<GymDTO> findAll() {
         return beanMappingService.mapCollectionTo(gymService.findAll(), GymDTO.class);
     }
+
+    @Override
+    public GymDTO findGymById(Long id) {
+        return beanMappingService.mapTo(gymService.findById(id), GymDTO.class);
+    }
 }

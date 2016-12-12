@@ -449,6 +449,11 @@ public class GymServiceImpl implements GymService {
     }
 
     @Override
+    public Gym findById(Long id) {
+        return gymDao.findOne(id);
+    }
+
+    @Override
     public List<Gym> findByCity(String city) {
         return gymDao.findByCity(city);
     }
