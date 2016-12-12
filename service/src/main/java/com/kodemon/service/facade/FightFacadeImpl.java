@@ -34,7 +34,6 @@ public class FightFacadeImpl implements FightFacade {
     private PokemonFightService pokemonFightService;
     private PokemonService pokemonService;
     private TrainerService trainerService;
-    private BadgeService badgeService;
     private TimeService timeService;
 
     @Inject
@@ -44,42 +43,19 @@ public class FightFacadeImpl implements FightFacade {
             PokemonFightService pokemonFightService,
             PokemonService pokemonService,
             TrainerService trainerService,
-            BadgeService badgeService,
             TimeService timeService) {
         this.beanMappingService = beanMappingService;
         this.trainerFightService = trainerFightService;
         this.pokemonFightService = pokemonFightService;
         this.pokemonService = pokemonService;
         this.trainerService = trainerService;
-        this.badgeService = badgeService;
         this.timeService = timeService;
     }
 
     @Override
     public boolean fightForBadge(UserDTO user, GymDTO gym) {
-        Trainer challengingTrainer = beanMappingService.mapTo(user, Trainer.class);
-        Gym targetGym = beanMappingService.mapTo(gym, Gym.class);
-
         LOG.debug("Beginning fight. User id: {}; Target gym id: {}.", user.getId(), gym.getId());
-
-        boolean wasChallengerSuccessful = false;
-        if (trainerFightService.wasFightForBadgeSuccessful(challengingTrainer, targetGym.getTrainer())) {
-            LOG.debug("Fight of User with id {} vs Gym with id {} successful.", user.getId(), gym.getId());
-            Badge badge = badgeService.createBadgeOfGym(targetGym);
-            badgeService.assignTrainerToBadge(challengingTrainer, badge);
-            trainerService.addBadge(badge, challengingTrainer);
-            wasChallengerSuccessful = true;
-        }
-
-        FightDTO fight = new FightDTO();
-        fight.setTargetGym(gym);
-        fight.setChallenger(user);
-        fight.setWasChallengerSuccessful(wasChallengerSuccessful);
-        Date fightTime = timeService.currentDate();
-        fight.setFightTime(fightTime);
-        LOG.debug("Storing the result of the fight between User {} and Gym {}. Fight time: {}.", user.getId(), gym.getId(), fightTime);
-        trainerFightService.save(beanMappingService.mapTo(fight, TrainerFight.class));
-        return wasChallengerSuccessful;
+        return trainerFightService.fightForBadge(beanMappingService.mapTo(user, Trainer.class), beanMappingService.mapTo(gym, Gym.class));
     }
 
     @Override

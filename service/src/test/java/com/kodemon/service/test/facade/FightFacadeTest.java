@@ -40,6 +40,7 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
     private PokemonFightService pokemonFightService;
     private PokemonService pokemonService;
     private TrainerService trainerService;
+    private GymService gymService;
     private BadgeService badgeService;
     private TimeService timeService;
     private FightFacade fightFacade;
@@ -65,13 +66,14 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
     public void prepare() {
         beanMappingService = mock(BeanMappingService.class);
         trainerService = mock(TrainerService.class);
+        gymService = mock(GymService.class);
         trainerFightService = mock(TrainerFightService.class);
         pokemonFightService = mock(PokemonFightService.class);
         pokemonService = mock(PokemonService.class);
         badgeService = mock(BadgeService.class);
         timeService = mock(TimeService.class);
         fightFacade = new FightFacadeImpl(beanMappingService, trainerFightService, pokemonFightService, pokemonService,
-                trainerService, badgeService, timeService);
+                trainerService, timeService);
 
         prepareTrainers();
         prepareGym();
@@ -81,6 +83,9 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
     @Test
     public void fightForBadgeTest() {
         Date today = new Calendar.Builder().setDate(2015, 4, 1).build().getTime();
+
+        when(trainerService.findByUserName(challenger.getUserName())).thenReturn(Collections.singletonList(challenger));
+        when(gymService.findByBadgeName(targetGym.getBadgeName())).thenReturn(Collections.singletonList(targetGym));
 
         when(beanMappingService.mapTo(pikachuDTO, Pokemon.class)).thenReturn(pikachu);
         when(beanMappingService.mapTo(pikachu, PokemonDTO.class)).thenReturn(pikachuDTO);
@@ -96,7 +101,9 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
         when(beanMappingService.mapTo(targetGym, GymDTO.class)).thenReturn(targetGymDTO);
         when(trainerFightService.wasFightForBadgeSuccessful(challenger, defender)).thenReturn(true);
         Badge badge = new Badge();
+        badge.setName("Fake Badge");
         badge.setGym(targetGym);
+        badge.setTrainer(challenger);
         when(badgeService.createBadgeOfGym(targetGym)).thenReturn(badge);
         when(timeService.currentDate()).thenReturn(today);
         fightFacade.fightForBadge(challengerDTO, targetGymDTO);
@@ -115,8 +122,7 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
 
         when(beanMappingService.mapTo(newFightDTO, TrainerFight.class)).thenReturn(newFight);
 
-        Mockito.verify(badgeService).assignTrainerToBadge(challenger, badge);
-        Mockito.verify(trainerService).addBadge(badge, challenger);
+        Mockito.verify(trainerFightService).fightForBadge(challenger, targetGym);
     }
 
     @Test
@@ -263,11 +269,13 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
         targetGym.setTrainer(defender);
         targetGym.setCity("Violet city");
         targetGym.setType(PokemonType.GROUND);
+        targetGym.setBadgeName("Cool Badge");
 
         targetGymDTO = new GymDTO();
         targetGymDTO.setTrainer(defenderDTO);
         targetGymDTO.setCity("Violet city");
         targetGymDTO.setType(PokemonType.GROUND);
+        targetGymDTO.setBadgeName("Cool Badge");
     }
 
     private void prepareFights() {

@@ -3,14 +3,11 @@ package com.kodemon.service.implementations;
 import com.kodemon.persistence.dao.GymDao;
 import com.kodemon.persistence.dao.TrainerDao;
 import com.kodemon.persistence.dao.TrainerFightDao;
-import com.kodemon.persistence.entity.Gym;
-import com.kodemon.persistence.entity.Pokemon;
-import com.kodemon.persistence.entity.Trainer;
-import com.kodemon.persistence.entity.TrainerFight;
-import com.kodemon.service.interfaces.PokemonFightService;
-import com.kodemon.service.interfaces.TrainerFightService;
-import com.kodemon.service.interfaces.TrainerService;
+import com.kodemon.persistence.entity.*;
+import com.kodemon.service.interfaces.*;
 import com.kodemon.service.util.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -29,18 +26,27 @@ import java.util.List;
 public class TrainerFightServiceImpl implements TrainerFightService {
 
     public static final int AMOUNT_OF_POKEMONS_FOR_MATCH = 6;
+    private static final Logger LOG = LoggerFactory.getLogger(TrainerFightServiceImpl.class);
 
     private TrainerDao trainerDao;
     private TrainerFightDao trainerFightDao;
     private PokemonFightService pokemonFightService;
+    private BadgeService badgeService;
+    private TrainerService trainerService;
+    private TimeService timeService;
+    private GymService gymService;
     private GymDao gymDao;
 
     @Inject
-    public TrainerFightServiceImpl(TrainerDao trainerDao, TrainerFightDao trainerFightDao, PokemonFightService pokemonFightService, GymDao gymDao) {
+    public TrainerFightServiceImpl(TrainerDao trainerDao, TrainerFightDao trainerFightDao, PokemonFightService pokemonFightService, GymDao gymDao, BadgeService badgeService, TrainerService trainerService, TimeService timeService, GymService gymService) {
         this.trainerDao = trainerDao;
         this.trainerFightDao = trainerFightDao;
         this.pokemonFightService = pokemonFightService;
         this.gymDao = gymDao;
+        this.badgeService = badgeService;
+        this.trainerService = trainerService;
+        this.timeService = timeService;
+        this.gymService = gymService;
     }
 
     @Override
@@ -101,5 +107,29 @@ public class TrainerFightServiceImpl implements TrainerFightService {
     @Override
     public void save(TrainerFight trainerFight) {
         trainerFightDao.save(trainerFight);
+    }
+
+    @Override
+    public boolean fightForBadge(Trainer trainer, Gym gym) {
+        boolean wasChallengerSuccessful = false;
+        trainer = trainerService.findByUserName(trainer.getUserName()).iterator().next();
+        gym = gymService.findByBadgeName(gym.getBadgeName()).iterator().next();
+        if (this.wasFightForBadgeSuccessful(trainer, gym.getTrainer())) {
+            Badge badge = badgeService.createBadgeOfGym(gym);
+            badgeService.assignTrainerToBadge(trainer, badge);
+            trainerService.addBadge(badge, trainer);
+            wasChallengerSuccessful = true;
+        }
+
+        TrainerFight fight = new TrainerFight();
+        fight.setTargetGym(gym);
+        fight.setChallenger(trainer);
+        fight.setWasChallengerSuccessful(wasChallengerSuccessful);
+        Date fightTime = timeService.currentDate();
+        fight.setFightTime(fightTime);
+        String successString = wasChallengerSuccessful ? "Success" : "Failed";
+        LOG.debug("Storing the result (" + successString + ") of the fight between User {} and Gym {}. Fight time: {}.", trainer.getId(), gym.getId(), fightTime);
+        this.save(fight);
+        return wasChallengerSuccessful;
     }
 }
