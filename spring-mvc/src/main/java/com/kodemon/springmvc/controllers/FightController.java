@@ -76,7 +76,7 @@ public class FightController {
                 break;
         }
         model.addAttribute("fights", fights);
-        LOG.debug("list" + period + "()");
+        LOG.debug("Viewing fights of " + period);
         return "fight/list";
     }
 
@@ -89,8 +89,9 @@ public class FightController {
      */
     @RequestMapping(value = "/listFightsOfGym", method = RequestMethod.GET)
     public String listFightsOfGym(@RequestParam Long id, Model model) {
-        model.addAttribute("fights", fightFacade.listFightsOfGym(gymFacade.findGymById(id)));
-        LOG.debug("listFightsOfGym()");
+        GymDTO gym = gymFacade.findGymById(id);
+        model.addAttribute("fights", fightFacade.listFightsOfGym(gym));
+        LOG.debug("Viewing fights of '" + gym.getCity() + "' Gym");
         return "fight/list";
     }
 
@@ -107,17 +108,18 @@ public class FightController {
         Collection<UserDTO> user = userFacade.findUserByUserName(username);
         if(user.isEmpty()) {
             model.addAttribute("alert_warning", "No trainer with such username found");
-            model.addAttribute("users", userFacade.findAllUsers());
-            return "fight/list";
+            LOG.error("Tried to look up fights of '" + username +"' - user doesn't exists.");
+            return "home";
         }
         Collection<FightDTO> fights = fightFacade.listFightsOfTrainer(userFacade.findUserByUserName(username).iterator().next());
         if(fights.isEmpty()) {
             model.addAttribute("alert_warning", "No fights of this user found");
             model.addAttribute("trainer", userFacade.findUserByUserName(username).iterator().next());
+            LOG.debug("Tried to look up fights of '" + username +"' - user doesn't have any fight history.");
             return "/user/detail";
         }
         model.addAttribute("fights", fights);
-        LOG.debug("listFightsOfUser()");
+        LOG.debug("Viewing fights of user '" + username + "'");
         return "fight/list";
     }
 
@@ -128,6 +130,7 @@ public class FightController {
         if ((UserDTO)session.getAttribute("authenticatedUser") == null)
         {
             model.addAttribute("alert_warning", "You are not logged in!");
+            LOG.error("User not logged in.");
             return "home";
         }
         Collection<UserDTO> users = userFacade.findUserByUserName(((UserDTO)session.getAttribute("authenticatedUser")).getUserName());
@@ -136,7 +139,7 @@ public class FightController {
         session.setAttribute("wildPokemon", wildPokemon);
         model.addAttribute("wildPokemon", wildPokemon);
         model.addAttribute("trainersPokemon", user.getPokemons().get(0));
-        LOG.debug("A wild " + wildPokemon.getName().getName() + " level " + wildPokemon.getLevel() + " appeared!");
+        LOG.debug("A wild " + wildPokemon.getName().getName() + " level " + wildPokemon.getLevel() + " appeared for " + user.getUserName());
         return "fight/grass";
     }
 
@@ -149,6 +152,7 @@ public class FightController {
         if ((UserDTO)session.getAttribute("authenticatedUser") == null)
         {
             model.addAttribute("alert_warning", "You are not logged in!");
+            LOG.error("User not logged in.");
             return "home";
         }
         Collection<UserDTO> users = userFacade.findUserByUserName(((UserDTO)session.getAttribute("authenticatedUser")).getUserName());
@@ -158,7 +162,7 @@ public class FightController {
             model.addAttribute("alert_success", (mode_ == WildPokemonFightMode.CATCH ? "Gotcha! " + wildPokemon.getName().getName() + " was caught!" : wildPokemon.getName().getName() + " fainted. " + user.getPokemons().get(0).getName().getName() + " leveled up to " + (user.getPokemons().get(0).getLevel() + 1)));
         else
             model.addAttribute("alert_warning", (mode_ == WildPokemonFightMode.CATCH ? wildPokemon.getName().getName() + " flew away!" : user.getPokemons().get(0).getName().getName() + " fainted! You ran to the nearest PokeCenter and healed your Pokemon."));
-        LOG.debug((mode_ == WildPokemonFightMode.CATCH ? "Catching" : "Fighting") + " wild " + wildPokemon.getName().getName() + " level " + wildPokemon.getLevel() + " -> " + (fightResult ? "Success!" : "Failed"));
+        LOG.debug(user.getUserName() + (mode_ == WildPokemonFightMode.CATCH ? " catching" : " fighting") + " wild " + wildPokemon.getName().getName() + " level " + wildPokemon.getLevel() + " -> " + (fightResult ? "Success!" : "Failed"));
         return "home";
     }
 
@@ -169,6 +173,7 @@ public class FightController {
         if ((UserDTO)session.getAttribute("authenticatedUser") == null)
         {
             model.addAttribute("alert_warning", "You are not logged in!");
+            LOG.error("User not logged in.");
             return "home";
         }
         Collection<UserDTO> users = userFacade.findUserByUserName(((UserDTO)session.getAttribute("authenticatedUser")).getUserName());
@@ -180,7 +185,7 @@ public class FightController {
             model.addAttribute("alert_success", "You beat " + gym.getTrainer().getUserName() + "! You received " + gym.getBadgeName());
         else
             model.addAttribute("alert_warning", "You lost!");
-        LOG.debug("Fighting " + gym.getCity() + " Gym -> " + (fightResult ? "Success!" : "Failed"));
+        LOG.debug(user.getUserName() + " is fighting " + gym.getCity() + " Gym -> " + (fightResult ? "Success!" : "Failed"));
         return "home";
     }
 
@@ -194,6 +199,7 @@ public class FightController {
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
     public String detail(@PathVariable Long id, Model model) {
         model.addAttribute("fight", fightFacade.findFightById(id));
+        LOG.debug("Viewing detail of fight " + id);
         return "fight/detail";
     }
 }
