@@ -8,6 +8,8 @@ import com.kodemon.service.interfaces.BeanMappingService;
 import com.kodemon.service.interfaces.PokemonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.Random;
@@ -19,6 +21,8 @@ import java.util.Random;
  *
  * @author Matej Poklemba
  */
+@Service
+@Transactional
 public class PokemonFacadeImpl implements PokemonFacade{
 
     private static final Logger LOG = LoggerFactory.getLogger(PokemonFacadeImpl.class);
@@ -42,11 +46,7 @@ public class PokemonFacadeImpl implements PokemonFacade{
 
     @Override
     public PokemonDTO generateWildPokemon(UserDTO user) {
-        Random rand = new Random();
-        Pokemon wildPokemon = pokemonService.generateWildPokemon(null);
-        PokemonDTO trainersPokemon = user.getPokemons().get(0);
-        wildPokemon.setLevel(Math.max(1, trainersPokemon.getLevel() - 5 + rand.nextInt(10)));
-        return beanMappingService.mapTo(wildPokemon, PokemonDTO.class);
+        return beanMappingService.mapTo(pokemonService.generateWildPokemon(null, user.getPokemons().get(0).getLevel() - 5, user.getPokemons().get(0).getLevel() + 5), PokemonDTO.class);
     }
 
 }

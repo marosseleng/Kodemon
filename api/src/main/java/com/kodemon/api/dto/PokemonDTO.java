@@ -1,5 +1,6 @@
 package com.kodemon.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kodemon.persistence.enums.PokemonName;
 
 import java.util.Objects;
@@ -11,6 +12,7 @@ import java.util.Objects;
  */
 public class PokemonDTO {
     private Long id;
+    @JsonIgnore
     private UserDTO trainer;
     private PokemonName name;
     private String nickname;

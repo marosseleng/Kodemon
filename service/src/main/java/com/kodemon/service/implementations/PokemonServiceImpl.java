@@ -35,7 +35,7 @@ public class PokemonServiceImpl implements PokemonService {
     }
 
     @Override
-    public Pokemon generateWildPokemon(@Nullable PokemonType type) {
+    public Pokemon generateWildPokemon(@Nullable PokemonType type, int minLevel, int maxLevel) {
         Pokemon pokemon;
         if (type == null) {
             int i = RANDOM.nextInt(PokemonName.values().length);
@@ -52,6 +52,8 @@ public class PokemonServiceImpl implements PokemonService {
             int i = RANDOM.nextInt(pokemonsOfWantedType.size());
             pokemon = new Pokemon(pokemonsOfWantedType.get(i));
         }
+        Random rand = new Random();
+        pokemon.setLevel(Math.max(1, minLevel + rand.nextInt(maxLevel - minLevel + 1)));
         return pokemon;
     }
 
