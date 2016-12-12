@@ -1,5 +1,7 @@
 package com.kodemon.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Objects;
 
 /**
@@ -10,7 +12,9 @@ import java.util.Objects;
 public class BadgeDTO {
     private Long id;
     private String name;
+    @JsonIgnore
     private GymDTO gym;
+    @JsonIgnore
     private UserDTO trainer;
 
     public String getName() {

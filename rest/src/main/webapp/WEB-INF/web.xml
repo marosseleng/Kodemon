@@ -1,0 +1,6 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value/>
+    </context-param>
+</web-app>
