@@ -27,10 +27,6 @@ public class Badge {
     @NotNull
     private Gym gym;
 
-    @ManyToOne // this is the BIDIRECTIONAL OWNING side
-    @NotNull
-    private Trainer trainer;
-
     /**
      * Parameterless constructor for (not only) persistence purposes.
      */
@@ -41,9 +37,8 @@ public class Badge {
      *
      * @param gym where can this badge be earned
      */
-    public Badge(@NotNull Gym gym, @NotNull Trainer trainer) {
+    public Badge(@NotNull Gym gym) {
         this.gym = gym;
-        this.trainer = trainer;
         this.name = gym.getBadgeName();
     }
 
@@ -67,33 +62,22 @@ public class Badge {
         this.gym = gym;
     }
 
-    public Trainer getTrainer() {
-        return trainer;
-    }
-
-    public void setTrainer(Trainer trainer) {
-        this.trainer = trainer;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Badge)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Badge badge = (Badge) o;
 
-        if (!getName().equals(badge.getName())) return false;
-        if (!getGym().equals(badge.getGym())) return false;
-        return getTrainer().getUserName().equals(badge.getTrainer().getUserName());
-
+        if (getId() != null ? !getId().equals(badge.getId()) : badge.getId() != null) return false;
+        return (getName() != null ? getName().equals(badge.getName()) : badge.getName() == null) && getGym().equals(badge.getGym());
     }
 
     @Override
     public int hashCode() {
-        int result = 17;
-        result = 31 * result + getName().hashCode();
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
         result = 31 * result + getGym().hashCode();
-        result = 31 * result + getTrainer().getUserName().hashCode();
         return result;
     }
 }

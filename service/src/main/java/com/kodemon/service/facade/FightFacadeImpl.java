@@ -109,23 +109,23 @@ public class FightFacadeImpl implements FightFacade {
 
     @Override
     public Collection<FightDTO> listFightsBetween(Date from, Date to) {
-        return beanMappingService.mapCollectionTo(trainerFightService.findByFightTimeBetween(from, to), FightDTO.class);
+        return beanMappingService.mapListTo(trainerFightService.findByFightTimeBetween(from, to), FightDTO.class);
     }
 
     @Override
     public Collection<FightDTO> listAllFights() {
-        return beanMappingService.mapCollectionTo(trainerFightService.findAll(), FightDTO.class);
+        return beanMappingService.mapListTo(trainerFightService.findAll(), FightDTO.class);
     }
 
     @Override
     public Collection<FightDTO> listFightsOfTrainer(UserDTO user) {
-        return beanMappingService.mapCollectionTo(trainerFightService.findByChallenger(user.getUserName()), FightDTO.class);
+        return beanMappingService.mapListTo(trainerFightService.findByChallenger(user.getUserName()), FightDTO.class);
     }
 
     @Override
     public Collection<FightDTO> listFightsOfGym(GymDTO gym) {
         Gym targetGym = beanMappingService.mapTo(gym, Gym.class);
-        return beanMappingService.mapCollectionTo(trainerFightService.findByTargetGym(gym.getBadgeName()), FightDTO.class);
+        return beanMappingService.mapListTo(trainerFightService.findByTargetGym(gym.getBadgeName()), FightDTO.class);
     }
 
     @Override

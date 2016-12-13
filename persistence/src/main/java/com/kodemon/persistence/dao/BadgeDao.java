@@ -42,12 +42,4 @@ public interface BadgeDao extends JpaRepository<Badge, Long> {
      * @return {@link List} of {@link Badge}s belonging to given {@link Gym}
      */
     List<Badge> findByGym(Gym gym);
-
-    /**
-     * Returns a {@link List} of {@link Badge}s belonging to given {@link Trainer}
-     *
-     * @param trainer Trainer whose badges to search for
-     * @return {@link List} of {@link Badge}s belonging to given {@link Trainer}
-     */
-    List<Badge> findByTrainer(Trainer trainer);
 }

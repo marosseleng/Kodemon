@@ -26,16 +26,6 @@ public interface BadgeService {
     Badge createBadgeOfGym(Gym gym);
 
     /**
-     * Assigns the given trainer to the given badge and updates badge table
-     * <p/>
-     * This method does <b>not</b> add badge to the trainer.
-     *
-     * @param trainer
-     * @param badge
-     */
-    void assignTrainerToBadge(Trainer trainer, Badge badge);
-
-    /**
      * Saves the given badge to the database.
      *
      * @param badge badge to be saved
@@ -75,12 +65,4 @@ public interface BadgeService {
      * @return {@link List} of {@link Badge}s belonging to given {@link Gym}
      */
     List<Badge> findByGym(Gym gym);
-
-    /**
-     * Returns a {@link List} of {@link Badge}s belonging to given {@link Trainer}
-     *
-     * @param trainer Trainer whose badges to search for
-     * @return {@link List} of {@link Badge}s belonging to given {@link Trainer}
-     */
-    List<Badge> findByTrainer(Trainer trainer);
 }

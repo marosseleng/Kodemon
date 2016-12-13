@@ -67,7 +67,7 @@ public class BadgeServiceTest extends AbstractTestNGSpringContextTests {
         gym.setType(PokemonType.WATER);
         gym.setTrainer(trainer);
 
-        badge = new Badge(gym, trainer);
+        badge = new Badge(gym);
         badge.setName(badgename);
     }
 
@@ -81,36 +81,6 @@ public class BadgeServiceTest extends AbstractTestNGSpringContextTests {
         Badge result = badgeService.createBadgeOfGym(gym);
         assertThat("badge == null", result, is(notNullValue()));
         assertThat(result.getGym(), is(gym));
-    }
-
-    @Test
-    public void assignTrainerToBadgeTest() {
-        when(badgeDao.save(badge)).thenReturn(badge);
-
-        Trainer trainer2 = new Trainer();
-        trainer2.setUserName("asdf");
-        trainer2.setFirstName("John");
-        trainer2.setLastName("Johnson");
-        Date born = new Calendar.Builder().setDate(1995, 1, 1).build().getTime();
-        trainer2.setDateOfBirth(born);
-
-        badgeService.assignTrainerToBadge(trainer2, badge);
-        assertThat(badge.getTrainer(), is(trainer2));
-        verify(badgeDao).save(badge);
-    }
-
-    @Test(expectedExceptions = {NullPointerException.class})
-    public void assignNullTrainerToBadgeTest() {
-        when(badgeDao.save(badge)).thenThrow(NullPointerException.class);
-        badgeService.assignTrainerToBadge(null, badge);
-        verify(badgeDao).save(badge);
-    }
-
-    @Test(expectedExceptions = {NullPointerException.class})
-    public void assignTrainerToNullBadgeTest() {
-        when(badgeDao.save(badge)).thenThrow(NullPointerException.class);
-        badgeService.assignTrainerToBadge(trainer, null);
-        verify(badgeDao).save(badge);
     }
 
     @Test
@@ -133,17 +103,6 @@ public class BadgeServiceTest extends AbstractTestNGSpringContextTests {
         assertThat(result.get(0), is(badge));
 
         verify(badgeDao).findByNameStartingWith(badgename.substring(0, 3) + "%");
-    }
-
-    @Test
-    public void findByTrainerTest() {
-        when(badgeDao.findByTrainer(trainer)).thenReturn(Collections.singletonList(badge));
-
-        List<Badge> result = badgeService.findByTrainer(trainer);
-        assertThat(result.size(), is(1));
-        assertThat(result.get(0), is(badge));
-
-        verify(badgeDao).findByTrainer(trainer);
     }
 
     @Test

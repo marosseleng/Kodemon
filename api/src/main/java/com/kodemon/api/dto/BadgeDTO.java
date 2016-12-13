@@ -1,9 +1,5 @@
 package com.kodemon.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.util.Objects;
-
 /**
  * DTO representing badge
  *
@@ -12,10 +8,7 @@ import java.util.Objects;
 public class BadgeDTO {
     private Long id;
     private String name;
-    @JsonIgnore
     private GymDTO gym;
-    @JsonIgnore
-    private UserDTO trainer;
 
     public String getName() {
         return name;
@@ -33,14 +26,6 @@ public class BadgeDTO {
         this.gym = gym;
     }
 
-    public UserDTO getTrainer() {
-        return trainer;
-    }
-
-    public void setTrainer(UserDTO trainer) {
-        this.trainer = trainer;
-    }
-
     public Long getId() {
         return id;
     }
@@ -52,15 +37,20 @@ public class BadgeDTO {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof BadgeDTO)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
+
         BadgeDTO badgeDTO = (BadgeDTO) o;
-        return Objects.equals(getName(), badgeDTO.getName()) &&
-                Objects.equals(getGym(), badgeDTO.getGym()) &&
-                Objects.equals(getTrainer().getUserName(), badgeDTO.getTrainer().getUserName());
+
+        if (getId() != null ? !getId().equals(badgeDTO.getId()) : badgeDTO.getId() != null) return false;
+        if (getName() != null ? !getName().equals(badgeDTO.getName()) : badgeDTO.getName() != null) return false;
+        return getGym() != null ? getGym().equals(badgeDTO.getGym()) : badgeDTO.getGym() == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getGym(), getTrainer().getUserName());
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getGym() != null ? getGym().hashCode() : 0);
+        return result;
     }
 }
