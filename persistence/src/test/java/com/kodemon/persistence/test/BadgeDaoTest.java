@@ -19,6 +19,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
+import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -105,7 +106,7 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(badgeDao.findAll(), is(equalTo(badges)));
     }
 
-    @Test(expectedExceptions = {NullPointerException.class})
+    @Test(expectedExceptions = {ConstraintViolationException.class})
     void testSaveBadgeWithNullName() {
         badge = new Badge(gym);
         badge.setName(null);
@@ -120,33 +121,11 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = {NullPointerException.class})
-    void testSaveBadgeWithNullTrainer() {
-        badge = new Badge(gym);
-        badge.setName("Volcano Badge");
-        badgeDao.save(badge);
-    }
-
-    @Test(expectedExceptions = {NullPointerException.class})
     void testSaveBadgeWithNullNameAndNullGym() {
         badge = new Badge(null);
         badge.setName(null);
         badgeDao.save(badge);
     }
-
-    @Test(expectedExceptions = {NullPointerException.class})
-    void testSaveBadgeWithNullNameAndNullTrainer() {
-        badge = new Badge(gym);
-        badge.setName(null);
-        badgeDao.save(badge);
-    }
-
-    @Test(expectedExceptions = {NullPointerException.class})
-    void testSaveBadgeWithNullGymAndNullTrainer() {
-        badge = new Badge();
-        badge.setName("Volcano Badge");
-        badgeDao.save(badge);
-    }
-
 
     @Test(expectedExceptions = {NullPointerException.class})
     void testSaveBadgeWithEverythingNull() {
@@ -247,20 +226,12 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(found, equalTo(badge));
     }
 
-    @Test(expectedExceptions = {NullPointerException.class})
+    @Test(expectedExceptions = {ConstraintViolationException.class})
     void testUpdateWithNullName() {
         badge = randomBadge(5);
         assertThat(badgeDao.count(), is(equalTo(0L)));
         badgeDao.save(badge);
         badge.setName(null);
-        badgeDao.saveAndFlush(badge);
-    }
-
-    @Test(expectedExceptions = {NullPointerException.class})
-    void testUpdateWithNullTrainer() {
-        badge = randomBadge(5);
-        assertThat(badgeDao.count(), is(equalTo(0L)));
-        badgeDao.save(badge);
         badgeDao.saveAndFlush(badge);
     }
 

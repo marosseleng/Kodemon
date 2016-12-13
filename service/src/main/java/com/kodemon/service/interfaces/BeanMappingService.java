@@ -9,6 +9,5 @@ import java.util.Set;
 public interface BeanMappingService {
 
     <T> List<T> mapListTo(List<?> source, Class<T> mapToClass);
-    <T> Set<T> mapSetTo(Set<?> source, Class<T> mapToClass);
     <T> T mapTo(Object source, Class<T> mapToClass);
 }

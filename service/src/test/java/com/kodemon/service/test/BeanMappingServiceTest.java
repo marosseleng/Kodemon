@@ -120,14 +120,14 @@ public class BeanMappingServiceTest extends AbstractTestNGSpringContextTests {
 
     @Test
     void testMapCollection() {
-        Set<Trainer> trainers = generateSetOfMinimalTrainers();
+        List<Trainer> trainers = generateListOfMinimalTrainers();
 
         List<UserDTO> iterated = new ArrayList<>();
         for (Trainer trainer : trainers) {
             iterated.add(service.mapTo(trainer, UserDTO.class));
         }
 
-        Collection<UserDTO> users = service.mapSetTo(trainers, UserDTO.class);
+        List<UserDTO> users = service.mapListTo(trainers, UserDTO.class);
 
         assertThat(users, is(equalTo(iterated)));
     }
@@ -213,8 +213,8 @@ public class BeanMappingServiceTest extends AbstractTestNGSpringContextTests {
         gymDTO.setTrainer(defenderDTO);
     }
 
-    private Set<Trainer> generateSetOfMinimalTrainers() {
-        Set<Trainer> trainers = new HashSet<>();
+    private List<Trainer> generateListOfMinimalTrainers() {
+        List<Trainer> trainers = new ArrayList<>();
         trainers.add(challenger);
         trainers.add(defender);
         return trainers;

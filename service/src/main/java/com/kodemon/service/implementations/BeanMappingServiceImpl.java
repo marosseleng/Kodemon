@@ -33,14 +33,6 @@ public class BeanMappingServiceImpl implements BeanMappingService {
     }
 
     @Override
-    public <T> Set<T> mapSetTo(Set<?> source, Class<T> mapToClass) {
-        if (mapToClass == null) {
-            return Collections.emptySet();
-        }
-        return mapper.mapAsSet(source, mapToClass);
-    }
-
-    @Override
     public <T> T mapTo(Object source, Class<T> targetClass) {
         if (source == null || targetClass == null) {
             return null;
