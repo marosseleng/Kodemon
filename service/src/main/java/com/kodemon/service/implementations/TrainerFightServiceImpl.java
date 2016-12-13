@@ -116,7 +116,7 @@ public class TrainerFightServiceImpl implements TrainerFightService {
         gym = gymService.findByBadgeName(gym.getBadgeName()).iterator().next();
         if (this.wasFightForBadgeSuccessful(trainer, gym.getTrainer())) {
             Badge badge = badgeService.createBadgeOfGym(gym);
-            badgeService.assignTrainerToBadge(trainer, badge);
+            badgeService.save(badge);
             trainerService.addBadge(badge, trainer);
             wasChallengerSuccessful = true;
         }

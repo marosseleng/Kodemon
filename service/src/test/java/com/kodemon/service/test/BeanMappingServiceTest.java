@@ -106,16 +106,14 @@ public class BeanMappingServiceTest extends AbstractTestNGSpringContextTests {
         prepareGymAndGymDTO();
         prepareTrainers();
 
-        Badge badge = new Badge(gym, challenger);
+        Badge badge = new Badge(gym);
         badge.setName("Some badge");
 
         BadgeDTO badgeDTO = new BadgeDTO();
         badgeDTO.setName("Some badge");
-        badgeDTO.setTrainer(challengerDTO);
         badgeDTO.setGym(gymDTO);
 
         BadgeDTO got = service.mapTo(badge, BadgeDTO.class);
-        assertThat(got.getTrainer(), is(equalTo(badgeDTO.getTrainer())));
         assertThat(got.getGym(), is(equalTo(badgeDTO.getGym())));
         assertThat(got.getName(), is(equalTo(badgeDTO.getName())));
     }
@@ -129,7 +127,7 @@ public class BeanMappingServiceTest extends AbstractTestNGSpringContextTests {
             iterated.add(service.mapTo(trainer, UserDTO.class));
         }
 
-        Collection<UserDTO> users = service.mapCollectionTo(trainers, UserDTO.class);
+        Collection<UserDTO> users = service.mapSetTo(trainers, UserDTO.class);
 
         assertThat(users, is(equalTo(iterated)));
     }

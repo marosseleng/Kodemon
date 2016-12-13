@@ -5,8 +5,9 @@ import com.kodemon.service.util.OrikaMapper;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Implementation of BeanMappingService
@@ -24,11 +25,19 @@ public class BeanMappingServiceImpl implements BeanMappingService {
     }
 
     @Override
-    public <T> Collection<T> mapCollectionTo(Collection<?> source, Class<T> mapToClass) {
+    public <T> List<T> mapListTo(List<?> source, Class<T> mapToClass) {
         if (mapToClass == null) {
             return Collections.emptyList();
         }
         return mapper.mapAsList(source, mapToClass);
+    }
+
+    @Override
+    public <T> Set<T> mapSetTo(Set<?> source, Class<T> mapToClass) {
+        if (mapToClass == null) {
+            return Collections.emptySet();
+        }
+        return mapper.mapAsSet(source, mapToClass);
     }
 
     @Override

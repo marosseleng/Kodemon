@@ -46,7 +46,7 @@ public class Trainer {
     @NotNull
     private Date dateOfBirth;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "trainer")
+    @OneToMany(fetch = FetchType.EAGER)
     @NotNull
     private Set<Badge> badges = new HashSet<>();
 

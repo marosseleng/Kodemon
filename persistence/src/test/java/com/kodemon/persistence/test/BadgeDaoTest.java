@@ -107,35 +107,35 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test(expectedExceptions = {NullPointerException.class})
     void testSaveBadgeWithNullName() {
-        badge = new Badge(gym, trainer);
+        badge = new Badge(gym);
         badge.setName(null);
         badgeDao.save(badge);
     }
 
     @Test(expectedExceptions = {NullPointerException.class})
     void testSaveBadgeWithNullGym() {
-        badge = new Badge(null, trainer);
+        badge = new Badge(null);
         badge.setName("Volcano Badge");
         badgeDao.save(badge);
     }
 
     @Test(expectedExceptions = {NullPointerException.class})
     void testSaveBadgeWithNullTrainer() {
-        badge = new Badge(gym, null);
+        badge = new Badge(gym);
         badge.setName("Volcano Badge");
         badgeDao.save(badge);
     }
 
     @Test(expectedExceptions = {NullPointerException.class})
     void testSaveBadgeWithNullNameAndNullGym() {
-        badge = new Badge(null, trainer);
+        badge = new Badge(null);
         badge.setName(null);
         badgeDao.save(badge);
     }
 
     @Test(expectedExceptions = {NullPointerException.class})
     void testSaveBadgeWithNullNameAndNullTrainer() {
-        badge = new Badge(gym, null);
+        badge = new Badge(gym);
         badge.setName(null);
         badgeDao.save(badge);
     }
@@ -217,7 +217,7 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
         badge = randomBadge(5);
         badgeDao.save(badge);
         assertThat(badge.getId(), is(notNullValue()));
-        Badge badgeExample = new Badge(badge.getGym(), badge.getTrainer());
+        Badge badgeExample = new Badge(badge.getGym());
         badgeExample.setName(badge.getName());
         Badge found = badgeDao.findOne(Example.of(badgeExample));
         assertThat(found, is(equalTo(badge)));
@@ -261,7 +261,6 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
         badge = randomBadge(5);
         assertThat(badgeDao.count(), is(equalTo(0L)));
         badgeDao.save(badge);
-        badge.setTrainer(null);
         badgeDao.saveAndFlush(badge);
     }
 
@@ -275,17 +274,6 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
     }
     
     // Custom find tests
-    @Test
-    void testFindByTrainer() {
-        List<Badge> badges = randomBadges(5);
-        badgeDao.save(badges);
-        assertThat(badgeDao.count(), is(equalTo(5L)));
-        Badge matching = badges.get(0);
-        List<Badge> found = badgeDao.findByTrainer(matching.getTrainer());
-        assertThat(found.size(), is(5));
-        assertThat(found.get(0), is(equalTo(matching)));
-    }
-    
     @Test
     void testFindByName() {
         List<Badge> badges = randomBadges(5);
@@ -350,7 +338,7 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     private Badge randomBadge(int index) {
-        Badge badge = new Badge(gym, trainer);
+        Badge badge = new Badge(gym);
         String chars = "abcdefghijklmnopqrstuvxyzABCDEFGHIJKLMNOPQRSTUVXYZ ";
         badge.setName(chars.substring(index % chars.length()));
         return badge;
