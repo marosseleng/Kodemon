@@ -1,12 +1,12 @@
 ##Kodemon REST API documentation
 #####Api root URL:
-    `/pa165/rest`
+    /pa165/rest
 ####Contents:
 * [User resource](#users)
 
 ###Users:
 #####Root URL:
-    `/users`
+    /users
 #####Model classes used:
 * [UserDTO](https://github.com/mseleng/Kodemon/blob/master/api/src/main/java/com/kodemon/api/dto/UserDTO.java)
 * [UserAndPasswordDTO](https://github.com/mseleng/Kodemon/blob/master/api/src/main/java/com/kodemon/api/dto/UserAndPasswordDTO.java)
