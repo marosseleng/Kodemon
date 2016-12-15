@@ -222,6 +222,12 @@ public class FightController {
         }
         UserDTO user = users.iterator().next();
         GymDTO gym = gymFacade.findGymById(id);
+        if (gym == null)
+        {
+            model.addAttribute("alert_warning", "Error: Gym not found in database!");
+            LOG.error("Error: Gym ID " + id + " not found in database!");
+            return "home";
+        }
         for (BadgeDTO b : user.getBadges())
         {
             if (b.getName().equals(gym.getBadgeName()))
