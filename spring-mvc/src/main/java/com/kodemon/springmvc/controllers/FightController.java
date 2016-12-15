@@ -162,6 +162,11 @@ public class FightController {
         HttpSession session = request.getSession();
         WildPokemonFightMode mode_ = (mode.equals("train")) ? WildPokemonFightMode.TRAIN : WildPokemonFightMode.CATCH;
         PokemonDTO wildPokemon = (PokemonDTO)session.getAttribute("wildPokemon");
+        if (wildPokemon == null)
+        {
+            return "home";
+        }
+        session.removeAttribute("wildPokemon");
         if ((UserDTO)session.getAttribute("authenticatedUser") == null)
         {
             model.addAttribute("alert_warning", "You are not logged in!");
