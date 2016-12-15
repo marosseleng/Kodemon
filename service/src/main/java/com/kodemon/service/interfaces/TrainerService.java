@@ -78,6 +78,13 @@ public interface TrainerService {
     void delete(Long id);
 
     /**
+     * Set value of isBlocked of specified trainer to blocked value.
+     *
+     * @param id of trainer to be blocked or unblocked
+     */
+    void setBlocked(Long id, boolean blocked);
+
+    /**
      * Updates the trainer with the given id
      *
      * @param id id of the trainer to update
