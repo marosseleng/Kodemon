@@ -169,6 +169,8 @@ public class FightController {
             model.addAttribute("alert_success", (mode_ == WildPokemonFightMode.CATCH ? "Gotcha! " + wildPokemon.getName().getName() + " was caught!" : wildPokemon.getName().getName() + " fainted. " + user.getPokemons().get(0).getName().getName() + " leveled up to " + (user.getPokemons().get(0).getLevel() + 1)));
         else
             model.addAttribute("alert_warning", (mode_ == WildPokemonFightMode.CATCH ? wildPokemon.getName().getName() + " flew away!" : user.getPokemons().get(0).getName().getName() + " fainted! You ran to the nearest PokeCenter and healed your Pokemon."));
+        user = userFacade.findUserByUserName(user.getUserName()).iterator().next();
+        session.setAttribute("authenticatedUser", user);
         LOG.debug(user.getUserName() + (mode_ == WildPokemonFightMode.CATCH ? " catching" : " fighting") + " wild " + wildPokemon.getName().getName() + " level " + wildPokemon.getLevel() + " -> " + (fightResult ? "Success!" : "Failed"));
         return "home";
     }
@@ -192,6 +194,8 @@ public class FightController {
             model.addAttribute("alert_success", "You beat " + gym.getTrainer().getUserName() + "! You received " + gym.getBadgeName());
         else
             model.addAttribute("alert_warning", "You lost!");
+        user = userFacade.findUserByUserName(user.getUserName()).iterator().next();
+        session.setAttribute("authenticatedUser", user);
         LOG.debug(user.getUserName() + " is fighting " + gym.getCity() + " Gym -> " + (fightResult ? "Success!" : "Failed"));
         return "home";
     }
