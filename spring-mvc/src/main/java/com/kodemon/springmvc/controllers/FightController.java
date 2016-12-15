@@ -265,7 +265,14 @@ public class FightController {
      */
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
     public String detail(@PathVariable Long id, Model model) {
-        model.addAttribute("fight", fightFacade.findFightById(id));
+        FightDTO fight = fightFacade.findFightById(id);
+        if (fight == null)
+        {
+            model.addAttribute("alert_warning", "Error: Fight not found in database!");
+            LOG.error("Error: Fight ID " + id + " not found in database!");
+            return "home";
+        }
+        model.addAttribute("fight", fight);
         LOG.debug("Viewing detail of fight " + id);
         return "fight/detail";
     }
