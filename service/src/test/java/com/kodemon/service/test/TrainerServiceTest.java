@@ -281,7 +281,6 @@ public class TrainerServiceTest extends AbstractTransactionalTestNGSpringContext
         Badge badge = new Badge();
         badge.setName("Super badge");
         badge.setGym(gym1);
-        badge.setTrainer(trainer1);
         trainer1.addBadge(badge);
         assertThat(trainer1.getBadges(), contains(badge));
     }

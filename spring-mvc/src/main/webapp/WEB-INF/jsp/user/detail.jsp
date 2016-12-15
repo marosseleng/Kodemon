@@ -24,7 +24,7 @@
             <h3>Trainer's badges:</h3>
             <ul>
                 <c:forEach items="${trainer.badges}" var="badge">
-                    <li><c:out value="${badge.name} from ${badge.gym.name}" /></li>
+                    <li><c:out value="${badge.name} from ${badge.gym.city} Gym" /></li>
                 </c:forEach>
             </ul>
         </div>

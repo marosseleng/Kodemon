@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -61,6 +62,12 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         ash.addPokemon(pikachu);
 
         trainerService.register(ash, "password123");
+
+        Collection<Trainer> strong = trainerService.findByUserName("Psyxox");
+        if (!strong.isEmpty())
+        {
+            trainerService.register(strong.iterator().next(), "pw");
+        }
 
         pikachu.setTrainer(ash);
         pokemonDao.save(pikachu);

@@ -105,7 +105,7 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
         List<UserDTO> userList = new ArrayList<>();
         userList.add(user);
         when(trainerService.findByUserName(trainer.getUserName())).thenReturn(trainerList);
-        when(beanMappingService.mapCollectionTo(trainerList, UserDTO.class)).thenReturn(userList);
+        when(beanMappingService.mapListTo(trainerList, UserDTO.class)).thenReturn(userList);
         Collection<UserDTO> result = userFacade.findUserByUserName(user.getUserName());
         assertThat(result.size(), is(1));
         assertThat(result, is(equalTo(userList)));
@@ -120,7 +120,7 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
         allUsers.add(user);
         allUsers.add(user2);
         when(trainerService.findAll()).thenReturn(allTrainers);
-        when(beanMappingService.mapCollectionTo(allTrainers, UserDTO.class)).thenReturn(allUsers);
+        when(beanMappingService.mapListTo(allTrainers, UserDTO.class)).thenReturn(allUsers);
         Collection<UserDTO> result = userFacade.findAllUsers();
         assertThat(result.size(), is(2));
         assertThat(result.contains(user) && result.contains(user2), is(true));
