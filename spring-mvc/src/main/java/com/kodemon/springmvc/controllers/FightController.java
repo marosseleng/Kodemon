@@ -188,6 +188,15 @@ public class FightController {
         Collection<UserDTO> users = userFacade.findUserByUserName(((UserDTO)session.getAttribute("authenticatedUser")).getUserName());
         UserDTO user = users.iterator().next();
         GymDTO gym = gymFacade.findGymById(id);
+        for (BadgeDTO b : user.getBadges())
+        {
+            if (b.getName().equals(gym.getBadgeName()))
+            {
+                model.addAttribute("alert_warning", "You have already beaten this gym!");
+                LOG.error("User " + user.getUserName() + " has already beaten " + gym.getCity() + " Gym.");
+                return "home";
+            }
+        }
         boolean fightResult = fightFacade.fightForBadge(user, gym);
         model.addAttribute("fightResult", fightResult);
         if (fightResult)
