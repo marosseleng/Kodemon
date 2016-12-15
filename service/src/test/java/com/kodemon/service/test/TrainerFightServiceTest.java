@@ -182,7 +182,7 @@ public class TrainerFightServiceTest extends AbstractTransactionalTestNGSpringCo
         when(trainerFightDao.findByTargetGym(targetGym2)).thenReturn(Collections.singletonList(secondFight));
         when(gymDao.findByBadgeName(targetGym2.getBadgeName())).thenReturn(Collections.singletonList(targetGym2));
 
-        List<TrainerFight> result = trainerFightService.findByTargetGym(targetGym2.getBadgeName());
+        List<TrainerFight> result = trainerFightService.findByTargetGymsBadgeName(targetGym2.getBadgeName());
         assertThat(result.size(), is(1));
         assertThat(result.get(0), is(secondFight));
 

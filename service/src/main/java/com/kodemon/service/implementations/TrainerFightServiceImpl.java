@@ -87,10 +87,11 @@ public class TrainerFightServiceImpl implements TrainerFightService {
     }
 
     @Override
-    public List<TrainerFight> findByTargetGym(String badgeName) {
+    public List<TrainerFight> findByTargetGymsBadgeName(String badgeName) {
         Collection<Gym> gyms = gymDao.findByBadgeName(badgeName);
-        if (gyms.isEmpty())
+        if (gyms.isEmpty()) {
             return null;
+        }
         return trainerFightDao.findByTargetGym(gyms.iterator().next());
     }
 
@@ -112,8 +113,14 @@ public class TrainerFightServiceImpl implements TrainerFightService {
     @Override
     public boolean fightForBadge(Trainer trainer, Gym gym) {
         boolean wasChallengerSuccessful = false;
-        trainer = trainerService.findByUserName(trainer.getUserName()).iterator().next();
-        gym = gymService.findByBadgeName(gym.getBadgeName()).iterator().next();
+        Collection<Trainer> trainers= trainerService.findByUserName(trainer.getUserName());
+        if (trainers.isEmpty())
+            return false;
+        trainer = trainers.iterator().next();
+        Collection<Gym> gyms = gymService.findByBadgeName(gym.getBadgeName());
+        if (gyms.isEmpty())
+            return false;
+        gym = gyms.iterator().next();
         if (this.wasFightForBadgeSuccessful(trainer, gym.getTrainer())) {
             Badge badge = badgeService.createBadgeOfGym(gym);
             badgeService.save(badge);

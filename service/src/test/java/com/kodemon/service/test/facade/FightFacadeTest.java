@@ -200,7 +200,7 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
     public void listFightsOfGymTest() {
         when(beanMappingService.mapTo(targetGymDTO, Gym.class)).thenReturn(targetGym);
         when(beanMappingService.mapListTo(trainerFights, FightDTO.class)).thenReturn(fights);
-        when(trainerFightService.findByTargetGym(targetGym.getBadgeName())).thenReturn(trainerFights);
+        when(trainerFightService.findByTargetGymsBadgeName(targetGym.getBadgeName())).thenReturn(trainerFights);
         Collection<FightDTO> fights = fightFacade.listFightsOfGym(targetGymDTO);
         assertThat(fights.size(), is(2));
     }
