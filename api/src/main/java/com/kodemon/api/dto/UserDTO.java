@@ -1,5 +1,6 @@
 package com.kodemon.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.*;
@@ -19,6 +20,10 @@ public class UserDTO {
     private String lastName;
     @JsonProperty(required = true)
     private Date dateOfBirth;
+    @JsonIgnore
+    private boolean isAdmin = false;
+    @JsonIgnore
+    private boolean isBlocked = false;
     @JsonProperty(required = false, defaultValue = "[]")
     private Set<BadgeDTO> badges = new HashSet<>();
     @JsonProperty(required = false, defaultValue = "[]")
@@ -84,6 +89,22 @@ public class UserDTO {
         return pokemons.remove(pokemon);
     }
 
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -110,6 +131,7 @@ public class UserDTO {
         result = 31 * result + getDateOfBirth().hashCode();
         result = 31 * result + getPokemons().hashCode();
         result = 31 * result + getBadges().hashCode();
+
         return result;
     }
 }

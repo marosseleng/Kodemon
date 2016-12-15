@@ -1,5 +1,7 @@
 package com.kodemon.persistence.entity;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -39,6 +41,14 @@ public class Trainer {
     @Column(nullable = false)
     @NotNull
     private String lastName;
+
+    @Column(nullable = false)
+    @NotNull
+    private boolean isAdmin = false;
+
+    @Column(nullable = false)
+    @NotNull
+    private boolean isBlocked = false;
 
     @Temporal(TemporalType.DATE)
     @Past
@@ -133,6 +143,22 @@ public class Trainer {
 
     public boolean removePokemon(Pokemon pokemon) {
         return pokemons.remove(pokemon);
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
     }
 
     @Override
