@@ -162,6 +162,11 @@ public class FightController {
         HttpSession session = request.getSession();
         WildPokemonFightMode mode_ = (mode.equals("train")) ? WildPokemonFightMode.TRAIN : WildPokemonFightMode.CATCH;
         PokemonDTO wildPokemon = (PokemonDTO)session.getAttribute("wildPokemon");
+        if (wildPokemon == null)
+        {
+            return "home";
+        }
+        session.removeAttribute("wildPokemon");
         if ((UserDTO)session.getAttribute("authenticatedUser") == null)
         {
             model.addAttribute("alert_warning", "You are not logged in!");
@@ -217,6 +222,12 @@ public class FightController {
         }
         UserDTO user = users.iterator().next();
         GymDTO gym = gymFacade.findGymById(id);
+        if (gym == null)
+        {
+            model.addAttribute("alert_warning", "Error: Gym not found in database!");
+            LOG.error("Error: Gym ID " + id + " not found in database!");
+            return "home";
+        }
         for (BadgeDTO b : user.getBadges())
         {
             if (b.getName().equals(gym.getBadgeName()))
@@ -254,7 +265,14 @@ public class FightController {
      */
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
     public String detail(@PathVariable Long id, Model model) {
-        model.addAttribute("fight", fightFacade.findFightById(id));
+        FightDTO fight = fightFacade.findFightById(id);
+        if (fight == null)
+        {
+            model.addAttribute("alert_warning", "Error: Fight not found in database!");
+            LOG.error("Error: Fight ID " + id + " not found in database!");
+            return "home";
+        }
+        model.addAttribute("fight", fight);
         LOG.debug("Viewing detail of fight " + id);
         return "fight/detail";
     }
