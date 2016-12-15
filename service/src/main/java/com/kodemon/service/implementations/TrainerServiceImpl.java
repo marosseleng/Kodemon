@@ -79,6 +79,20 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Override
+    public void blockTrainer(Long id) {
+        Trainer toBeBlocked = findById(id);
+        toBeBlocked.setBlocked(true);
+        trainerDao.save(toBeBlocked);
+    }
+
+    @Override
+    public void unblockTrainer(Long id) {
+        Trainer toBeBlocked = findById(id);
+        toBeBlocked.setBlocked(false);
+        trainerDao.save(toBeBlocked);
+    }
+
+    @Override
     public Trainer update(Long id, Trainer trainer) {
         Trainer found = findById(id);
         String firstName = trainer.getFirstName();

@@ -19,6 +19,10 @@ public class UserDTO {
     private String lastName;
     @JsonProperty(required = true)
     private Date dateOfBirth;
+    @JsonProperty(required = true)
+    private boolean isAdmin;
+    @JsonProperty(required = true)
+    private boolean isBlocked;
     @JsonProperty(required = false, defaultValue = "[]")
     private Set<BadgeDTO> badges = new HashSet<>();
     @JsonProperty(required = false, defaultValue = "[]")
@@ -84,6 +88,22 @@ public class UserDTO {
         return pokemons.remove(pokemon);
     }
 
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -110,6 +130,7 @@ public class UserDTO {
         result = 31 * result + getDateOfBirth().hashCode();
         result = 31 * result + getPokemons().hashCode();
         result = 31 * result + getBadges().hashCode();
+
         return result;
     }
 }

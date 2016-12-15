@@ -82,4 +82,14 @@ public class UserFacadeImpl implements UserFacade {
     public void delete(Long id) {
         trainerService.delete(id);
     }
+
+    @Override
+    public void blockUser(Long id) {
+        trainerService.blockTrainer(id);
+    }
+
+    @Override
+    public void unblockUser(Long id) {
+        trainerService.unblockTrainer(id);
+    }
 }

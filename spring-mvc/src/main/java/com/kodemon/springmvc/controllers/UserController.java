@@ -100,6 +100,10 @@ public class UserController {
         HttpServletRequest request = (HttpServletRequest) r;
         if(userFacade.login(userAuthDTO)) {
             UserDTO authenticated = userFacade.findUserByUserName(username).iterator().next();
+            if(authenticated.isBlocked()) {
+                model.addAttribute("alert_danger", "This account is blocked");
+                return "/login";
+            }
             HttpSession session = request.getSession();
             session.setAttribute("authenticatedUser", authenticated);
             model.addAttribute("alert_success", "Welcome "+username);
@@ -109,5 +113,85 @@ public class UserController {
             model.addAttribute("alert_danger", "Incorrect username or password ");
             return "/login";
         }
+    }
+
+    /**
+     * Block specified user. Only administrator can block other user and even admin cannot block another admin.
+     * User remain blocked until admin unblocks him.
+     *
+     * @param username Username of user to be blocked
+     * @param r servlet request to get logged user
+     * @param model Data to display
+     * @return JSP page name
+     */
+    @RequestMapping(value = "/blockUser", method = RequestMethod.POST)
+    public String blockUser(@RequestParam String username, ServletRequest r, Model model) {
+        HttpServletRequest request = (HttpServletRequest) r;
+        HttpSession session = request.getSession();
+        UserDTO toBeBlocked = userFacade.findUserByUserName(username).iterator().next();
+        if ((UserDTO)session.getAttribute("authenticatedUser") == null || !(((UserDTO)session.getAttribute("authenticatedUser")).isAdmin())) {
+            model.addAttribute("alert_warning", "You do not have permissions to do this");
+            LOG.error("User is not admin.");
+            model.addAttribute("trainer", toBeBlocked);
+            return "/user/detail";
+        }
+        if(toBeBlocked.isAdmin()) {
+            model.addAttribute("alert_warning", "Admin can not block another admin");
+            LOG.error("Admin trying to block admin");
+            model.addAttribute("trainer", toBeBlocked);
+            return "/user/detail";
+        }
+        LOG.info("User blocked");
+        userFacade.blockUser(toBeBlocked.getId());
+        model.addAttribute("alert_success", "User successfully blocked");
+        model.addAttribute("trainer", toBeBlocked);
+        return "/user/detail";
+    }
+
+    /**
+     * Unblock specified user if he is blocked. Only administrator can unblock user.
+     *
+     * @param username Username of user to be unblocked
+     * @param r servlet request to get logged user
+     * @param model Data to display
+     * @return JSP page name
+     */
+    @RequestMapping(value = "/unblockUser", method = RequestMethod.POST)
+    public String unblockUser(@RequestParam String username, ServletRequest r, Model model) {
+        HttpServletRequest request = (HttpServletRequest) r;
+        HttpSession session = request.getSession();
+        UserDTO toBeUnblocked = userFacade.findUserByUserName(username).iterator().next();
+        if ((UserDTO)session.getAttribute("authenticatedUser") == null || !(((UserDTO)session.getAttribute("authenticatedUser")).isAdmin())) {
+            model.addAttribute("alert_warning", "You do not have permissions to do this");
+            LOG.error("User is not admin.");
+            model.addAttribute("trainer", toBeUnblocked);
+            return "/user/detail";
+        }
+        LOG.info("User unblocked");
+        userFacade.unblockUser(toBeUnblocked.getId());
+        model.addAttribute("alert_success", "User successfully unblocked");
+        model.addAttribute("trainer", toBeUnblocked);
+        return "/user/detail";
+    }
+
+    /**
+     * Function to logout user.
+     *
+     * @param r servlet request to get logged user
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(ServletRequest r, Model model) {
+        HttpServletRequest request = (HttpServletRequest) r;
+        HttpSession session = request.getSession();
+        if ((UserDTO)session.getAttribute("authenticatedUser") == null) {
+            model.addAttribute("alert_warning", "You are not logged in");
+            return "/login";
+        }
+        LOG.info("User logged out");
+        session.removeAttribute("authenticatedUser");
+        model.addAttribute("alert_success", "Succesfully logged out");
+        return "/login";
     }
 }

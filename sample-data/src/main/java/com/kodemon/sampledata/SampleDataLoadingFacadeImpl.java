@@ -65,6 +65,16 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         pikachu.setTrainer(ash);
         pokemonDao.save(pikachu);
 
+        Trainer admin = new Trainer();
+        admin.setUserName("admin");
+        admin.setFirstName("Professor");
+        admin.setLastName("Oak");
+        Date dob2 = new Calendar.Builder().setDate(1963, 24, 3).build().getTime();
+        admin.setDateOfBirth(dob2);
+        admin.setAdmin(true);
+
+        trainerService.register(admin, "adminpassword");
+
 
         TrainerFight fight;
 

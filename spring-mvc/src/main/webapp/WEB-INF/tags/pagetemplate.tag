@@ -40,6 +40,7 @@
                     <c:when test="${not empty authenticatedUser}">
                         <li><kodemon:a href="/fight/grass">Visit grass</kodemon:a></li>
                         <li><kodemon:a href="/user/detail/${authenticatedUser.userName}">My profile</kodemon:a></li>
+                        <li><kodemon:a href="/user/logout">Logout</kodemon:a></li>
                     </c:when>
                     <c:otherwise>
                         <li><kodemon:a href="/login">Login</kodemon:a></li>

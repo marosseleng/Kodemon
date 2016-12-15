@@ -66,4 +66,18 @@ public interface UserFacade {
      * @param id id of the user we want to delete
      */
     void delete(Long id);
+
+    /**
+     * Block account of user
+     *
+     * @param id of user to be blocked
+     */
+    void blockUser(Long id);
+
+    /**
+     * Unblock account of user
+     *
+     * @param id of user to be unblocked
+     */
+    void unblockUser(Long id);
 }
