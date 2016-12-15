@@ -84,12 +84,7 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public void blockUser(Long id) {
-        trainerService.blockTrainer(id);
-    }
-
-    @Override
-    public void unblockUser(Long id) {
-        trainerService.unblockTrainer(id);
+    public void setBlocked(Long id, boolean blocked) {
+        trainerService.setBlocked(id, blocked);
     }
 }

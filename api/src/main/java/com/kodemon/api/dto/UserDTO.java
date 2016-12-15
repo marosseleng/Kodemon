@@ -1,5 +1,6 @@
 package com.kodemon.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.*;
@@ -19,10 +20,10 @@ public class UserDTO {
     private String lastName;
     @JsonProperty(required = true)
     private Date dateOfBirth;
-    @JsonProperty(required = true)
-    private boolean isAdmin;
-    @JsonProperty(required = true)
-    private boolean isBlocked;
+    @JsonIgnore
+    private boolean isAdmin = false;
+    @JsonIgnore
+    private boolean isBlocked = false;
     @JsonProperty(required = false, defaultValue = "[]")
     private Set<BadgeDTO> badges = new HashSet<>();
     @JsonProperty(required = false, defaultValue = "[]")

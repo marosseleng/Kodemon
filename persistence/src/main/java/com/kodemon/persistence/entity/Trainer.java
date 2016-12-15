@@ -44,13 +44,11 @@ public class Trainer {
 
     @Column(nullable = false)
     @NotNull
-    @ColumnDefault("false")
-    private boolean isAdmin;
+    private boolean isAdmin = false;
 
     @Column(nullable = false)
     @NotNull
-    @ColumnDefault("false")
-    private boolean isBlocked;
+    private boolean isBlocked = false;
 
     @Temporal(TemporalType.DATE)
     @Past

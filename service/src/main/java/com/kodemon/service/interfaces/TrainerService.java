@@ -79,18 +79,11 @@ public interface TrainerService {
     void delete(Long id);
 
     /**
-     * Block account of specified trainer
+     * Set value of isBlocked of specified trainer to blocked value.
      *
-     * @param id of trainer to be blocked
+     * @param id of trainer to be blocked or unblocked
      */
-    void blockTrainer(Long id);
-
-    /**
-     * Unblock a account of specified trainer
-     *
-     * @param id of trainer to be unblocked
-     */
-    void unblockTrainer(Long id);
+    void setBlocked(Long id, boolean blocked);
 
     /**
      * Updates the trainer with the given id
