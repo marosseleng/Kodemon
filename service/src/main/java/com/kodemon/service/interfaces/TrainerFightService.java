@@ -46,10 +46,10 @@ public interface TrainerFightService {
     /**
      * Find all fights for the specified gym
      *
-     * @param targetGym gym for which the fights were
+     * @param badgeName gym's badgename to identify gym for which the fights were
      * @return list of fights for the specified gym
      */
-    List<TrainerFight> findByTargetGym(Gym targetGym);
+    List<TrainerFight> findByTargetGymsBadgeName(String badgeName);
 
     /**
      * Find all fight between specified times
@@ -73,4 +73,11 @@ public interface TrainerFightService {
      * @param trainerFight trainer fight, that has been played and is to be saved
      */
     void save(TrainerFight trainerFight);
+
+    /**
+     * Represents an attempt to conquer the {@link com.kodemon.persistence.entity.Gym}
+     *  @param trainer trainer that wants to conquer the gym
+     * @param gym gym to be challenged
+     */
+    public boolean fightForBadge(Trainer trainer, Gym gym);
 }

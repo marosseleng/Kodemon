@@ -38,7 +38,6 @@ public interface TrainerService {
      * Adds the given badge to the given trainer and updates the trainer table
      * <p/>
      * This method expects that the given Badge has already been saved in the database.
-     * This method does <b>not</b> assign the trainer to the badge.
      *
      * @param badge badge to add
      * @param trainer trainer that receives the badge

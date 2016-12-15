@@ -90,7 +90,14 @@ public class FightController {
     @RequestMapping(value = "/listFightsOfGym", method = RequestMethod.GET)
     public String listFightsOfGym(@RequestParam Long id, Model model) {
         GymDTO gym = gymFacade.findGymById(id);
-        model.addAttribute("fights", fightFacade.listFightsOfGym(gym));
+        Collection<FightDTO> fights = fightFacade.listFightsOfGym(gym);
+        if(fights.isEmpty()) {
+            model.addAttribute("alert_warning", "No fights of this gym found");
+            model.addAttribute("gym", gym);
+            LOG.debug("Tried to look up fights of '" + gym.getCity() +"' Gym - the gym doesn't have any fight history.");
+            return "/gym/detail";
+        }
+        model.addAttribute("fights", fights);
         LOG.debug("Viewing fights of '" + gym.getCity() + "' Gym");
         return "fight/list";
     }
@@ -134,6 +141,12 @@ public class FightController {
             return "home";
         }
         Collection<UserDTO> users = userFacade.findUserByUserName(((UserDTO)session.getAttribute("authenticatedUser")).getUserName());
+        if (users.isEmpty())
+        {
+            model.addAttribute("alert_warning", "Error: User not found in database!");
+            LOG.error("Error: User not found in database!");
+            return "home";
+        }
         UserDTO user = users.iterator().next();
         PokemonDTO wildPokemon = pokemonFacade.generateWildPokemon(user);
         session.setAttribute("wildPokemon", wildPokemon);
@@ -155,13 +168,32 @@ public class FightController {
             LOG.error("User not logged in.");
             return "home";
         }
+
         Collection<UserDTO> users = userFacade.findUserByUserName(((UserDTO)session.getAttribute("authenticatedUser")).getUserName());
+        if (users.isEmpty())
+        {
+            model.addAttribute("alert_warning", "Error: User not found in database!");
+            LOG.error("Error: User not found in database!");
+            return "home";
+        }
         UserDTO user = users.iterator().next();
+
         boolean fightResult = fightFacade.fightWildPokemon(user, wildPokemon, mode_);
         if (fightResult)
             model.addAttribute("alert_success", (mode_ == WildPokemonFightMode.CATCH ? "Gotcha! " + wildPokemon.getName().getName() + " was caught!" : wildPokemon.getName().getName() + " fainted. " + user.getPokemons().get(0).getName().getName() + " leveled up to " + (user.getPokemons().get(0).getLevel() + 1)));
         else
             model.addAttribute("alert_warning", (mode_ == WildPokemonFightMode.CATCH ? wildPokemon.getName().getName() + " flew away!" : user.getPokemons().get(0).getName().getName() + " fainted! You ran to the nearest PokeCenter and healed your Pokemon."));
+
+        users = userFacade.findUserByUserName(((UserDTO)session.getAttribute("authenticatedUser")).getUserName());
+        if (users.isEmpty())
+        {
+            model.addAttribute("alert_warning", "Error: User not found in database!");
+            LOG.error("Error: User not found in database!");
+            return "home";
+        }
+        user = userFacade.findUserByUserName(user.getUserName()).iterator().next();
+        session.setAttribute("authenticatedUser", user);
+
         LOG.debug(user.getUserName() + (mode_ == WildPokemonFightMode.CATCH ? " catching" : " fighting") + " wild " + wildPokemon.getName().getName() + " level " + wildPokemon.getLevel() + " -> " + (fightResult ? "Success!" : "Failed"));
         return "home";
     }
@@ -177,14 +209,38 @@ public class FightController {
             return "home";
         }
         Collection<UserDTO> users = userFacade.findUserByUserName(((UserDTO)session.getAttribute("authenticatedUser")).getUserName());
+        if (users.isEmpty())
+        {
+            model.addAttribute("alert_warning", "Error: User not found in database!");
+            LOG.error("Error: User not found in database!");
+            return "home";
+        }
         UserDTO user = users.iterator().next();
         GymDTO gym = gymFacade.findGymById(id);
+        for (BadgeDTO b : user.getBadges())
+        {
+            if (b.getName().equals(gym.getBadgeName()))
+            {
+                model.addAttribute("alert_warning", "You have already beaten this gym!");
+                LOG.error("User " + user.getUserName() + " has already beaten " + gym.getCity() + " Gym.");
+                return "home";
+            }
+        }
         boolean fightResult = fightFacade.fightForBadge(user, gym);
         model.addAttribute("fightResult", fightResult);
         if (fightResult)
             model.addAttribute("alert_success", "You beat " + gym.getTrainer().getUserName() + "! You received " + gym.getBadgeName());
         else
             model.addAttribute("alert_warning", "You lost!");
+        users = userFacade.findUserByUserName(((UserDTO)session.getAttribute("authenticatedUser")).getUserName());
+        if (users.isEmpty())
+        {
+            model.addAttribute("alert_warning", "Error: User not found in database!");
+            LOG.error("Error: User not found in database!");
+            return "home";
+        }
+        user = userFacade.findUserByUserName(user.getUserName()).iterator().next();
+        session.setAttribute("authenticatedUser", user);
         LOG.debug(user.getUserName() + " is fighting " + gym.getCity() + " Gym -> " + (fightResult ? "Success!" : "Failed"));
         return "home";
     }

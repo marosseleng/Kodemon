@@ -29,14 +29,7 @@ public class BadgeServiceImpl implements BadgeService {
 
     @Override
     public Badge createBadgeOfGym(Gym gym) {
-        Badge badge = new Badge(gym, gym.getTrainer());
-        return badge;
-    }
-
-    @Override
-    public void assignTrainerToBadge(Trainer trainer, Badge badge) {
-        badge.setTrainer(trainer);
-        badgeDao.save(badge);
+        return new Badge(gym);
     }
 
     @Override
@@ -63,9 +56,4 @@ public class BadgeServiceImpl implements BadgeService {
     public List<Badge> findByGym(Gym gym) {
         return badgeDao.findByGym(gym);
     }
-
-    @Override
-    public List<Badge> findByTrainer(Trainer trainer) {
-        return badgeDao.findByTrainer(trainer);
-    }    
 }
