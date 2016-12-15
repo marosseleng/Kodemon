@@ -65,6 +65,10 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         pikachu.setTrainer(ash);
         pokemonDao.save(pikachu);
 
+        Pokemon mewtwo = new Pokemon(PokemonName.MEWTWO);
+        mewtwo.setLevel(999);
+        pokemonDao.save(mewtwo);
+
         Trainer admin = new Trainer();
         admin.setUserName("admin");
         admin.setFirstName("Professor");
@@ -72,8 +76,12 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         Date dob2 = new Calendar.Builder().setDate(1963, 24, 3).build().getTime();
         admin.setDateOfBirth(dob2);
         admin.setAdmin(true);
+        admin.addPokemon(mewtwo);
 
         trainerService.register(admin, "adminpassword");
+
+        mewtwo.setTrainer(admin);
+        pokemonDao.save(mewtwo);
 
 
         TrainerFight fight;
