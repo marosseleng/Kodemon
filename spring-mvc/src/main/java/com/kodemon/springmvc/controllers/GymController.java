@@ -65,7 +65,6 @@ public class GymController {
             return "/gym/list";
         }
         model.addAttribute("gym", gym);
-        LOG.error("Number of trainers Pokemon: {}.", gym.getTrainer().getPokemons().size());
         return "gym/detail";
     }
 }
