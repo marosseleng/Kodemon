@@ -3,10 +3,10 @@
 Travis CI build:
 [![Build Status](https://travis-ci.org/mseleng/Kodemon.svg?branch=master)](https://travis-ci.org/mseleng/Kodemon)
 
-####Synopsis
-Kodemon is a simple app storing pokemon trainers, pokemons they catch, gyms where they can fight and badges they win. It also contains list of all fights, trainers and other options. Detailed description can be found in the project's [wiki](https://github.com/mseleng/Kodemon/wiki)!
+###Synopsis
+Kodemon is a simple app for storing pokemon trainers, pokemons they catch, gyms where they can fight and badges that they win. It also contains a list of all fights, trainers and other options. Detailed description can be found in the project's [wiki](https://github.com/mseleng/Kodemon/wiki)!
 
-####How to test
+###How to test
 In order to test the application run, log in as one of the following sample users:
 
 - Ash Ketchum
