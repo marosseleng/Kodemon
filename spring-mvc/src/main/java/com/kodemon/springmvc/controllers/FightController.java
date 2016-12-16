@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.inject.Inject;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +26,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Collection;
 
 /**
- *  @author Matej Poklemba
+ * @author Matej Poklemba
  */
 
 @Controller
@@ -60,8 +61,7 @@ public class FightController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(@RequestParam String period, Model model) {
         Collection<FightDTO> fights;
-        switch (period)
-        {
+        switch (period) {
             case "year":
                 fights = fightFacade.listThisYearsFights();
                 break;
@@ -83,7 +83,7 @@ public class FightController {
     /**
      * Show list of given gym's fights.
      *
-     * @param id id of gym to display fights of
+     * @param id    id of gym to display fights of
      * @param model data to display
      * @return JSP page name
      */
@@ -91,10 +91,10 @@ public class FightController {
     public String listFightsOfGym(@RequestParam Long id, Model model) {
         GymDTO gym = gymFacade.findGymById(id);
         Collection<FightDTO> fights = fightFacade.listFightsOfGym(gym);
-        if(fights.isEmpty()) {
+        if (fights.isEmpty()) {
             model.addAttribute("alert_warning", "No fights of this gym found");
             model.addAttribute("gym", gym);
-            LOG.debug("Tried to look up fights of '" + gym.getCity() +"' Gym - the gym doesn't have any fight history.");
+            LOG.debug("Tried to look up fights of '" + gym.getCity() + "' Gym - the gym doesn't have any fight history.");
             return "/gym/detail";
         }
         model.addAttribute("fights", fights);
@@ -106,23 +106,23 @@ public class FightController {
      * Show list of given user's fights.
      *
      * @param username which user's fights do display
-     * @param model data to display
+     * @param model    data to display
      * @return JSP page name
      */
     @RequestMapping(value = "/listFightsOfUser", method = RequestMethod.GET)
     public String listFightsOfUser(@RequestParam String username, Model model) {
 
         Collection<UserDTO> user = userFacade.findUserByUserName(username);
-        if(user.isEmpty()) {
+        if (user.isEmpty()) {
             model.addAttribute("alert_warning", "No trainer with such username found");
-            LOG.error("Tried to look up fights of '" + username +"' - user doesn't exists.");
+            LOG.error("Tried to look up fights of '" + username + "' - user doesn't exists.");
             return "home";
         }
         Collection<FightDTO> fights = fightFacade.listFightsOfTrainer(userFacade.findUserByUserName(username).iterator().next());
-        if(fights.isEmpty()) {
+        if (fights.isEmpty()) {
             model.addAttribute("alert_warning", "No fights of this user found");
             model.addAttribute("trainer", userFacade.findUserByUserName(username).iterator().next());
-            LOG.debug("Tried to look up fights of '" + username +"' - user doesn't have any fight history.");
+            LOG.debug("Tried to look up fights of '" + username + "' - user doesn't have any fight history.");
             return "/user/detail";
         }
         model.addAttribute("fights", fights);
@@ -134,15 +134,13 @@ public class FightController {
     public String grass(ServletRequest r, Model model) {
         HttpServletRequest request = (HttpServletRequest) r;
         HttpSession session = request.getSession();
-        if ((UserDTO)session.getAttribute("authenticatedUser") == null)
-        {
+        if ((UserDTO) session.getAttribute("authenticatedUser") == null) {
             model.addAttribute("alert_warning", "You are not logged in!");
             LOG.error("User not logged in.");
             return "home";
         }
-        Collection<UserDTO> users = userFacade.findUserByUserName(((UserDTO)session.getAttribute("authenticatedUser")).getUserName());
-        if (users.isEmpty())
-        {
+        Collection<UserDTO> users = userFacade.findUserByUserName(((UserDTO) session.getAttribute("authenticatedUser")).getUserName());
+        if (users.isEmpty()) {
             model.addAttribute("alert_warning", "Error: User not found in database!");
             LOG.error("Error: User not found in database!");
             return "home";
@@ -161,22 +159,19 @@ public class FightController {
         HttpServletRequest request = (HttpServletRequest) r;
         HttpSession session = request.getSession();
         WildPokemonFightMode mode_ = (mode.equals("train")) ? WildPokemonFightMode.TRAIN : WildPokemonFightMode.CATCH;
-        PokemonDTO wildPokemon = (PokemonDTO)session.getAttribute("wildPokemon");
-        if (wildPokemon == null)
-        {
+        PokemonDTO wildPokemon = (PokemonDTO) session.getAttribute("wildPokemon");
+        if (wildPokemon == null) {
             return "home";
         }
         session.removeAttribute("wildPokemon");
-        if ((UserDTO)session.getAttribute("authenticatedUser") == null)
-        {
+        if ((UserDTO) session.getAttribute("authenticatedUser") == null) {
             model.addAttribute("alert_warning", "You are not logged in!");
             LOG.error("User not logged in.");
             return "home";
         }
 
-        Collection<UserDTO> users = userFacade.findUserByUserName(((UserDTO)session.getAttribute("authenticatedUser")).getUserName());
-        if (users.isEmpty())
-        {
+        Collection<UserDTO> users = userFacade.findUserByUserName(((UserDTO) session.getAttribute("authenticatedUser")).getUserName());
+        if (users.isEmpty()) {
             model.addAttribute("alert_warning", "Error: User not found in database!");
             LOG.error("Error: User not found in database!");
             return "home";
@@ -189,9 +184,8 @@ public class FightController {
         else
             model.addAttribute("alert_warning", (mode_ == WildPokemonFightMode.CATCH ? wildPokemon.getName().getName() + " flew away!" : user.getPokemons().get(0).getName().getName() + " fainted! You ran to the nearest PokeCenter and healed your Pokemon."));
 
-        users = userFacade.findUserByUserName(((UserDTO)session.getAttribute("authenticatedUser")).getUserName());
-        if (users.isEmpty())
-        {
+        users = userFacade.findUserByUserName(((UserDTO) session.getAttribute("authenticatedUser")).getUserName());
+        if (users.isEmpty()) {
             model.addAttribute("alert_warning", "Error: User not found in database!");
             LOG.error("Error: User not found in database!");
             return "home";
@@ -207,67 +201,61 @@ public class FightController {
     public String fightGym(@RequestParam Long id, ServletRequest r, Model model) {
         HttpServletRequest request = (HttpServletRequest) r;
         HttpSession session = request.getSession();
-        if ((UserDTO)session.getAttribute("authenticatedUser") == null)
-        {
+        UserDTO userDTO = (UserDTO) session.getAttribute("authenticatedUser");
+        if (userDTO == null) {
             model.addAttribute("alert_warning", "You are not logged in!");
             LOG.error("User not logged in.");
             return "home";
         }
-        Collection<UserDTO> users = userFacade.findUserByUserName(((UserDTO)session.getAttribute("authenticatedUser")).getUserName());
-        if (users.isEmpty())
-        {
+        Collection<UserDTO> users = userFacade.findUserByUserName(userDTO.getUserName());
+        if (users.isEmpty()) {
             model.addAttribute("alert_warning", "Error: User not found in database!");
             LOG.error("Error: User not found in database!");
             return "home";
         }
-        UserDTO user = users.iterator().next();
+        userDTO = users.iterator().next();
         GymDTO gym = gymFacade.findGymById(id);
-        if (gym == null)
-        {
+        if (gym == null) {
             model.addAttribute("alert_warning", "Error: Gym not found in database!");
             LOG.error("Error: Gym ID " + id + " not found in database!");
             return "home";
         }
-        for (BadgeDTO b : user.getBadges())
-        {
-            if (b.getName().equals(gym.getBadgeName()))
-            {
+        for (BadgeDTO b : userDTO.getBadges()) {
+            if (b.getName().equals(gym.getBadgeName())) {
                 model.addAttribute("alert_warning", "You have already beaten this gym!");
-                LOG.error("User " + user.getUserName() + " has already beaten " + gym.getCity() + " Gym.");
+                LOG.error("User " + userDTO.getUserName() + " has already beaten " + gym.getCity() + " Gym.");
                 return "home";
             }
         }
-        boolean fightResult = fightFacade.fightForBadge(user, gym);
+        boolean fightResult = fightFacade.fightForBadge(userDTO, gym);
         model.addAttribute("fightResult", fightResult);
         if (fightResult)
             model.addAttribute("alert_success", "You beat " + gym.getTrainer().getUserName() + "! You received " + gym.getBadgeName());
         else
             model.addAttribute("alert_warning", "You lost!");
-        users = userFacade.findUserByUserName(((UserDTO)session.getAttribute("authenticatedUser")).getUserName());
-        if (users.isEmpty())
-        {
+        users = userFacade.findUserByUserName(userDTO.getUserName());
+        if (users.isEmpty()) {
             model.addAttribute("alert_warning", "Error: User not found in database!");
             LOG.error("Error: User not found in database!");
             return "home";
         }
-        user = userFacade.findUserByUserName(user.getUserName()).iterator().next();
-        session.setAttribute("authenticatedUser", user);
-        LOG.debug(user.getUserName() + " is fighting " + gym.getCity() + " Gym -> " + (fightResult ? "Success!" : "Failed"));
+        userDTO = users.iterator().next();
+        session.setAttribute("authenticatedUser", userDTO);
+        LOG.debug(userDTO.getUserName() + " is fighting " + gym.getCity() + " Gym -> " + (fightResult ? "Success!" : "Failed"));
         return "home";
     }
 
     /**
      * Show detail of fight specified by its id
      *
-     * @param id which id is to be shown
+     * @param id    which id is to be shown
      * @param model data to display
      * @return JSP page name
      */
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
     public String detail(@PathVariable Long id, Model model) {
         FightDTO fight = fightFacade.findFightById(id);
-        if (fight == null)
-        {
+        if (fight == null) {
             model.addAttribute("alert_warning", "Error: Fight not found in database!");
             LOG.error("Error: Fight ID " + id + " not found in database!");
             return "home";
