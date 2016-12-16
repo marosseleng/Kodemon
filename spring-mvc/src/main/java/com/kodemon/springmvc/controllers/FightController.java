@@ -227,6 +227,11 @@ public class FightController {
                 return "home";
             }
         }
+        if (gym.getTrainer().getUserName().equals(userDTO.getUserName())) {
+            model.addAttribute("alert_warning", "You cannot fight your own gym!");
+            LOG.error("User " + userDTO.getUserName() + " owns " + gym.getCity() + " Gym.");
+            return "home";
+        }
         boolean fightResult = fightFacade.fightForBadge(userDTO, gym);
         model.addAttribute("fightResult", fightResult);
         if (fightResult)
