@@ -26,31 +26,35 @@
         <button type="submit" class="btn btn-primary" name="id" value="${gym.id}">This gym's fights</button>
     </form>
     <c:choose>
-        <c:when test="${authenticatedUser.userName == gym.trainer.userName}">
-            <form method="get" action="${pageContext.request.contextPath}/fight/fightGym">
-                <button type="submit" class="btn btn-primary" name="id" value="${gym.id}" disabled="disabled">You cannot fight your own gym.</button>
-            </form>
-        </c:when>
-        <c:otherwise>
-            <c:set var="beaten" value="false"/>
-            <c:forEach items="${authenticatedUser.badges}" var="badge">
-                <c:choose>
-                    <c:when test="${badge.name == gym.badgeName}">
-                        <c:set var="beaten" value="true"/>
-                    </c:when>
-                </c:choose>
-            </c:forEach>
+        <c:when test="${not empty authenticatedUser}">
             <c:choose>
-                <c:when test="${!beaten}">
-                <form method="get" action="${pageContext.request.contextPath}/fight/fightGym">
-                    <button type="submit" class="btn btn-primary" name="id" value="${gym.id}">FIGHT IT!</button>
+                <c:when test="${authenticatedUser.userName == gym.trainer.userName}">
+                    <form method="get" action="${pageContext.request.contextPath}/fight/fightGym">
+                        <button type="submit" class="btn btn-primary" name="id" value="${gym.id}" disabled="disabled">You cannot fight your own gym.</button>
                     </form>
                 </c:when>
                 <c:otherwise>
-                    <button type="submit" class="btn btn-primary" name="id" value="${gym.id}" disabled="disabled">You already beat this gym.</button>
+                    <c:set var="beaten" value="false"/>
+                    <c:forEach items="${authenticatedUser.badges}" var="badge">
+                        <c:choose>
+                            <c:when test="${badge.name == gym.badgeName}">
+                                <c:set var="beaten" value="true"/>
+                            </c:when>
+                        </c:choose>
+                    </c:forEach>
+                    <c:choose>
+                        <c:when test="${!beaten}">
+                        <form method="get" action="${pageContext.request.contextPath}/fight/fightGym">
+                            <button type="submit" class="btn btn-primary" name="id" value="${gym.id}">FIGHT IT!</button>
+                            </form>
+                        </c:when>
+                        <c:otherwise>
+                            <button type="submit" class="btn btn-primary" name="id" value="${gym.id}" disabled="disabled">You already beat this gym.</button>
+                        </c:otherwise>
+                    </c:choose>
                 </c:otherwise>
             </c:choose>
-        </c:otherwise>
+        </c:when>
     </c:choose>
 
 </jsp:attribute>
