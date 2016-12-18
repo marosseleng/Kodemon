@@ -9,18 +9,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.inject.Inject;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.Collection;
 
 /**
  * The controller of Gym
  *
- *  @author Michal Romanek
+ * @author Michal Romanek
  */
 
 @Controller
@@ -51,14 +46,14 @@ public class GymController {
     /**
      * Show detail of gym specified by its id
      *
-     * @param id of the chosen gym
+     * @param id    of the chosen gym
      * @param model data to display
      * @return JSP page name
      */
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
     public String detail(@PathVariable Long id, Model model) {
         GymDTO gym = gymFacade.findGymById(id);
-        if(gym == null){
+        if (gym == null) {
             LOG.warn("No gym with this id found");
             model.addAttribute("alert_warning", "No gym with this id found");
             model.addAttribute("gyms", gymFacade.findAll());

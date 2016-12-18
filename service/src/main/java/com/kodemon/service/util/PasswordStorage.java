@@ -11,36 +11,13 @@ import java.security.spec.InvalidKeySpecException;
  * Helper functions to hash/validate passwords using the PBKDF algorithm
  * Downloaded from <a href="https://github.com/defuse/password-hashing">GitHub</a>
  */
-public class PasswordStorage
-{
-
-    @SuppressWarnings("serial")
-    static public class InvalidHashException extends Exception {
-        public InvalidHashException(String message) {
-            super(message);
-        }
-        public InvalidHashException(String message, Throwable source) {
-            super(message, source);
-        }
-    }
-
-    @SuppressWarnings("serial")
-    static public class CannotPerformOperationException extends Exception {
-        public CannotPerformOperationException(String message) {
-            super(message);
-        }
-        public CannotPerformOperationException(String message, Throwable source) {
-            super(message, source);
-        }
-    }
+public class PasswordStorage {
 
     public static final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA1";
-
     // These constants may be changed without breaking existing hashes.
     public static final int SALT_BYTE_SIZE = 24;
     public static final int HASH_BYTE_SIZE = 18;
     public static final int PBKDF2_ITERATIONS = 64000;
-
     // These constants define the encoding and may not be changed.
     public static final int HASH_SECTIONS = 5;
     public static final int HASH_ALGORITHM_INDEX = 0;
@@ -50,8 +27,7 @@ public class PasswordStorage
     public static final int PBKDF2_INDEX = 4;
 
     public static String createHash(String password)
-            throws CannotPerformOperationException
-    {
+            throws CannotPerformOperationException {
         if (password == null) {
             throw new CannotPerformOperationException("Given password was null!");
         }
@@ -59,8 +35,7 @@ public class PasswordStorage
     }
 
     public static String createHash(char[] password)
-            throws CannotPerformOperationException
-    {
+            throws CannotPerformOperationException {
         if (password == null) {
             throw new CannotPerformOperationException("Given password was null!");
         }
@@ -85,8 +60,7 @@ public class PasswordStorage
     }
 
     public static boolean verifyPassword(String password, String correctHash)
-            throws CannotPerformOperationException, InvalidHashException
-    {
+            throws CannotPerformOperationException, InvalidHashException {
         if (password == null || correctHash == null) {
             throw new CannotPerformOperationException("Given password was null!");
         }
@@ -94,8 +68,7 @@ public class PasswordStorage
     }
 
     public static boolean verifyPassword(char[] password, String correctHash)
-            throws CannotPerformOperationException, InvalidHashException
-    {
+            throws CannotPerformOperationException, InvalidHashException {
         if (password == null || correctHash == null) {
             throw new CannotPerformOperationException("Given password was null!");
         }
@@ -174,17 +147,15 @@ public class PasswordStorage
         return slowEquals(hash, testHash);
     }
 
-    private static boolean slowEquals(byte[] a, byte[] b)
-    {
+    private static boolean slowEquals(byte[] a, byte[] b) {
         int diff = a.length ^ b.length;
-        for(int i = 0; i < a.length && i < b.length; i++)
+        for (int i = 0; i < a.length && i < b.length; i++)
             diff |= a[i] ^ b[i];
         return diff == 0;
     }
 
     private static byte[] pbkdf2(char[] password, byte[] salt, int iterations, int bytes)
-            throws CannotPerformOperationException
-    {
+            throws CannotPerformOperationException {
         try {
             PBEKeySpec spec = new PBEKeySpec(password, salt, iterations, bytes * 8);
             SecretKeyFactory skf = SecretKeyFactory.getInstance(PBKDF2_ALGORITHM);
@@ -203,13 +174,33 @@ public class PasswordStorage
     }
 
     private static byte[] fromBase64(String hex)
-            throws IllegalArgumentException
-    {
+            throws IllegalArgumentException {
         return DatatypeConverter.parseBase64Binary(hex);
     }
 
-    private static String toBase64(byte[] array)
-    {
+    private static String toBase64(byte[] array) {
         return DatatypeConverter.printBase64Binary(array);
+    }
+
+    @SuppressWarnings("serial")
+    static public class InvalidHashException extends Exception {
+        public InvalidHashException(String message) {
+            super(message);
+        }
+
+        public InvalidHashException(String message, Throwable source) {
+            super(message, source);
+        }
+    }
+
+    @SuppressWarnings("serial")
+    static public class CannotPerformOperationException extends Exception {
+        public CannotPerformOperationException(String message) {
+            super(message);
+        }
+
+        public CannotPerformOperationException(String message, Throwable source) {
+            super(message, source);
+        }
     }
 }

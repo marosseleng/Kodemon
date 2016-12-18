@@ -21,10 +21,9 @@ import javax.inject.Inject;
 @Import(ServiceConfig.class)
 @ComponentScan(basePackageClasses = {SampleDataLoadingFacadeImpl.class})
 public class SampleDataConfig {
+    final static Logger LOG = LoggerFactory.getLogger(SampleDataConfig.class);
     @Inject
     SampleDataLoadingFacade sampleDataLoadingFacade;
-
-    final static Logger LOG = LoggerFactory.getLogger(SampleDataConfig.class);
 
     @PostConstruct
     public void dataLoading() throws PasswordStorage.CannotPerformOperationException {

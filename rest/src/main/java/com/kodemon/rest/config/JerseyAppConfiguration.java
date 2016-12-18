@@ -10,7 +10,7 @@ import javax.ws.rs.ApplicationPath;
 
 /**
  * Jersey application configuration
- *
+ * <p>
  * After hours of jersey complaining that it cannot find the applicationContext.xml, the solution was found:
  * https://github.com/peeskillet/underdog-jersey-spring-example
  *

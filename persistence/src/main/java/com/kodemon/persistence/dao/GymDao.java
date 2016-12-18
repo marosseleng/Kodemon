@@ -75,7 +75,7 @@ public interface GymDao extends JpaRepository<Gym, Long> {
      * @return {@link List} of {@link Gym}s with badge name containing the given string.
      */
     List<Gym> findByBadgeNameContaining(String string);
-    
+
     /**
      * Returns a {@link List} of {@link Gym}s with given PokemonType.
      *
@@ -83,7 +83,7 @@ public interface GymDao extends JpaRepository<Gym, Long> {
      * @return {@link List} of {@link Gym}s of the given type.
      */
     List<Gym> findByType(PokemonType type);
-    
+
     /**
      * Returns a {@link List} of {@link Gym}s of the given trainer.
      * <p/>

@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  * Entity that represents a Pokemon.
- *
+ * <p>
  * A pokemon can fight with other Pokemon, level up and evolve.
  *
  * @author Matej Poklemba
@@ -39,7 +39,8 @@ public class Pokemon {
     /**
      * Parameterless constructor for (not only) persistence purposes.
      */
-    public Pokemon() {}
+    public Pokemon() {
+    }
 
     /**
      * A constructor to initialize a Pokemon with its {@link PokemonName}.
@@ -98,9 +99,11 @@ public class Pokemon {
         Pokemon pokemon = (Pokemon) object;
 
         if (getLevel() != pokemon.getLevel()) return false;
-        if (getTrainer() != null ? !getTrainer().getUserName().equals(pokemon.getTrainer().getUserName()) : pokemon.getTrainer() != null) return false;
+        if (getTrainer() != null ? !getTrainer().getUserName().equals(pokemon.getTrainer().getUserName()) : pokemon.getTrainer() != null)
+            return false;
         if (!getName().equals(pokemon.getName())) return false;
-        if (getNickname() != null ? !getNickname().equals(pokemon.getNickname()) : pokemon.getNickname() != null) return false;
+        if (getNickname() != null ? !getNickname().equals(pokemon.getNickname()) : pokemon.getNickname() != null)
+            return false;
         return getType() == pokemon.getType();
 
     }

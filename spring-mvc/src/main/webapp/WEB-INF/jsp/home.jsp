@@ -14,6 +14,7 @@
 
 
     <h2>About</h2>
-    <h4>Kodemon is a simple app for aspiring Pokemon trainers. Catch your Pokemon, challenge gyms, win badges and be the very best!</h4>
+    <h4>Kodemon is a simple app for aspiring Pokemon trainers. Catch your Pokemon, challenge gyms, win badges and be the
+        very best!</h4>
 </jsp:attribute>
 </kodemon:pagetemplate>

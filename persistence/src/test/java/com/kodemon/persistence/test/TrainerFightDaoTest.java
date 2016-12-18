@@ -75,7 +75,9 @@ public class TrainerFightDaoTest extends AbstractTestNGSpringContextTests {
         trainerFight = null;
     }
 
-    /** save(...) tests */
+    /**
+     * save(...) tests
+     */
 
     @Test(expectedExceptions = {DataAccessException.class})
     void testSaveNullTrainerFight() {
@@ -142,7 +144,9 @@ public class TrainerFightDaoTest extends AbstractTestNGSpringContextTests {
     }
 
 
-    /** delete(...) tests */
+    /**
+     * delete(...) tests
+     */
 
     @Test(expectedExceptions = {DataAccessException.class})
     void testDeleteNullTrainerFight() {
@@ -188,7 +192,9 @@ public class TrainerFightDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(trainerFightDao.count(), is(equalTo(0L)));
     }
 
-    /** find(...) tests */
+    /**
+     * find(...) tests
+     */
 
     @Test
     void testFindByPassingId() {
@@ -223,7 +229,9 @@ public class TrainerFightDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(found, is(equalTo(trainerFights)));
     }
 
-    /** update tests */
+    /**
+     * update tests
+     */
 
     @Test
     void testCorrectNameUpdate() {
@@ -349,7 +357,7 @@ public class TrainerFightDaoTest extends AbstractTestNGSpringContextTests {
         TrainerFight trainerFight = new TrainerFight();
         trainerFight.setChallenger(trainer);
         trainerFight.setTargetGym(gym);
-        Date fightTime = new Calendar.Builder().setDate(1990, 11, (index % 20)+1).build().getTime();
+        Date fightTime = new Calendar.Builder().setDate(1990, 11, (index % 20) + 1).build().getTime();
         trainerFight.setFightTime(fightTime);
         trainerFight.setWasChallengerSuccessful((index % 2) == 0);
         return trainerFight;

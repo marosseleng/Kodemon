@@ -26,11 +26,11 @@ import java.util.List;
 
 /**
  * Gym service implementation
- * 
+ * <p>
  * Can initialize the whole setting with 8 gyms of different types, with corresponding trainers, cities, pokemons and their levels.
- * 
+ * <p>
  * Can also be saved, deleted and found.
- * 
+ *
  * @author Miso Romanek
  */
 @Service

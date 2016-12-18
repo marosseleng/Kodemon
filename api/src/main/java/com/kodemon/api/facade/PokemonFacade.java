@@ -12,6 +12,7 @@ public interface PokemonFacade {
 
     /**
      * Renames given Pokemon and updates record in Pokemon table.
+     *
      * @param pokemon Pokemon to be renamed
      * @param newName Desired new nickname of the Pokemon
      */
@@ -19,6 +20,7 @@ public interface PokemonFacade {
 
     /**
      * Generates a wild pokemon with level around user's primary pokemon's level
+     *
      * @param user User to be taken into consideration
      * @return random Pokemon
      */

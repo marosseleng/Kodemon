@@ -1,7 +1,5 @@
 package com.kodemon.persistence.entity;
 
-import org.hibernate.annotations.ColumnDefault;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -13,8 +11,8 @@ import java.util.*;
  * <p>
  * A trainer can:
  * <ul>
- *     <li>train one or many {@link Pokemon} and</li>
- *     <li>own zero or many {@link Badge}s.</li>
+ * <li>train one or many {@link Pokemon} and</li>
+ * <li>own zero or many {@link Badge}s.</li>
  * </ul>
  *
  * @author <a href="xseleng@fi.muni.cz">Maros Seleng, 422624</a>
@@ -70,7 +68,8 @@ public class Trainer {
     /**
      * Parameterless constructor for (not only) persistence purposes.
      */
-    public Trainer() { }
+    public Trainer() {
+    }
 
     /**
      * A constructor to initialize a Pokemon Trainer and assign his first {@link Pokemon} to him.

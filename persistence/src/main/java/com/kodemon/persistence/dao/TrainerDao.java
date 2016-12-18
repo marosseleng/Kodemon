@@ -70,7 +70,7 @@ public interface TrainerDao extends JpaRepository<Trainer, Long> {
      * Returns a {@link List} of {@link Trainer}s with the given first and last name.
      *
      * @param firstName {@link Trainer}'s firstName to search by
-     * @param lastName {@link Trainer}'s lastName to search by
+     * @param lastName  {@link Trainer}'s lastName to search by
      * @return {@link List} of {@link Trainer}s with the given first and last names
      */
     List<Trainer> findByFirstNameAndLastName(String firstName, String lastName);

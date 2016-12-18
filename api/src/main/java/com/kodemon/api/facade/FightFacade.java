@@ -19,8 +19,9 @@ public interface FightFacade {
 
     /**
      * Represents an attempt to conquer the {@link com.kodemon.persistence.entity.Gym}
-     *  @param user user that wants to conquer the gym
-     * @param gym gym to be challenged
+     *
+     * @param user user that wants to conquer the gym
+     * @param gym  gym to be challenged
      */
     boolean fightForBadge(UserDTO user, GymDTO gym);
 
@@ -29,8 +30,8 @@ public interface FightFacade {
      * <p/>
      * A fight can be done according to two scenarios:
      * <ol>
-     *     <li>The {@link com.kodemon.persistence.entity.Trainer} want to catch a wild {@link com.kodemon.persistence.entity.Pokemon}</li>
-     *     <li>The {@link com.kodemon.persistence.entity.Trainer} want to exercise his {@link com.kodemon.persistence.entity.Pokemon} without catching the wild one.</li>
+     * <li>The {@link com.kodemon.persistence.entity.Trainer} want to catch a wild {@link com.kodemon.persistence.entity.Pokemon}</li>
+     * <li>The {@link com.kodemon.persistence.entity.Trainer} want to exercise his {@link com.kodemon.persistence.entity.Pokemon} without catching the wild one.</li>
      * </ol>
      *
      * @param user user wanting to fight a wild Pokemon
@@ -63,7 +64,7 @@ public interface FightFacade {
      * Returns fights that happened between two specified dates
      *
      * @param from start date from which to list fights
-     * @param to end date to which to list fights
+     * @param to   end date to which to list fights
      * @return a {@link List} of {@link FightDTO}s
      */
     Collection<FightDTO> listFightsBetween(Date from, Date to);

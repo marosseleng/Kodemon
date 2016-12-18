@@ -6,18 +6,14 @@ import com.kodemon.api.facade.FightFacade;
 import com.kodemon.api.facade.GymFacade;
 import com.kodemon.api.facade.PokemonFacade;
 import com.kodemon.api.facade.UserFacade;
-import com.kodemon.persistence.entity.Gym;
-import com.kodemon.persistence.entity.Pokemon;
-import org.omg.CORBA.TRANSACTION_MODE;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.servlet.ServletRequest;

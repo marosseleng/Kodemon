@@ -76,7 +76,9 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
         badge = null;
     }
 
-    /** save(...) tests */
+    /**
+     * save(...) tests
+     */
 
     @Test(expectedExceptions = {DataAccessException.class})
     void testSaveNullBadge() {
@@ -134,7 +136,9 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
         badgeDao.save(badge);
     }
 
-    /** delete(...) tests */
+    /**
+     * delete(...) tests
+     */
 
     @Test(expectedExceptions = {DataAccessException.class})
     void testDeleteNullBadge() {
@@ -180,7 +184,9 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(badgeDao.count(), is(equalTo(0L)));
     }
 
-    /** find(...) tests */
+    /**
+     * find(...) tests
+     */
 
     @Test
     void testFindByPassingId() {
@@ -213,7 +219,9 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(found, is(equalTo(badges)));
     }
 
-    /** update tests */
+    /**
+     * update tests
+     */
 
     @Test
     void testCorrectNameUpdate() {
@@ -243,7 +251,7 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
         badge.setGym(null);
         badgeDao.saveAndFlush(badge);
     }
-    
+
     // Custom find tests
     @Test
     void testFindByName() {
@@ -257,7 +265,7 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(found.size(), is(3));
         assertThat(found.get(0), is(equalTo(matching)));
     }
-    
+
     @Test
     void testFindByNameStartingWith() {
         List<Badge> badges = randomBadges(5);
@@ -270,7 +278,7 @@ public class BadgeDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(found.size(), is(3));
         assertThat(found.get(0), is(equalTo(matching)));
     }
-    
+
     @Test
     void testFindByGym() {
         List<Badge> badges = randomBadges(5);

@@ -77,7 +77,7 @@ public class BadgeServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void createBadgeOfGymTest(){
+    public void createBadgeOfGymTest() {
         Badge result = badgeService.createBadgeOfGym(gym);
         assertThat("badge == null", result, is(notNullValue()));
         assertThat(result.getGym(), is(gym));

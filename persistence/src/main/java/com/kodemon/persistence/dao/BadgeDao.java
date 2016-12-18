@@ -2,7 +2,6 @@ package com.kodemon.persistence.dao;
 
 import com.kodemon.persistence.entity.Badge;
 import com.kodemon.persistence.entity.Gym;
-import com.kodemon.persistence.entity.Trainer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -23,7 +22,7 @@ public interface BadgeDao extends JpaRepository<Badge, Long> {
      * @return {@link List} of {@link Badge}s with given name
      */
     List<Badge> findByName(String name);
-    
+
     /**
      * Returns a {@link List} of {@link Badge}s with name starting with the given prefix.
      * <p/>
@@ -34,7 +33,7 @@ public interface BadgeDao extends JpaRepository<Badge, Long> {
      * @return {@link List} of {@link Badge}s with names prefixed with the given prefix
      */
     List<Badge> findByNameStartingWith(String prefix);
-    
+
     /**
      * Returns a {@link List} of {@link Badge}s belonging to given {@link Gym}
      *

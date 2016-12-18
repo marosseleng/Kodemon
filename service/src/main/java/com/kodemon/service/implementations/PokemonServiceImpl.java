@@ -17,7 +17,7 @@ import java.util.Random;
 
 /**
  * Pokemon Service implementation
- *
+ * <p>
  * Can generate wild Pokemon for encounters, level up Pokemon, assign Trainer to a Pokemon
  *
  * @author Matej Poklemba
@@ -40,8 +40,7 @@ public class PokemonServiceImpl implements PokemonService {
         if (type == null) {
             int i = RANDOM.nextInt(PokemonName.values().length);
             pokemon = new Pokemon(PokemonName.values()[i]);
-        }
-        else {
+        } else {
             List<PokemonName> pokemons = Arrays.asList(PokemonName.values());
             List<PokemonName> pokemonsOfWantedType = new ArrayList<>();
             for (int i = 0; i < pokemons.size(); i++) {

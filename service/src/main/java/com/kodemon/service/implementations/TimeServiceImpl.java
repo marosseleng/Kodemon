@@ -1,10 +1,12 @@
 package com.kodemon.service.implementations;
 
 import com.kodemon.service.interfaces.TimeService;
-import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+
+import static com.kodemon.service.util.TimeUtils.asDate;
+import static com.kodemon.service.util.TimeUtils.asLocalDate;
 
 /**
  * Implementation of the TimeService
@@ -21,13 +23,11 @@ public class TimeServiceImpl implements TimeService {
 
     @Override
     public Date startOfTheDay(Date day) {
-        DateTime dt = new DateTime(day);
-        return dt.withTimeAtStartOfDay().toDate();
+        return asDate(asLocalDate(day).atStartOfDay());
     }
 
     @Override
     public Date endOfTheDay(Date day) {
-        DateTime dt = new DateTime(day);
-        return dt.plusDays(1).withTimeAtStartOfDay().toDate();
+        return asDate(asLocalDate(day).atStartOfDay().plusDays(1L));
     }
 }

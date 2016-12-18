@@ -76,8 +76,9 @@ public interface TrainerFightService {
 
     /**
      * Represents an attempt to conquer the {@link com.kodemon.persistence.entity.Gym}
-     *  @param trainer trainer that wants to conquer the gym
-     * @param gym gym to be challenged
+     *
+     * @param trainer trainer that wants to conquer the gym
+     * @param gym     gym to be challenged
      */
     public boolean fightForBadge(Trainer trainer, Gym gym);
 }

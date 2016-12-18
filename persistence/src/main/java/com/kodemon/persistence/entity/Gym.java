@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  * Entity that represents a pokemon gym.
- *
+ * <p>
  * Each gym has a leader, which can be challenged by other trainers that want to earn a badge.
  *
  * @author Miso Romanek
@@ -40,7 +40,8 @@ public class Gym {
     /**
      * Parameterless constructor for (not only) persistence purposes.
      */
-    public Gym() {}
+    public Gym() {
+    }
 
     /**
      * Constructor which initializes a gym with its {@link Trainer}.
@@ -97,9 +98,9 @@ public class Gym {
         Gym gym = (Gym) object;
 
         return !(!getCity().equals(gym.getCity()) ||
-                 !getBadgeName().equals(gym.getBadgeName()) ||
-                 !getType().equals(gym.getType()) ||
-                 !getTrainer().equals(gym.getTrainer()));
+                !getBadgeName().equals(gym.getBadgeName()) ||
+                !getType().equals(gym.getType()) ||
+                !getTrainer().equals(gym.getTrainer()));
     }
 
     @Override
