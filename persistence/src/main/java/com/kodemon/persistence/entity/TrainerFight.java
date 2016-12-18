@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * Entity represents result of fight between challenging trainer and gym leader.
  * Used to store fight history in database.
- *
+ * <p>
  * If challenging trainer defeats gym leader, he earns the badge of gym.
  *
  * @author Oliver Roch

@@ -23,7 +23,7 @@ public interface PokemonService {
      * <p/>
      * The only way a Pokemon can be created is through this method.
      *
-     * @param type (optional) type of the Pokemon
+     * @param type     (optional) type of the Pokemon
      * @param minLevel minimum level of the Pokemon
      * @param maxLevel maximum level of the Pokemon
      * @return generated wild Pokemon
@@ -51,6 +51,7 @@ public interface PokemonService {
 
     /**
      * Renames given Pokemon and updates record in Pokemon table.
+     *
      * @param pokemon Pokemon to be renamed
      * @param newName Desired new nickname of the Pokemon
      */

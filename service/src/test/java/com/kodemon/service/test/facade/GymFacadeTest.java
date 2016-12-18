@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
  *
  * @author Michal Romanek
  */
-@ContextConfiguration(classes=ServiceConfig.class)
+@ContextConfiguration(classes = ServiceConfig.class)
 public class GymFacadeTest extends AbstractTestNGSpringContextTests {
 
     private GymFacade gymFacade;
@@ -111,7 +111,7 @@ public class GymFacadeTest extends AbstractTestNGSpringContextTests {
         Collection<GymDTO> result = gymFacade.findAll();
         assertThat(result.size(), is(2));
         assertThat(result.contains(gymdto1) && result.contains(gymdto2), is(true));
-        }
+    }
 
     @AfterMethod
     void resetMocks() {

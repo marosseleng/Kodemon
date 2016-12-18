@@ -12,18 +12,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import java.util.Random;
 
 /**
  * Pokemon facade implementation
- *
+ * <p>
  * Renames Pokemon
  *
  * @author Matej Poklemba
  */
 @Service
 @Transactional
-public class PokemonFacadeImpl implements PokemonFacade{
+public class PokemonFacadeImpl implements PokemonFacade {
 
     private static final Logger LOG = LoggerFactory.getLogger(PokemonFacadeImpl.class);
 

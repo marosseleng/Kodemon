@@ -34,7 +34,7 @@ import static org.mockito.Mockito.when;
  * @author Oliver Roch
  */
 
-@ContextConfiguration(classes=ServiceConfig.class)
+@ContextConfiguration(classes = ServiceConfig.class)
 public class TrainerFightServiceTest extends AbstractTransactionalTestNGSpringContextTests {
     @Mock
     private PokemonFightService pokemonFightService;

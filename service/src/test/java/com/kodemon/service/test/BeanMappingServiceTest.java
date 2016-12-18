@@ -12,7 +12,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -24,24 +26,20 @@ import static org.hamcrest.Matchers.is;
 @ContextConfiguration(classes = ServiceConfig.class)
 public class BeanMappingServiceTest extends AbstractTestNGSpringContextTests {
 
-    @Inject
-    private BeanMappingService service;
-
     Trainer challenger;
     Trainer defender;
     UserDTO challengerDTO;
     UserDTO defenderDTO;
-
     Pokemon challengerPokemon;
     PokemonDTO challengerPokemonDTO;
     Pokemon defenderPokemon;
     PokemonDTO defenderPokemonDTO;
-
     Gym gym;
     GymDTO gymDTO;
-
     TrainerFight trainerFight;
     FightDTO fightDTO;
+    @Inject
+    private BeanMappingService service;
 
     @BeforeMethod
     void setUp() {

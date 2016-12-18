@@ -13,7 +13,6 @@ import com.kodemon.service.config.ServiceConfig;
 import com.kodemon.service.facade.FightFacadeImpl;
 import com.kodemon.service.interfaces.*;
 import com.kodemon.service.util.Pair;
-import org.joda.time.DateTime;
 import org.mockito.Mockito;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -21,8 +20,11 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.*;
 
+import static com.kodemon.service.util.TimeUtils.asDate;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
@@ -165,13 +167,13 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void listTodaysFightTest() {
-        Date today = new Calendar.Builder().setDate(2015, 4, 1).build().getTime();
-        DateTime currentDate = new DateTime(today);
-        Date dayStart = currentDate.withTimeAtStartOfDay().toDate();
-        Date dayEnd = currentDate.plusDays(1).withTimeAtStartOfDay().toDate();
-        when(timeService.currentDate()).thenReturn(today);
-        when(timeService.startOfTheDay(today)).thenReturn(dayStart);
-        when(timeService.endOfTheDay(today)).thenReturn(dayEnd);
+        LocalDate today = LocalDate.of(2015, Month.APRIL, 1);
+        Date todayDate = asDate(today.atStartOfDay());
+        Date dayStart = todayDate;
+        Date dayEnd = asDate(today.atStartOfDay().plusDays(1));
+        when(timeService.currentDate()).thenReturn(todayDate);
+        when(timeService.startOfTheDay(todayDate)).thenReturn(dayStart);
+        when(timeService.endOfTheDay(todayDate)).thenReturn(dayEnd);
         when(trainerFightService.findByFightTimeBetween(dayStart, dayEnd)).thenReturn(Collections.singletonList(fight1e));
         when(beanMappingService.mapListTo(Collections.singletonList(fight1e), FightDTO.class)).thenReturn(Collections.singletonList(fight1));
 

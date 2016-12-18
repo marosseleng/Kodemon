@@ -24,7 +24,7 @@ import javax.validation.Validator;
 @EnableWebMvc
 @Configuration
 @Import({SampleDataConfig.class})
-@ComponentScan(basePackageClasses  = UserController.class)
+@ComponentScan(basePackageClasses = UserController.class)
 public class AppSpringMvcConfig extends WebMvcConfigurerAdapter {
 
     public static final String TEXTS = "Texts";
@@ -32,7 +32,6 @@ public class AppSpringMvcConfig extends WebMvcConfigurerAdapter {
     /**
      * Maps the main page to a specific view.
      * goes to home.jsp
-     *
      */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {

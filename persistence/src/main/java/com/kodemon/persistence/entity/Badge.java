@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  * Entity that represents a badge a trainer can earn from a gym.
- *
+ * <p>
  * A trainer earns a badge, by defeating gym leader.
  *
  * @author Oliver Roch
@@ -30,7 +30,8 @@ public class Badge {
     /**
      * Parameterless constructor for (not only) persistence purposes.
      */
-    public Badge() {}
+    public Badge() {
+    }
 
     /**
      * Constructor which initialize a gym of the badge and trainer to own it

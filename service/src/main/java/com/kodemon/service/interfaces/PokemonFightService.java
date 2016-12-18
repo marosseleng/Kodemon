@@ -16,7 +16,7 @@ public interface PokemonFightService {
      * These scores are compared and counted into the result of the Trainer fight
      *
      * @param challenger challenger Pokemon
-     * @param target target Pokemon
+     * @param target     target Pokemon
      * @return {@link Pair} of fight scores
      */
     Pair<Double, Double> getScorePair(Pokemon challenger, Pokemon target);

@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 
 /**
  * Configuration class for Spring.
- *
+ * <p>
  * <p>We prefer using annotation based configuration (Java config).
  * <p>For the creation of DAOs we chose to use {@link org.springframework.data.jpa.repository.JpaRepository} from Spring Data.
  *
@@ -39,8 +39,8 @@ public class PersistenceConfig {
     }
 
     @Bean
-    public JpaTransactionManager transactionManager(){
-        return  new JpaTransactionManager(entityManagerFactory().getObject());
+    public JpaTransactionManager transactionManager() {
+        return new JpaTransactionManager(entityManagerFactory().getObject());
     }
 
     /**
@@ -49,7 +49,7 @@ public class PersistenceConfig {
      * @return configured entity manager factory
      */
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean jpaFactoryBean = new LocalContainerEntityManagerFactoryBean();
         jpaFactoryBean.setDataSource(db());
         jpaFactoryBean.setLoadTimeWeaver(instrumentationLoadTimeWeaver());
@@ -58,7 +58,7 @@ public class PersistenceConfig {
     }
 
     @Bean
-    public LocalValidatorFactoryBean localValidatorFactoryBean(){
+    public LocalValidatorFactoryBean localValidatorFactoryBean() {
         return new LocalValidatorFactoryBean();
     }
 
@@ -73,7 +73,7 @@ public class PersistenceConfig {
      * @return The dataSource
      */
     @Bean
-    public DataSource db(){
+    public DataSource db() {
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.DERBY)
                 .build();

@@ -8,7 +8,8 @@
 <kodemon:pagetemplate title="${gym.city} gym">
 <jsp:attribute name="body">
 
-    <h4>Gym master <kodemon:a href="/user/detail/${gym.trainer.userName}"><c:out value="${gym.trainer.firstName} ${gym.trainer.lastName}"/></kodemon:a></h4>
+    <h4>Gym master <kodemon:a href="/user/detail/${gym.trainer.userName}"><c:out
+            value="${gym.trainer.firstName} ${gym.trainer.lastName}"/></kodemon:a></h4>
     <h4><c:out value="${gym.type}"/> type</h4>
     <h4>Awards <c:out value="${gym.badgeName}"/></h4>
     <div class="row">
@@ -20,7 +21,7 @@
                 </c:forEach>
             </ul>
         </div>
-     </div>
+    </div>
 
     <form method="get" action="${pageContext.request.contextPath}/fight/listFightsOfGym">
         <button type="submit" class="btn btn-primary" name="id" value="${gym.id}">This gym's fights</button>
@@ -30,7 +31,9 @@
             <c:choose>
                 <c:when test="${authenticatedUser.userName == gym.trainer.userName}">
                     <form method="get" action="${pageContext.request.contextPath}/fight/fightGym">
-                        <button type="submit" class="btn btn-primary" name="id" value="${gym.id}" disabled="disabled">You cannot fight your own gym.</button>
+                        <button type="submit" class="btn btn-primary" name="id" value="${gym.id}" disabled="disabled">
+                            You cannot fight your own gym.
+                        </button>
                     </form>
                 </c:when>
                 <c:otherwise>
@@ -46,10 +49,12 @@
                         <c:when test="${!beaten}">
                         <form method="get" action="${pageContext.request.contextPath}/fight/fightGym">
                             <button type="submit" class="btn btn-primary" name="id" value="${gym.id}">FIGHT IT!</button>
-                            </form>
+                        </form>
                         </c:when>
                         <c:otherwise>
-                            <button type="submit" class="btn btn-primary" name="id" value="${gym.id}" disabled="disabled">You already beat this gym.</button>
+                            <button type="submit" class="btn btn-primary" name="id" value="${gym.id}"
+                                    disabled="disabled">You already beat this gym.
+                            </button>
                         </c:otherwise>
                     </c:choose>
                 </c:otherwise>

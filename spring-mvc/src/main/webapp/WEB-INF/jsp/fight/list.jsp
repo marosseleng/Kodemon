@@ -16,7 +16,9 @@
 
     <h4>Click on fight to see details</h4>
     <c:forEach items="${fights}" var="fight">
-        <h3><kodemon:a href="detail/${fight.id}">${fight.challenger.firstName} vs. ${fight.targetGym.city} on <fmt:formatDate value="${fight.fightTime}" pattern="dd.MM.yyyy"/></kodemon:a></h3>
+        <h3><kodemon:a
+                href="detail/${fight.id}">${fight.challenger.firstName} vs. ${fight.targetGym.city} on <fmt:formatDate
+                value="${fight.fightTime}" pattern="dd.MM.yyyy"/></kodemon:a></h3>
     </c:forEach>
 </jsp:attribute>
 </kodemon:pagetemplate>

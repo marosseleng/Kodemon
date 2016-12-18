@@ -58,7 +58,9 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         gym = null;
     }
 
-    /** save(...) tests */
+    /**
+     * save(...) tests
+     */
 
     @Test(expectedExceptions = {DataAccessException.class})
     void testSaveNullGym() {
@@ -123,7 +125,9 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         gymDao.save(gym);
     }
 
-    /** delete(...) tests */
+    /**
+     * delete(...) tests
+     */
 
     @Test(expectedExceptions = {DataAccessException.class})
     void testDeleteNullGym() {
@@ -170,7 +174,9 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(gymDao.count(), is(equalTo(0L)));
     }
 
-    /** find(...) tests */
+    /**
+     * find(...) tests
+     */
 
     @Test
     void testFindByPassingId() {
@@ -203,7 +209,7 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(found.size(), is(equalTo(numberOfGyms)));
         assertThat(found, is(equalTo(gyms)));
     }
-    
+
     @Test
     void testFindByCity() {
         List<Gym> gyms = randomGyms(3);
@@ -236,7 +242,7 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(found.size(), is(3));
         assertThat(found.get(0), is(equalTo(matching)));
     }
-    
+
     @Test
     void testFindByType() {
         List<Gym> gyms = randomGyms(3);
@@ -250,7 +256,7 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(found.size(), is(1));
         assertThat(found.get(0), is(equalTo(matching)));
     }
-    
+
     @Test
     void testFindByTrainer() {
         List<Gym> gyms = randomGyms(4);
@@ -262,7 +268,9 @@ public class GymDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(found.get(0), is(equalTo(matching)));
     }
 
-    /** update tests */
+    /**
+     * update tests
+     */
 
     @Test
     void testUpdateCity() {

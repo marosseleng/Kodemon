@@ -17,7 +17,7 @@ import java.util.Collection;
 
 /**
  * User Facade Implementation
- *
+ * <p>
  * Registers and logins users, finds user by userName and finds all users
  *
  * @author Matej Poklemba

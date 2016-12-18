@@ -3,7 +3,6 @@ package com.kodemon.service.implementations;
 import com.kodemon.persistence.dao.BadgeDao;
 import com.kodemon.persistence.entity.Badge;
 import com.kodemon.persistence.entity.Gym;
-import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.service.interfaces.BadgeService;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +11,9 @@ import java.util.List;
 
 /**
  * Badge service implementation
- * 
+ * <p>
  * Can create new badge of a gym, assign a trainer, save and find a badge.
- * 
+ *
  * @author Miso Romanek
  */
 @Service

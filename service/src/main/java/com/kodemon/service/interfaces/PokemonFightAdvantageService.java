@@ -16,7 +16,7 @@ public interface PokemonFightAdvantageService {
      * Zero means the Pokemon has no chance against the defender, whatever its level is.
      *
      * @param challenger challenger PokemonName
-     * @param target target PokemonName
+     * @param target     target PokemonName
      * @return coefficient to multiply challenger's level by
      */
     double computePokemonFightAdvantage(PokemonName challenger, PokemonName target);

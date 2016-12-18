@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
  *
  * @author Matej Poklemba
  */
-@ContextConfiguration(classes=ServiceConfig.class)
+@ContextConfiguration(classes = ServiceConfig.class)
 public class UserFacadeTest extends AbstractTestNGSpringContextTests {
 
     private UserFacade userFacade;
@@ -124,7 +124,7 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
         Collection<UserDTO> result = userFacade.findAllUsers();
         assertThat(result.size(), is(2));
         assertThat(result.contains(user) && result.contains(user2), is(true));
-        }
+    }
 
     @AfterMethod
     void resetMocks() {

@@ -100,7 +100,7 @@ public class UserResource {
     /**
      * Edits the user with the given id
      *
-     * @param id id of the user to be edited
+     * @param id  id of the user to be edited
      * @param dto dto containing new data
      * @return 201 when updated or 409
      */

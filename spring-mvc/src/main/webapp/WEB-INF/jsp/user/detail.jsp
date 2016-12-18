@@ -25,7 +25,7 @@
             <h3>Trainer's badges:</h3>
             <ul>
                 <c:forEach items="${trainer.badges}" var="badge">
-                    <li><c:out value="${badge.name} from ${badge.gym.city} Gym" /></li>
+                    <li><c:out value="${badge.name} from ${badge.gym.city} Gym"/></li>
                 </c:forEach>
             </ul>
         </div>
@@ -39,13 +39,15 @@
         <c:choose>
             <c:when test="${!trainer.blocked}">
                 <form method="post" action="${pageContext.request.contextPath}/user/blockUser">
-                    <button type="submit" class="btn btn-primary" name="username" value="${trainer.userName}">Block this user
+                    <button type="submit" class="btn btn-primary" name="username" value="${trainer.userName}">Block this
+                        user
                     </button>
                 </form>
             </c:when>
             <c:otherwise>
                 <form method="post" action="${pageContext.request.contextPath}/user/unblockUser">
-                    <button type="submit" class="btn btn-primary" name="username" value="${trainer.userName}">Unblock this user
+                    <button type="submit" class="btn btn-primary" name="username" value="${trainer.userName}">Unblock
+                        this user
                     </button>
                 </form>
             </c:otherwise>

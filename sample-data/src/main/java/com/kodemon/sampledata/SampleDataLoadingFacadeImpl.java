@@ -64,8 +64,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         trainerService.register(ash, "password123");
 
         Collection<Trainer> strong = trainerService.findByUserName("Psyxox");
-        if (!strong.isEmpty())
-        {
+        if (!strong.isEmpty()) {
             trainerService.register(strong.iterator().next(), "pw");
         }
 

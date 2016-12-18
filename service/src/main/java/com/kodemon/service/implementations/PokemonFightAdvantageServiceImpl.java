@@ -17,7 +17,7 @@ import java.util.Set;
  * @author Oliver Roch
  */
 @Service
-public class PokemonFightAdvantageServiceImpl  implements PokemonFightAdvantageService {
+public class PokemonFightAdvantageServiceImpl implements PokemonFightAdvantageService {
 
     @Override
     public double computePokemonFightAdvantage(PokemonName challenger, PokemonName target) {
@@ -26,14 +26,14 @@ public class PokemonFightAdvantageServiceImpl  implements PokemonFightAdvantageS
 
         double advantageCoefficient = 1;
 
-        for(PokemonType challengerType : challengerTypes) {
+        for (PokemonType challengerType : challengerTypes) {
             Set<PokemonType> weakerTypes = new HashSet<>(Arrays.asList(challengerType.weakerTypes()));
-            for(PokemonType targetType : targetTypes) {
+            for (PokemonType targetType : targetTypes) {
                 Set<PokemonType> strongerTypes = new HashSet<>(Arrays.asList(targetType.weakerTypes()));
-                if(weakerTypes.contains(targetType)) {
+                if (weakerTypes.contains(targetType)) {
                     advantageCoefficient += 0.2;
                 }
-                if(strongerTypes.contains(challengerType)) {
+                if (strongerTypes.contains(challengerType)) {
                     advantageCoefficient -= 0.2;
                 }
             }

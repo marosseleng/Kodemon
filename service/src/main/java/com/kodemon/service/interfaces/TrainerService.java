@@ -19,7 +19,7 @@ public interface TrainerService {
      * Creates new user in the database.
      * Checks whether an user with that username exists, etc.
      *
-     * @param trainer trainer to be registered(created), eg. correct {@link Trainer} instance that can be saved into db
+     * @param trainer  trainer to be registered(created), eg. correct {@link Trainer} instance that can be saved into db
      * @param password hash of user's password
      * @return an instance of {@link Trainer} when successful
      */
@@ -39,7 +39,7 @@ public interface TrainerService {
      * <p/>
      * This method expects that the given Badge has already been saved in the database.
      *
-     * @param badge badge to add
+     * @param badge   badge to add
      * @param trainer trainer that receives the badge
      */
     void addBadge(Badge badge, Trainer trainer);
@@ -87,7 +87,7 @@ public interface TrainerService {
     /**
      * Updates the trainer with the given id
      *
-     * @param id id of the trainer to update
+     * @param id      id of the trainer to update
      * @param trainer new data of the trainer
      * @return updated trainer
      */
@@ -156,7 +156,7 @@ public interface TrainerService {
      * Returns a {@link List} of {@link Trainer}s with the given first and last name.
      *
      * @param firstName {@link Trainer}'s firstName to search by
-     * @param lastName {@link Trainer}'s lastName to search by
+     * @param lastName  {@link Trainer}'s lastName to search by
      * @return {@link List} of {@link Trainer}s with the given first and last names
      */
     List<Trainer> findByFirstNameAndLastName(String firstName, String lastName);

@@ -30,7 +30,7 @@ import static org.mockito.Mockito.*;
  *
  * @author Matej Poklemba
  */
-@ContextConfiguration(classes=ServiceConfig.class)
+@ContextConfiguration(classes = ServiceConfig.class)
 public class PokemonFacadeTest extends AbstractTestNGSpringContextTests {
 
     private PokemonFacade pokemonFacade;
@@ -79,7 +79,7 @@ public class PokemonFacadeTest extends AbstractTestNGSpringContextTests {
         assertThat(pokemon.getNickname(), is(nullValue()));
         pokemonFacade.renamePokemon(pokemonDto, "Krysa");
         verify(pokemonService).renamePokemon(pokemon, "Krysa");
-        }
+    }
 
     @AfterMethod
     void resetMocks() {

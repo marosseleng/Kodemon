@@ -32,7 +32,7 @@ import static org.mockito.Mockito.*;
  * @author Miso Romanek
  */
 
-@ContextConfiguration(classes=ServiceConfig.class)
+@ContextConfiguration(classes = ServiceConfig.class)
 public class TrainerServiceTest extends AbstractTransactionalTestNGSpringContextTests {
 
     @Mock

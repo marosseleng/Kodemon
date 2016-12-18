@@ -16,7 +16,7 @@ public interface UserFacade {
      * Creates new user in the database.
      * Checks whether an user with that username exists, etc.
      *
-     * @param user User details
+     * @param user     User details
      * @param password user's password
      */
     UserDTO register(UserDTO user, String password);
@@ -54,7 +54,7 @@ public interface UserFacade {
     /**
      * Updates the user with the given id
      *
-     * @param id id of the user to update
+     * @param id      id of the user to update
      * @param userDTO new data of the user
      * @return updated DTO
      */

@@ -37,7 +37,7 @@ public interface TrainerFightDao extends JpaRepository<TrainerFight, Long> {
      * Find all fight between specified times
      *
      * @param from bottom bound for the fight time
-     * @param til upper bound for the fight time
+     * @param til  upper bound for the fight time
      * @return list of all fights between specified times
      */
     List<TrainerFight> findByFightTimeBetween(Date from, Date til);

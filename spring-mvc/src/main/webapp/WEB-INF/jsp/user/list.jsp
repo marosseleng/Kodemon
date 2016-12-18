@@ -10,14 +10,15 @@
 
     <form method="get" action="${pageContext.request.contextPath}/user/find">
         <div class="form-group">
-            <input type="text" name="username" class="form-control" placeholder="Enter username" />
+            <input type="text" name="username" class="form-control" placeholder="Enter username"/>
         </div>
         <button type="submit" class="btn btn-primary">Find user by username</button>
     </form>
 
     <h4>Click on name to see details</h4>
     <c:forEach items="${users}" var="trainer">
-        <h3><kodemon:a href="detail/${trainer.userName}"><c:out value="${trainer.firstName} ${trainer.lastName}" /></kodemon:a></h3>
+        <h3><kodemon:a href="detail/${trainer.userName}"><c:out
+                value="${trainer.firstName} ${trainer.lastName}"/></kodemon:a></h3>
     </c:forEach>
 </jsp:attribute>
 </kodemon:pagetemplate>

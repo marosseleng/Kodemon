@@ -54,15 +54,15 @@ public class TrainerFightServiceImpl implements TrainerFightService {
         double challengerScore = 0;
         double defenderScore = 0;
 
-        for(int i = 0; i < AMOUNT_OF_POKEMONS_FOR_MATCH; i++) {
+        for (int i = 0; i < AMOUNT_OF_POKEMONS_FOR_MATCH; i++) {
             Pair<Double, Double> scorePair;
-            if(challenger.getPokemons().size() > i && defender.getPokemons().size() > i) {
+            if (challenger.getPokemons().size() > i && defender.getPokemons().size() > i) {
                 Pokemon currentChallengerPokemon = challenger.getPokemons().get(i);
                 Pokemon currentDefenderPokemon = defender.getPokemons().get(i);
                 scorePair = pokemonFightService.getScorePair(currentChallengerPokemon, currentDefenderPokemon);
-            } else if(challenger.getPokemons().size() <= i && defender.getPokemons().size() > i) {
+            } else if (challenger.getPokemons().size() <= i && defender.getPokemons().size() > i) {
                 scorePair = new Pair<>(0.0, (double) defender.getPokemons().get(i).getLevel());
-            } else if(challenger.getPokemons().size() > i && defender.getPokemons().size() <= i) {
+            } else if (challenger.getPokemons().size() > i && defender.getPokemons().size() <= i) {
                 scorePair = new Pair<>((double) challenger.getPokemons().get(i).getLevel(), 0.0);
             } else {
                 scorePair = new Pair<>(0.0, 0.0);
@@ -113,7 +113,7 @@ public class TrainerFightServiceImpl implements TrainerFightService {
     @Override
     public boolean fightForBadge(Trainer trainer, Gym gym) {
         boolean wasChallengerSuccessful = false;
-        Collection<Trainer> trainers= trainerService.findByUserName(trainer.getUserName());
+        Collection<Trainer> trainers = trainerService.findByUserName(trainer.getUserName());
         if (trainers.isEmpty())
             return false;
         trainer = trainers.iterator().next();
