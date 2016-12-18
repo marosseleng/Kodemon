@@ -52,12 +52,18 @@ public class PasswordStorage
     public static String createHash(String password)
             throws CannotPerformOperationException
     {
+        if (password == null) {
+            throw new CannotPerformOperationException("Given password was null!");
+        }
         return createHash(password.toCharArray());
     }
 
     public static String createHash(char[] password)
             throws CannotPerformOperationException
     {
+        if (password == null) {
+            throw new CannotPerformOperationException("Given password was null!");
+        }
         // Generate a random salt
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[SALT_BYTE_SIZE];
@@ -81,12 +87,18 @@ public class PasswordStorage
     public static boolean verifyPassword(String password, String correctHash)
             throws CannotPerformOperationException, InvalidHashException
     {
+        if (password == null || correctHash == null) {
+            throw new CannotPerformOperationException("Given password was null!");
+        }
         return verifyPassword(password.toCharArray(), correctHash);
     }
 
     public static boolean verifyPassword(char[] password, String correctHash)
             throws CannotPerformOperationException, InvalidHashException
     {
+        if (password == null || correctHash == null) {
+            throw new CannotPerformOperationException("Given password was null!");
+        }
         // Decode the hash into its parameters
         String[] params = correctHash.split(":");
         if (params.length != HASH_SECTIONS) {
