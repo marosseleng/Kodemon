@@ -190,7 +190,12 @@ public class FightController {
         session.setAttribute("authenticatedUser", user);
 
         LOG.debug(user.getUserName() + (mode_ == WildPokemonFightMode.CATCH ? " catching" : " fighting") + " wild " + wildPokemon.getName().getName() + " level " + wildPokemon.getLevel() + " -> " + (fightResult ? "Success!" : "Failed"));
-        return "home";
+        wildPokemon = pokemonFacade.generateWildPokemon(user);
+        session.setAttribute("wildPokemon", wildPokemon);
+        model.addAttribute("wildPokemon", wildPokemon);
+        model.addAttribute("trainersPokemon", user.getPokemons().get(0));
+        LOG.debug("A wild " + wildPokemon.getName().getName() + " level " + wildPokemon.getLevel() + " appeared for " + user.getUserName());
+        return "fight/grass";
     }
 
     @RequestMapping(value = "/fightGym", method = RequestMethod.GET)
