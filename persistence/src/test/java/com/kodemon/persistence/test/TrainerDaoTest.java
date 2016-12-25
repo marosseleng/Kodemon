@@ -315,7 +315,7 @@ public class TrainerDaoTest extends AbstractTestNGSpringContextTests {
         trainerDao.save(trainers);
         assertThat(trainerDao.count(), is(equalTo(3L)));
         Trainer matching = trainers.get(0);
-        List<Trainer> found = trainerDao.findByUserNameStartingWith(matching.getUserName().substring(0, 2) + "%");
+        List<Trainer> found = trainerDao.findByUserNameStartingWith(matching.getUserName().substring(0, 2));
         assertThat(found.size(), is(1));
         assertThat(found.get(0), is(equalTo(matching)));
     }
@@ -326,7 +326,18 @@ public class TrainerDaoTest extends AbstractTestNGSpringContextTests {
         trainerDao.save(trainers);
         assertThat(trainerDao.count(), is(equalTo(3L)));
         Trainer matching = trainers.get(0);
-        List<Trainer> found = trainerDao.findByUserNameEndingWith("%" + matching.getUserName().substring(2));
+        List<Trainer> found = trainerDao.findByUserNameEndingWith(matching.getUserName().substring(2));
+        assertThat(found.size(), is(1));
+        assertThat(found.get(0), is(equalTo(matching)));
+    }
+
+    @Test
+    void testFindByUserNameIgnoreCaseContaining() {
+        List<Trainer> trainers = randomTrainers(2);
+        trainerDao.save(trainers);
+        assertThat(trainerDao.count(), is(equalTo(2L)));
+        Trainer matching = trainers.get(0);
+        List<Trainer> found = trainerDao.findByUserNameContaining(matching.getUserName().substring(2, 3).toUpperCase());
         assertThat(found.size(), is(1));
         assertThat(found.get(0), is(equalTo(matching)));
     }
@@ -337,7 +348,7 @@ public class TrainerDaoTest extends AbstractTestNGSpringContextTests {
         trainerDao.save(trainers);
         assertThat(trainerDao.count(), is(equalTo(3L)));
         Trainer matching = trainers.get(0);
-        List<Trainer> found = trainerDao.findByUserNameContaining("%" + matching.getUserName().substring(2, 3) + "%");
+        List<Trainer> found = trainerDao.findByUserNameContaining(matching.getUserName().substring(2, 3));
         assertThat(found.size(), is(1));
         assertThat(found.get(0), is(equalTo(matching)));
     }

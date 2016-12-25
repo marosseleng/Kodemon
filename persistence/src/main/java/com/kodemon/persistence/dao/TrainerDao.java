@@ -36,7 +36,7 @@ public interface TrainerDao extends JpaRepository<Trainer, Long> {
     /**
      * Returns a {@link List} of {@link Trainer}s with username starting with the given prefix.
      * <p/>
-     * Note: the prefix <b>must</b> be appended by {@code %} as the method generates the following query:
+     * Note: the method generates the following query:
      * {@code … where x.userName like ?1}
      *
      * @param prefix Username prefix to search by
@@ -47,7 +47,7 @@ public interface TrainerDao extends JpaRepository<Trainer, Long> {
     /**
      * Returns a {@link List} of {@link Trainer}s with username ending with the given postfix.
      * <p/>
-     * Note: the postfix <b>must</b> be prepended by {@code %} as the method generates the following query:
+     * Note: the method generates the following query:
      * {@code … where x.userName like ?1}
      *
      * @param postfix Username postfix to search by
@@ -56,9 +56,20 @@ public interface TrainerDao extends JpaRepository<Trainer, Long> {
     List<Trainer> findByUserNameEndingWith(String postfix);
 
     /**
+     * Returns a {@link List} of {@link Trainer}s with username containing the given string (Ignoring case).
+     * <p/>
+     * Note: the method generates the following query:
+     * {@code … where x.userName like ?1}
+     *
+     * @param string String that should be contained in {@link Trainer}'s username
+     * @return {@link List} of {@link Trainer}s with userNames which contain the given string
+     */
+    List<Trainer> findByUserNameIgnoreCaseContaining(String string);
+
+    /**
      * Returns a {@link List} of {@link Trainer}s with username containing the given string.
      * <p/>
-     * Note: a parameter <b>must</b> be wrapped in {@code %} as the method generates the following query:
+     * Note: the method generates the following query:
      * {@code … where x.userName like ?1}
      *
      * @param string String that should be contained in {@link Trainer}'s username

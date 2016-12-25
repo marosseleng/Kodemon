@@ -72,15 +72,22 @@ public class UserController {
      */
     @RequestMapping(value = "/find", method = RequestMethod.GET)
     public String find(@RequestParam String username, Model model) {
-        Collection<UserDTO> user = userFacade.findUserByUserName(username);
-        if (user.isEmpty()) {
-            LOG.warn("No trainer with such username found");
-            model.addAttribute("alert_warning", "No trainer with such username found");
-            model.addAttribute("users", userFacade.findAllUsers());
-            return "/user/list";
+        Collection<UserDTO> result;
+        if (username.length() < 3) {
+            model.addAttribute("alert_warning", "Search query should be at least 3 characters long.");
+            result = userFacade.findAllUsers();
+        } else {
+            Collection<UserDTO> found = userFacade.findUserByUserName(username);
+            if (found.isEmpty()) {
+                LOG.warn("No trainer with such username found");
+                model.addAttribute("alert_warning", "No trainer with such username found");
+                result = userFacade.findAllUsers();
+            } else {
+                result = found;
+            }
         }
-        model.addAttribute("trainer", user.iterator().next());
-        return "/user/detail";
+        model.addAttribute("users", result);
+        return "/user/list";
     }
 
     /**
