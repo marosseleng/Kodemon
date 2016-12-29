@@ -3,6 +3,7 @@ package com.kodemon.service.interfaces;
 import com.kodemon.persistence.entity.Gym;
 import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.persistence.enums.PokemonType;
+import com.kodemon.service.util.PasswordStorage;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface GymService {
      * <p/>
      * This method takes care of the creation and proper initialization of all gyms
      */
-    void initializeGyms();
+    void initializeGyms() throws PasswordStorage.CannotPerformOperationException;
 
     /**
      * Saves the given gym to the database

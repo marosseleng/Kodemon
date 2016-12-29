@@ -4,6 +4,8 @@ import com.kodemon.persistence.dao.TrainerDao;
 import com.kodemon.persistence.entity.Badge;
 import com.kodemon.persistence.entity.Pokemon;
 import com.kodemon.persistence.entity.Trainer;
+import com.kodemon.persistence.enums.PokemonName;
+import com.kodemon.service.interfaces.PokemonService;
 import com.kodemon.service.interfaces.TrainerService;
 import com.kodemon.service.util.PasswordStorage;
 import org.slf4j.Logger;
@@ -22,19 +24,48 @@ import java.util.List;
 @Service
 public class TrainerServiceImpl implements TrainerService {
 
+    public static final int INITIAL_POKEMON_LEVEL = 3;
     private static final Logger LOG = LoggerFactory.getLogger(TrainerServiceImpl.class);
-
     private TrainerDao trainerDao;
+    private PokemonService pokemonService;
 
     @Inject
-    public TrainerServiceImpl(TrainerDao trainerDao) {
+    public TrainerServiceImpl(TrainerDao trainerDao, PokemonService pokemonService) {
         this.trainerDao = trainerDao;
+        this.pokemonService = pokemonService;
     }
 
     @Override
-    public Trainer register(Trainer trainer, String password) throws PasswordStorage.CannotPerformOperationException {
+    public Trainer register(
+            String userName,
+            String firstName,
+            String lastName,
+            Date dayOfBirth,
+            PokemonName pokemon,
+            String password) throws PasswordStorage.CannotPerformOperationException {
+        if (!PokemonName.getInitialPokemon().contains(pokemon)) {
+            LOG.error("Invalid initial Pokemon! Was: {}. Expected one of: {}.", pokemon, PokemonName.getInitialPokemon());
+            throw new IllegalArgumentException(
+                    "Invalid initial Pokemon! Was: " +
+                            pokemon +
+                            ". Expected one of " +
+                            PokemonName.getInitialPokemon());
+        }
+        Trainer trainer = new Trainer();
+        trainer.setDateOfBirth(dayOfBirth);
+        trainer.setLastName(lastName);
+        trainer.setFirstName(firstName);
+        trainer.setUserName(userName);
         trainer.setPwdHash(PasswordStorage.createHash(password));
-        return trainerDao.save(trainer);
+        Trainer saved = trainerDao.save(trainer);
+
+        Pokemon initial = pokemonService.createPokemonWithName(pokemon);
+        initial.setLevel(INITIAL_POKEMON_LEVEL);
+        pokemonService.assignTrainerToPokemon(saved, initial);
+
+        addPokemon(initial, saved);
+
+        return saved;
     }
 
     @Override
@@ -52,15 +83,15 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Override
-    public void addBadge(Badge badge, Trainer trainer) {
+    public Trainer addBadge(Badge badge, Trainer trainer) {
         trainer.addBadge(badge);
-        trainerDao.save(trainer);
+        return trainerDao.save(trainer);
     }
 
     @Override
-    public void addPokemon(Pokemon pokemon, Trainer trainer) {
+    public Trainer addPokemon(Pokemon pokemon, Trainer trainer) {
         trainer.addPokemon(pokemon);
-        trainerDao.save(trainer);
+        return trainerDao.save(trainer);
     }
 
     @Override

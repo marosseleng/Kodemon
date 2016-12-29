@@ -2,8 +2,10 @@ package com.kodemon.service.test.facade;
 
 import com.kodemon.api.dto.UserAuthDTO;
 import com.kodemon.api.dto.UserDTO;
+import com.kodemon.api.dto.UserRegisterDTO;
 import com.kodemon.api.facade.UserFacade;
 import com.kodemon.persistence.entity.Trainer;
+import com.kodemon.persistence.enums.PokemonName;
 import com.kodemon.service.config.ServiceConfig;
 import com.kodemon.service.facade.UserFacadeImpl;
 import com.kodemon.service.interfaces.BeanMappingService;
@@ -36,8 +38,11 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
     private BeanMappingService beanMappingService;
     private TrainerService trainerService;
 
-    private UserDTO user, user2;
-    private Trainer trainer, trainer2;
+    private UserDTO user;
+    private UserDTO user2;
+    private UserRegisterDTO userRegisterDTO;
+    private Trainer trainer;
+    private Trainer trainer2;
 
     @BeforeMethod
     public void prepare() {
@@ -72,22 +77,44 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
         user2.setLastName("Blin");
         born = new Calendar.Builder().setDate(1995, 4, 8).build().getTime();
         user2.setDateOfBirth(born);
+
+        userRegisterDTO = new UserRegisterDTO(
+                "brock1999",
+                "Brock",
+                "Brockowski",
+                "password",
+                PokemonName.SQUIRTLE,
+                new Calendar.Builder().setDate(1999, 5, 5).build().getTime());
     }
 
     @Test
     public void registerTest() throws PasswordStorage.CannotPerformOperationException {
         when(beanMappingService.mapTo(user, Trainer.class)).thenReturn(trainer);
         when(beanMappingService.mapTo(trainer, UserDTO.class)).thenReturn(user);
-        when(trainerService.register(trainer, "password")).thenReturn(trainer);
-        assertThat(userFacade.register(user, "password"), is(equalTo(user)));
+        when(trainerService.register(
+                userRegisterDTO.getUserName(),
+                userRegisterDTO.getFirstName(),
+                userRegisterDTO.getLastName(),
+                userRegisterDTO.getDateOfBirth(),
+                userRegisterDTO.getPokemon(),
+                "password"))
+                .thenReturn(trainer);
+        assertThat(userFacade.register(userRegisterDTO), is(equalTo(user)));
     }
 
     @Test
     public void loginTest() throws PasswordStorage.CannotPerformOperationException {
         when(beanMappingService.mapTo(user, Trainer.class)).thenReturn(trainer);
         when(beanMappingService.mapTo(trainer, UserDTO.class)).thenReturn(user);
-        when(trainerService.register(trainer, "password")).thenReturn(trainer);
-        assertThat(userFacade.register(user, "password"), is(equalTo(user)));
+        when(trainerService.register(
+                userRegisterDTO.getUserName(),
+                userRegisterDTO.getFirstName(),
+                userRegisterDTO.getLastName(),
+                userRegisterDTO.getDateOfBirth(),
+                userRegisterDTO.getPokemon(),
+                "password"))
+                .thenReturn(trainer);
+        assertThat(userFacade.register(userRegisterDTO), is(equalTo(user)));
 
         UserAuthDTO userAuth = new UserAuthDTO();
         userAuth.setUserName(trainer.getUserName());

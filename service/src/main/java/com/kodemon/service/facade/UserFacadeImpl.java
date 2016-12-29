@@ -2,6 +2,7 @@ package com.kodemon.service.facade;
 
 import com.kodemon.api.dto.UserAuthDTO;
 import com.kodemon.api.dto.UserDTO;
+import com.kodemon.api.dto.UserRegisterDTO;
 import com.kodemon.api.facade.UserFacade;
 import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.service.interfaces.BeanMappingService;
@@ -40,10 +41,16 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public UserDTO register(UserDTO user, String pwdHash) {
+    public UserDTO register(UserRegisterDTO user) {
         LOG.debug("Registering user with userName {}.", user.getUserName());
         try {
-            Trainer trainer = trainerService.register(beanMappingService.mapTo(user, Trainer.class), pwdHash);
+            Trainer trainer = trainerService.register(
+                    user.getUserName(),
+                    user.getFirstName(),
+                    user.getLastName(),
+                    user.getDateOfBirth(),
+                    user.getPokemon(),
+                    user.getPassword());
             return beanMappingService.mapTo(trainer, UserDTO.class);
         } catch (PasswordStorage.CannotPerformOperationException e) {
             LOG.error("Error while registering user", e);

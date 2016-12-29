@@ -1,5 +1,6 @@
 package com.kodemon.sampledata;
 
+import com.kodemon.api.dto.UserRegisterDTO;
 import com.kodemon.persistence.dao.PokemonDao;
 import com.kodemon.persistence.dao.TrainerDao;
 import com.kodemon.persistence.dao.TrainerFightDao;
@@ -7,7 +8,9 @@ import com.kodemon.persistence.entity.Pokemon;
 import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.persistence.entity.TrainerFight;
 import com.kodemon.persistence.enums.PokemonName;
+import com.kodemon.service.implementations.TrainerServiceImpl;
 import com.kodemon.service.interfaces.GymService;
+import com.kodemon.service.interfaces.PokemonService;
 import com.kodemon.service.interfaces.TrainerService;
 import com.kodemon.service.util.PasswordStorage;
 import org.springframework.stereotype.Component;
@@ -27,21 +30,18 @@ import java.util.Date;
 public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
     private GymService gymService;
     private TrainerService trainerService;
-    private TrainerDao trainerDao;
-    private PokemonDao pokemonDao;
+    private PokemonService pokemonService;
     private TrainerFightDao trainerFightDao;
 
     @Inject
     public SampleDataLoadingFacadeImpl(
             GymService gymService,
             TrainerService trainerService,
-            TrainerDao trainerDao,
-            PokemonDao pokemonDao,
+            PokemonService pokemonService,
             TrainerFightDao trainerFightDao) {
         this.gymService = gymService;
         this.trainerService = trainerService;
-        this.trainerDao = trainerDao;
-        this.pokemonDao = pokemonDao;
+        this.pokemonService = pokemonService;
         this.trainerFightDao = trainerFightDao;
     }
 
@@ -49,46 +49,37 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
     public void loadData() throws PasswordStorage.CannotPerformOperationException {
         gymService.initializeGyms();
 
-        Pokemon pikachu = new Pokemon(PokemonName.PIKACHU);
-        pikachu.setLevel(1);
-        pokemonDao.save(pikachu);
+        Calendar cal = Calendar.getInstance();
+        cal.set(1993, Calendar.MARCH, 24);
 
         Trainer ash = new Trainer();
-        ash.setUserName("Ash123");
         ash.setFirstName("Ash");
         ash.setLastName("Ketchum");
-        Date dob = new Calendar.Builder().setDate(1993, 24, 3).build().getTime();
-        ash.setDateOfBirth(dob);
-        ash.addPokemon(pikachu);
+        ash.setUserName("Ash123");
+        ash.setDateOfBirth(cal.getTime());
+        ash.setPwdHash(PasswordStorage.createHash("password"));
+        ash = trainerService.save(ash);
 
-        trainerService.register(ash, "password123");
+        Pokemon pikachu = pokemonService.createPokemonWithName(PokemonName.PIKACHU);
+        pikachu.setLevel(TrainerServiceImpl.INITIAL_POKEMON_LEVEL);
+        pokemonService.assignTrainerToPokemon(ash, pikachu);
 
-        Collection<Trainer> strong = trainerService.findByUserName("Psyxox");
-        if (!strong.isEmpty()) {
-            trainerService.register(strong.iterator().next(), "pw");
-        }
-
-        pikachu.setTrainer(ash);
-        pokemonDao.save(pikachu);
-
-        Pokemon mewtwo = new Pokemon(PokemonName.MEWTWO);
-        mewtwo.setLevel(999);
-        pokemonDao.save(mewtwo);
+        ash = trainerService.addPokemon(pikachu, ash);
 
         Trainer admin = new Trainer();
         admin.setUserName("admin");
         admin.setFirstName("Professor");
         admin.setLastName("Oak");
-        Date dob2 = new Calendar.Builder().setDate(1963, 24, 3).build().getTime();
-        admin.setDateOfBirth(dob2);
+        cal.set(1963, Calendar.MARCH, 3);
+        admin.setDateOfBirth(cal.getTime());
         admin.setAdmin(true);
-        admin.addPokemon(mewtwo);
+        admin.setPwdHash(PasswordStorage.createHash("adminpassword"));
 
-        trainerService.register(admin, "adminpassword");
+        Pokemon mewtwo = pokemonService.createPokemonWithName(PokemonName.MEWTWO);
+        mewtwo.setLevel(999);
+        pokemonService.assignTrainerToPokemon(admin, mewtwo);
 
-        mewtwo.setTrainer(admin);
-        pokemonDao.save(mewtwo);
-
+        trainerService.addPokemon(mewtwo, admin);
 
         TrainerFight fight;
 

@@ -78,7 +78,7 @@ public class UserResource {
      * @param dto object containing user details and password
      * @return 200 if created, 400 if some data was missing, 409 if creation was unsuccessful
      */
-    @POST
+    /*@POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createUser(UserAndPasswordDTO dto) {
         UserDTO user = dto.getUser();
@@ -89,13 +89,14 @@ public class UserResource {
         }
         try {
             LOG.debug("Registering user with username {}", user.getUserName());
-            UserDTO created = userFacade.register(user, password);
+            UserDTO created = userFacade.register(user);
             return Response.created(URI.create(USERS_URI_PREFIX + created.getId())).build();
         } catch (DataAccessException e) {
             LOG.error("Error while registering user.", e);
             throw new RestDataAccessException(e);
         }
-    }
+    }*/
+    // TODO remove UserAndPasswordDTO, which is replaced by UserRegisterDTO
 
     /**
      * Edits the user with the given id

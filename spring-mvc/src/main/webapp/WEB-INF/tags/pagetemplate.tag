@@ -44,6 +44,7 @@
                     </c:when>
                     <c:otherwise>
                         <li><kodemon:a href="/login">Login</kodemon:a></li>
+                        <li><kodemon:a href="/register">Register</kodemon:a></li>
                     </c:otherwise>
                 </c:choose>
             </ul>

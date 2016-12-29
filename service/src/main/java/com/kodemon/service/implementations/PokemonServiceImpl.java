@@ -57,6 +57,11 @@ public class PokemonServiceImpl implements PokemonService {
     }
 
     @Override
+    public Pokemon createPokemonWithName(PokemonName name) {
+        return new Pokemon(name);
+    }
+
+    @Override
     public void levelPokemonUp(Pokemon pokemon) {
         pokemon.setLevel(pokemon.getLevel() + 1);
         pokemonDao.save(pokemon);

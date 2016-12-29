@@ -2,6 +2,7 @@ package com.kodemon.api.facade;
 
 import com.kodemon.api.dto.UserAuthDTO;
 import com.kodemon.api.dto.UserDTO;
+import com.kodemon.api.dto.UserRegisterDTO;
 
 import java.util.Collection;
 
@@ -15,11 +16,10 @@ public interface UserFacade {
     /**
      * Creates new user in the database.
      * Checks whether an user with that username exists, etc.
+     *  @param user     User details
      *
-     * @param user     User details
-     * @param password user's password
      */
-    UserDTO register(UserDTO user, String password);
+    UserDTO register(UserRegisterDTO user);
 
     /**
      * Authenticates the user with given credentials

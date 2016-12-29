@@ -19,7 +19,6 @@ import javax.validation.constraints.NotNull;
 @Table(name = "POKEMON", schema = "APP")
 public class Pokemon {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

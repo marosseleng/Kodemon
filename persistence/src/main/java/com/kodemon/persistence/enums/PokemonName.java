@@ -1,5 +1,8 @@
 package com.kodemon.persistence.enums;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Available names of Pokemon with their type
  *
@@ -173,5 +176,9 @@ public enum PokemonName {
 
     public String getName() {
         return this.name;
+    }
+
+    public static List<PokemonName> getInitialPokemon() {
+        return Arrays.asList(BULBASAUR, CHARMANDER, SQUIRTLE);
     }
 }
