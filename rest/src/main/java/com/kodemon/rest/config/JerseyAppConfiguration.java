@@ -3,8 +3,6 @@ package com.kodemon.rest.config;
 import com.kodemon.rest.resources.UserResource;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.ApplicationPath;
 
@@ -18,8 +16,6 @@ import javax.ws.rs.ApplicationPath;
  */
 @ApplicationPath("rest")
 public class JerseyAppConfiguration extends ResourceConfig {
-    private static final Logger LOG = LoggerFactory.getLogger(JerseyAppConfiguration.class);
-
     public JerseyAppConfiguration() {
         registerClasses(
                 JacksonFeature.class,

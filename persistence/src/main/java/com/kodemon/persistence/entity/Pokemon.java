@@ -7,6 +7,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import static com.kodemon.persistence.util.Constants.MIN_POKEMON_LEVEL;
+
 /**
  * Entity that represents a Pokemon.
  * <p>
@@ -32,7 +34,7 @@ public class Pokemon {
 
     private String nickname;
 
-    @Min(1)
+    @Min(MIN_POKEMON_LEVEL)
     private int level;
 
     /**

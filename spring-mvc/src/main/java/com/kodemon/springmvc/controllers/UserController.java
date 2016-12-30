@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
 
-import static com.kodemon.persistence.util.ValidationConstants.MIN_USERNAME_LENGTH;
+import static com.kodemon.persistence.util.Constants.MIN_USERNAME_LENGTH;
 
 /**
  * @author Oliver Roch

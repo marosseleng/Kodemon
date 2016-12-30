@@ -4,6 +4,7 @@ import com.kodemon.api.dto.UserDTO;
 import com.kodemon.api.dto.UserRegisterDTO;
 import com.kodemon.api.facade.UserFacade;
 import com.kodemon.persistence.enums.PokemonName;
+import com.kodemon.persistence.util.Constants;
 import com.kodemon.rest.exception.RestDataAccessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,11 +13,9 @@ import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.xml.ws.WebServiceException;
 import java.net.URI;
 import java.util.Date;
 
@@ -88,8 +87,8 @@ public class UserResource {
         String userName = dto.getUserName();
         if (userName == null) {
             badRequest("userName", "was null");
-        } else if (userName.length() < 4) {
-            badRequest("userName", "was shorter than 4 characters");
+        } else if (userName.length() < Constants.MIN_USERNAME_LENGTH) {
+            badRequest("userName", "was shorter than " + Constants.MIN_USERNAME_LENGTH + " characters");
         }
 
         String firstName = dto.getFirstName();
@@ -105,8 +104,8 @@ public class UserResource {
         String password = dto.getPassword();
         if (password == null) {
             badRequest("password", "was null");
-        } else if (password.length() < 6) {
-            badRequest("password", "was shorter than 6 characters");
+        } else if (password.length() < Constants.MIN_PASSWORD_LENGTH) {
+            badRequest("password", "was shorter than " + Constants.MIN_PASSWORD_LENGTH + " characters");
         }
 
         PokemonName pokemon = dto.getPokemon();

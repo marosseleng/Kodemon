@@ -8,6 +8,9 @@ import org.springframework.validation.Validator;
 
 import java.util.Date;
 
+import static com.kodemon.persistence.util.Constants.MIN_PASSWORD_LENGTH;
+import static com.kodemon.persistence.util.Constants.MIN_USERNAME_LENGTH;
+
 /**
  * Validator for the user registration
  *
@@ -50,7 +53,7 @@ public class UserRegisterDTOValidator implements Validator {
         String password = dto.getPassword();
         if (password == null) {
             errors.rejectValue("password", "UserRegisterDTOValidator.password.null", "Password cannot be null");
-        } else if (password.length() < 6) {
+        } else if (password.length() < MIN_PASSWORD_LENGTH) {
             errors.rejectValue("password", "UserRegisterDTOValidator.password.short", "Password needs to be at least 6 characters long");
         }
 
@@ -71,7 +74,7 @@ public class UserRegisterDTOValidator implements Validator {
         String userName = dto.getUserName();
         if (userName == null) {
             errors.rejectValue("userName", "UserRegisterDTOValidator.userName.null", "User name cannot be null");
-        } else if (userName.length() < 4) {
+        } else if (userName.length() < MIN_USERNAME_LENGTH) {
             errors.rejectValue("userName", "UserRegisterDTOValidator.userName.short", "User name needs to be at least 4 characters long");
         } else if (!userFacade.findUserByUserNameExactMatch(userName).isEmpty()) {
             errors.rejectValue("userName", "UserRegisterDTOValidator.userName.taken", "User name is already taken");

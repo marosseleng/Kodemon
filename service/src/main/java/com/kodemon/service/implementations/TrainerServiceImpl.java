@@ -16,6 +16,8 @@ import javax.inject.Inject;
 import java.util.Date;
 import java.util.List;
 
+import static com.kodemon.persistence.util.Constants.INITIAL_POKEMON_LEVEL;
+
 /**
  * Implementation of the {@link TrainerService}
  *
@@ -24,7 +26,6 @@ import java.util.List;
 @Service
 public class TrainerServiceImpl implements TrainerService {
 
-    public static final int INITIAL_POKEMON_LEVEL = 3;
     private static final Logger LOG = LoggerFactory.getLogger(TrainerServiceImpl.class);
     private TrainerDao trainerDao;
     private PokemonService pokemonService;
