@@ -65,12 +65,12 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public Collection<UserDTO> findUserByUserName(String userName) {
+    public Collection<UserDTO> findUserByUserNameIgnoringCaseIncludeSubstrings(String userName) {
         return beanMappingService.mapListTo(trainerService.findByUserNameIgnoreCaseContaining(userName), UserDTO.class);
     }
 
     @Override
-    public Collection<UserDTO> findUserByUserNameExact(String userName) {
+    public Collection<UserDTO> findUserByUserNameExactMatch(String userName) {
         return beanMappingService.mapListTo(trainerService.findByUserName(userName), UserDTO.class);
     }
 

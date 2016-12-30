@@ -133,7 +133,7 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
         userList.add(user);
         when(trainerService.findByUserNameIgnoreCaseContaining(trainer.getUserName())).thenReturn(trainerList);
         when(beanMappingService.mapListTo(trainerList, UserDTO.class)).thenReturn(userList);
-        Collection<UserDTO> result = userFacade.findUserByUserName(user.getUserName());
+        Collection<UserDTO> result = userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(user.getUserName());
         assertThat(result.size(), is(1));
         assertThat(result, is(equalTo(userList)));
     }

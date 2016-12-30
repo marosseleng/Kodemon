@@ -73,7 +73,7 @@ public class UserRegisterDTOValidator implements Validator {
             errors.rejectValue("userName", "UserRegisterDTOValidator.userName.null", "User name cannot be null");
         } else if (userName.length() < 4) {
             errors.rejectValue("userName", "UserRegisterDTOValidator.userName.short", "User name needs to be at least 4 characters long");
-        } else if(!userFacade.findUserByUserNameExact(userName).isEmpty()) {
+        } else if (!userFacade.findUserByUserNameExactMatch(userName).isEmpty()) {
             errors.rejectValue("userName", "UserRegisterDTOValidator.userName.taken", "User name is already taken");
         }
     }

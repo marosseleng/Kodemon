@@ -42,7 +42,8 @@ public interface TrainerService {
      * Adds the given badge to the given trainer and updates the trainer table
      * <p/>
      * This method expects that the given Badge has already been saved in the database.
-     *  @param badge   badge to add
+     *
+     * @param badge   badge to add
      * @param trainer trainer that receives the badge
      */
     Trainer addBadge(Badge badge, Trainer trainer);
@@ -52,7 +53,8 @@ public interface TrainerService {
      * <p/>
      * This method expects that the given Pokemon has already been saved in the db
      * This method does <b>not</b> assign the trainer to the Pokemon
-     *  @param pokemon Pokemon to be added to trainer
+     *
+     * @param pokemon Pokemon to be added to trainer
      * @param trainer trainer that receives a new Pokemon
      */
     Trainer addPokemon(Pokemon pokemon, Trainer trainer);

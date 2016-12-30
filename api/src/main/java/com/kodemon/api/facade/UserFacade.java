@@ -29,12 +29,12 @@ public interface UserFacade {
     boolean login(UserAuthDTO auth);
 
     /**
-     * Finds users with the given username (should be 1)
+     * Finds users with the given username
      *
      * @param userName username to find
      * @return Collection of Users
      */
-    Collection<UserDTO> findUserByUserName(String userName);
+    Collection<UserDTO> findUserByUserNameIgnoringCaseIncludeSubstrings(String userName);
 
     /**
      * Finds users with the given username. Matching exactly this username, neither ignoring case, nor finding substrings.
@@ -42,7 +42,7 @@ public interface UserFacade {
      * @param userName username to find
      * @return Collection of Users (ideally of size()==1, when any)
      */
-    Collection<UserDTO> findUserByUserNameExact(String userName);
+    Collection<UserDTO> findUserByUserNameExactMatch(String userName);
 
     /**
      * Finds all users

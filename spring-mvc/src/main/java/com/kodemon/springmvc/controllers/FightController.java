@@ -108,16 +108,16 @@ public class FightController {
     @RequestMapping(value = "/listFightsOfUser", method = RequestMethod.GET)
     public String listFightsOfUser(@RequestParam String username, Model model) {
 
-        Collection<UserDTO> user = userFacade.findUserByUserName(username);
+        Collection<UserDTO> user = userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(username);
         if (user.isEmpty()) {
             model.addAttribute("alert_warning", "No trainer with such username found");
             LOG.error("Tried to look up fights of '" + username + "' - user doesn't exists.");
             return "home";
         }
-        Collection<FightDTO> fights = fightFacade.listFightsOfTrainer(userFacade.findUserByUserName(username).iterator().next());
+        Collection<FightDTO> fights = fightFacade.listFightsOfTrainer(userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(username).iterator().next());
         if (fights.isEmpty()) {
             model.addAttribute("alert_warning", "No fights of this user found");
-            model.addAttribute("trainer", userFacade.findUserByUserName(username).iterator().next());
+            model.addAttribute("trainer", userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(username).iterator().next());
             LOG.debug("Tried to look up fights of '" + username + "' - user doesn't have any fight history.");
             return "user/detail";
         }
@@ -135,7 +135,7 @@ public class FightController {
             LOG.error("User not logged in.");
             return "home";
         }
-        Collection<UserDTO> users = userFacade.findUserByUserName(((UserDTO) session.getAttribute("authenticatedUser")).getUserName());
+        Collection<UserDTO> users = userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(((UserDTO) session.getAttribute("authenticatedUser")).getUserName());
         if (users.isEmpty()) {
             model.addAttribute("alert_warning", "Error: User not found in database!");
             LOG.error("Error: User not found in database!");
@@ -166,7 +166,7 @@ public class FightController {
             return "home";
         }
 
-        Collection<UserDTO> users = userFacade.findUserByUserName(((UserDTO) session.getAttribute("authenticatedUser")).getUserName());
+        Collection<UserDTO> users = userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(((UserDTO) session.getAttribute("authenticatedUser")).getUserName());
         if (users.isEmpty()) {
             model.addAttribute("alert_warning", "Error: User not found in database!");
             LOG.error("Error: User not found in database!");
@@ -180,13 +180,13 @@ public class FightController {
         else
             model.addAttribute("alert_warning", (mode_ == WildPokemonFightMode.CATCH ? wildPokemon.getName().getName() + " flew away!" : user.getPokemons().get(0).getName().getName() + " fainted! You ran to the nearest PokeCenter and healed your Pokemon."));
 
-        users = userFacade.findUserByUserName(((UserDTO) session.getAttribute("authenticatedUser")).getUserName());
+        users = userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(((UserDTO) session.getAttribute("authenticatedUser")).getUserName());
         if (users.isEmpty()) {
             model.addAttribute("alert_warning", "Error: User not found in database!");
             LOG.error("Error: User not found in database!");
             return "home";
         }
-        user = userFacade.findUserByUserName(user.getUserName()).iterator().next();
+        user = userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(user.getUserName()).iterator().next();
         session.setAttribute("authenticatedUser", user);
 
         LOG.debug(user.getUserName() + (mode_ == WildPokemonFightMode.CATCH ? " catching" : " fighting") + " wild " + wildPokemon.getName().getName() + " level " + wildPokemon.getLevel() + " -> " + (fightResult ? "Success!" : "Failed"));
@@ -203,7 +203,7 @@ public class FightController {
             LOG.error("User not logged in.");
             return "home";
         }
-        Collection<UserDTO> users = userFacade.findUserByUserName(userDTO.getUserName());
+        Collection<UserDTO> users = userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(userDTO.getUserName());
         if (users.isEmpty()) {
             model.addAttribute("alert_warning", "Error: User not found in database!");
             LOG.error("Error: User not found in database!");
@@ -234,7 +234,7 @@ public class FightController {
             model.addAttribute("alert_success", "You beat " + gym.getTrainer().getUserName() + "! You received " + gym.getBadgeName());
         else
             model.addAttribute("alert_warning", "You lost!");
-        users = userFacade.findUserByUserName(userDTO.getUserName());
+        users = userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(userDTO.getUserName());
         if (users.isEmpty()) {
             model.addAttribute("alert_warning", "Error: User not found in database!");
             LOG.error("Error: User not found in database!");

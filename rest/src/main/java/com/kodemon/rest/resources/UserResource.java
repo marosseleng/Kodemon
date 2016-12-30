@@ -67,7 +67,7 @@ public class UserResource {
             return Response.ok(userFacade.findAllUsers()).build();
         } else {
             LOG.debug("Listing all users.", userName);
-            return Response.ok(userFacade.findUserByUserName(userName)).build();
+            return Response.ok(userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(userName)).build();
         }
     }
 

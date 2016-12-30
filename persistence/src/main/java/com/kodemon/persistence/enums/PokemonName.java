@@ -170,15 +170,15 @@ public enum PokemonName {
         this.types = types;
     }
 
+    public static List<PokemonName> getInitialPokemon() {
+        return Arrays.asList(BULBASAUR, CHARMANDER, SQUIRTLE);
+    }
+
     public PokemonType[] getTypes() {
         return this.types;
     }
 
     public String getName() {
         return this.name;
-    }
-
-    public static List<PokemonName> getInitialPokemon() {
-        return Arrays.asList(BULBASAUR, CHARMANDER, SQUIRTLE);
     }
 }
