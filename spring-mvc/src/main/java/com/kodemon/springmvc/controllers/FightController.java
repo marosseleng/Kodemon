@@ -72,7 +72,7 @@ public class FightController {
                 break;
         }
         model.addAttribute("fights", fights);
-        LOG.debug("Viewing fights of ", period);
+        LOG.debug("Viewing fights of {}", period);
         return "fight/list";
     }
 
@@ -91,7 +91,7 @@ public class FightController {
             model.addAttribute("alert_warning", "No fights of this gym found");
             model.addAttribute("gym", gym);
             LOG.debug("Tried to look up fights of '{}' Gym - the gym doesn't have any fight history.", gym.getCity());
-            return "/gym/detail";
+            return "gym/detail";
         }
         model.addAttribute("fights", fights);
         LOG.debug("Viewing fights of '{}' Gym", gym.getCity());
@@ -119,7 +119,7 @@ public class FightController {
             model.addAttribute("alert_warning", "No fights of this user found");
             model.addAttribute("trainer", userFacade.findUserByUserName(username).iterator().next());
             LOG.debug("Tried to look up fights of '{}' - user doesn't have any fight history.", username);
-            return "/user/detail";
+            return "user/detail";
         }
         model.addAttribute("fights", fights);
         LOG.debug("Viewing fights of user '{}'", username);
@@ -268,7 +268,7 @@ public class FightController {
             return "home";
         }
         model.addAttribute("fight", fight);
-        LOG.debug("Viewing detail of fight ", id);
+        LOG.debug("Viewing detail of fight {}", id);
         return "fight/detail";
     }
 }
