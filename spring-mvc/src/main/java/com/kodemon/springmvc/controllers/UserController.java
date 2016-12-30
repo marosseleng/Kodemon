@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
 import javax.servlet.ServletRequest;
@@ -52,18 +53,19 @@ public class UserController {
     /**
      * Show detail of trainer specified by his username
      *
-     * @param username which trainer is to be shown
-     * @param model    data to display
+     * @param username           which trainer is to be shown
+     * @param model              data to display
+     * @param redirectAttributes attributes to use/display in case of redirect
      * @return JSP page name
      */
     @RequestMapping(value = "/detail/{username}", method = RequestMethod.GET)
-    public String detail(@PathVariable String username, Model model) {
+    public String detail(@PathVariable String username, Model model, RedirectAttributes redirectAttributes) {
         Collection<UserDTO> user = userFacade.findUserByUserName(username);
         if (user.isEmpty()) {
             LOG.warn("No trainer with such username found");
-            model.addAttribute("alert_warning", "No trainer with such username found");
-            model.addAttribute("users", userFacade.findAllUsers());
-            return "/user/list";
+            redirectAttributes.addFlashAttribute("alert_warning", "No trainer with such username found");
+            redirectAttributes.addFlashAttribute("users", userFacade.findAllUsers());
+            return "redirect:/user/list";
         }
         model.addAttribute("trainer", user.iterator().next());
         return "user/detail";
@@ -78,15 +80,22 @@ public class UserController {
      */
     @RequestMapping(value = "/find", method = RequestMethod.GET)
     public String find(@RequestParam String username, Model model) {
-        Collection<UserDTO> user = userFacade.findUserByUserName(username);
-        if (user.isEmpty()) {
-            LOG.warn("No trainer with such username found");
-            model.addAttribute("alert_warning", "No trainer with such username found");
-            model.addAttribute("users", userFacade.findAllUsers());
-            return "/user/list";
+        Collection<UserDTO> result;
+        if (username.length() < 4) { // TODO: extract to a constant
+            model.addAttribute("alert_warning", "Search query should be at least 4 characters long.");
+            result = userFacade.findAllUsers();
+        } else {
+            Collection<UserDTO> found = userFacade.findUserByUserName(username);
+            if (found.isEmpty()) {
+                LOG.warn("No trainer with such username found");
+                model.addAttribute("alert_warning", "No trainer with such username found");
+                result = userFacade.findAllUsers();
+            } else {
+                result = found;
+            }
         }
-        model.addAttribute("trainer", user.iterator().next());
-        return "/user/detail";
+        model.addAttribute("users", result);
+        return "/user/list";
     }
 
     /**
@@ -107,16 +116,16 @@ public class UserController {
             UserDTO authenticated = userFacade.findUserByUserName(username).iterator().next();
             if (authenticated.isBlocked()) {
                 model.addAttribute("alert_danger", "This account is blocked");
-                return "/login";
+                return "login";
             }
             HttpSession session = request.getSession();
             session.setAttribute("authenticatedUser", authenticated);
             model.addAttribute("alert_success", "Welcome " + username);
             model.addAttribute("trainer", authenticated);
-            return "/user/detail";
+            return "user/detail";
         } else {
             model.addAttribute("alert_danger", "Incorrect username or password ");
-            return "/login";
+            return "login";
         }
     }
 
@@ -137,7 +146,7 @@ public class UserController {
         if (toBeBlocked == null) {
             model.addAttribute("alert_warning", "User with this username does not exists");
             LOG.error("Trying to block non-existing user");
-            return "/user/list";
+            return "user/list";
         }
         model.addAttribute("trainer", toBeBlocked);
         if ((UserDTO) session.getAttribute("authenticatedUser") == null || !(((UserDTO) session.getAttribute("authenticatedUser")).isAdmin())) {
@@ -151,7 +160,7 @@ public class UserController {
             userFacade.setBlocked(toBeBlocked.getId(), true);
             model.addAttribute("alert_success", "User successfully blocked");
         }
-        return "/user/detail";
+        return "user/detail";
     }
 
     /**
@@ -170,7 +179,7 @@ public class UserController {
         if (toBeUnblocked == null) {
             model.addAttribute("alert_warning", "User with this username does not exists");
             LOG.error("Trying to unblock non-existing user");
-            return "/user/list";
+            return "user/list";
         }
         model.addAttribute("trainer", toBeUnblocked);
         if ((UserDTO) session.getAttribute("authenticatedUser") == null || !(((UserDTO) session.getAttribute("authenticatedUser")).isAdmin())) {
@@ -181,7 +190,7 @@ public class UserController {
             userFacade.setBlocked(toBeUnblocked.getId(), false);
             model.addAttribute("alert_success", "User successfully unblocked");
         }
-        return "/user/detail";
+        return "user/detail";
     }
 
     /**
@@ -197,11 +206,11 @@ public class UserController {
         HttpSession session = request.getSession();
         if ((UserDTO) session.getAttribute("authenticatedUser") == null) {
             model.addAttribute("alert_warning", "You are not logged in");
-            return "/login";
+            return "login";
         }
         LOG.info("User logged out");
         session.removeAttribute("authenticatedUser");
         model.addAttribute("alert_success", "Succesfully logged out");
-        return "/login";
+        return "login";
     }
 }

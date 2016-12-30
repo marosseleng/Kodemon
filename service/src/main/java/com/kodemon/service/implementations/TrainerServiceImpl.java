@@ -164,6 +164,11 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Override
+    public List<Trainer> findByUserNameIgnoreCaseContaining(String string) {
+        return trainerDao.findByUserNameIgnoreCaseContaining(string);
+    }
+
+    @Override
     public List<Trainer> findByUserNameContaining(String string) {
         return trainerDao.findByUserNameContaining(string);
     }
