@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
 
+import static com.kodemon.persistence.util.ValidationConstants.MIN_USERNAME_LENGTH;
+
 /**
  * @author Oliver Roch
  */
@@ -27,7 +29,7 @@ import java.util.Collection;
 @RequestMapping("/user")
 public class UserController {
 
-    final static Logger LOG = LoggerFactory.getLogger(UserController.class);
+    private final static Logger LOG = LoggerFactory.getLogger(UserController.class);
 
     private UserFacade userFacade;
 
@@ -79,8 +81,8 @@ public class UserController {
     @RequestMapping(value = "/find", method = RequestMethod.GET)
     public String find(@RequestParam String username, Model model) {
         Collection<UserDTO> result;
-        if (username.length() < 4) { // TODO: extract to a constant
-            model.addAttribute("alert_warning", "Search query should be at least 4 characters long.");
+        if (username.length() < MIN_USERNAME_LENGTH) {
+            model.addAttribute("alert_warning", "Search query should be at least " + MIN_USERNAME_LENGTH + " characters long.");
             result = userFacade.findAllUsers();
         } else {
             Collection<UserDTO> found = userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(username);

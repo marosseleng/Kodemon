@@ -1,19 +1,28 @@
 package com.kodemon.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kodemon.persistence.enums.PokemonName;
 
 import java.util.Date;
 
 /**
- * Created by mseleng on 12/29/16.
+ * DTO used in user registration
+ *
+ * @author <a href="mailto:xseleng@fi.muni.cz">Maros Seleng, 422624</a>
  */
 public class UserRegisterDTO {
 
+    @JsonProperty(required = true)
     private String userName;
+    @JsonProperty(required = true)
     private String firstName;
+    @JsonProperty(required = true)
     private String lastName;
+    @JsonProperty(required = true)
     private String password;
+    @JsonProperty(required = true)
     private PokemonName pokemon;
+    @JsonProperty(required = true)
     private Date dateOfBirth;
 
     public UserRegisterDTO() {
