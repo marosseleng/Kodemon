@@ -81,8 +81,19 @@
     </footer>
 </div>
 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+<script>
+    $( function() {
+        $( "#datepicker" ).datepicker({
+            maxDate: "-1",
+            changeYear: true,
+            yearRange: "-100:+0"
+        });
+    } );
+</script>
 </body>
 </html>
 

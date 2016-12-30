@@ -9,7 +9,7 @@
 <jsp:attribute name="body">
 
     <h1>Welcome young trainer. Please log in.</h1>
-    <form:form method="post" action="${pageContext.request.contextPath}/user/login">
+    <form method="post" action="${pageContext.request.contextPath}/user/login">
         <div class="form-group">
             <label for="username">User name</label>
             <input type="text" class="form-control" name="username" id="username" aria-describedby="emailHelp"
@@ -20,7 +20,7 @@
             <input type="password" class="form-control" name="password" id="password" placeholder="Password">
         </div>
         <button type="submit" class="btn btn-primary">Enter Kodemon world</button>
-    </form:form>
+    </form>
 
 </jsp:attribute>
 </kodemon:pagetemplate>

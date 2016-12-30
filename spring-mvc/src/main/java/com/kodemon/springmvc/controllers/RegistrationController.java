@@ -1,6 +1,7 @@
 package com.kodemon.springmvc.controllers;
 
 import com.kodemon.api.dto.UserRegisterDTO;
+import com.kodemon.api.facade.UserFacade;
 import com.kodemon.persistence.enums.PokemonName;
 import com.kodemon.springmvc.validator.UserRegisterDTOValidator;
 import org.springframework.stereotype.Controller;
@@ -9,14 +10,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Created by mseleng on 12/29/16.
@@ -25,20 +25,30 @@ import javax.validation.Valid;
 @RequestMapping("/register")
 public class RegistrationController {
 
-    @RequestMapping(method = RequestMethod.GET)
+    private UserFacade userFacade;
+
+    @Inject
+    public RegistrationController(UserFacade userFacade) {
+        this.userFacade = userFacade;
+    }
+
+    @ModelAttribute("pokemon")
+    public List<PokemonName> availablePokemon() {
+        return PokemonName.getInitialPokemon();
+    }
+
+    @GetMapping
     public String initRegistration(Model model) {
         model.addAttribute("userRegister", new UserRegisterDTO());
-        model.addAttribute("availablePokemon", PokemonName.getInitialPokemon());
         return "register";
     }
 
-    @RequestMapping(value = "/finish", method = RequestMethod.POST)
+    @PostMapping(path = "/finish")
     public String register(
             @Valid @ModelAttribute("userRegister") UserRegisterDTO userRegister,
             BindingResult bindingResult,
             Model model,
-            RedirectAttributes redirectAttributes,
-            UriComponentsBuilder uriBuilder) {
+            RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             for (ObjectError ge : bindingResult.getGlobalErrors()) {
@@ -50,8 +60,9 @@ public class RegistrationController {
             }
             return "";
         }
-
-        return "";
+        userFacade.register(userRegister);
+        redirectAttributes.addFlashAttribute("alert_success", "You have been successfully registered.");
+        return "redirect:/login";
     }
 
     /**

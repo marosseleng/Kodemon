@@ -30,8 +30,12 @@ public class UserController {
 
     final static Logger LOG = LoggerFactory.getLogger(UserController.class);
 
-    @Inject
     private UserFacade userFacade;
+
+    @Inject
+    public UserController(UserFacade userFacade) {
+        this.userFacade = userFacade;
+    }
 
     /**
      * Show list of all trainers.
