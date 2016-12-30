@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 import java.util.Calendar;
 
+import static com.kodemon.persistence.util.Constants.INITIAL_POKEMON_LEVEL;
+
 /**
  * @author Oliver Roch
  */
@@ -56,7 +58,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         ash = trainerService.save(ash);
 
         Pokemon pikachu = pokemonService.createPokemonWithName(PokemonName.PIKACHU);
-        pikachu.setLevel(TrainerServiceImpl.INITIAL_POKEMON_LEVEL);
+        pikachu.setLevel(INITIAL_POKEMON_LEVEL);
         pokemonService.assignTrainerToPokemon(ash, pikachu);
 
         ash = trainerService.addPokemon(pikachu, ash);
