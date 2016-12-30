@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
 
@@ -46,18 +47,19 @@ public class GymController {
     /**
      * Show detail of gym specified by its id
      *
-     * @param id    of the chosen gym
-     * @param model data to display
+     * @param id                 of the chosen gym
+     * @param model              data to display
+     * @param redirectAttributes attributes to use/display in case of redirect
      * @return JSP page name
      */
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
-    public String detail(@PathVariable Long id, Model model) {
+    public String detail(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
         GymDTO gym = gymFacade.findGymById(id);
         if (gym == null) {
             LOG.warn("No gym with this id found");
-            model.addAttribute("alert_warning", "No gym with this id found");
-            model.addAttribute("gyms", gymFacade.findAll());
-            return "/gym/list";
+            redirectAttributes.addFlashAttribute("alert_warning", "No gym with this id found");
+            redirectAttributes.addFlashAttribute("gyms", gymFacade.findAll());
+            return "redirect:/gym/list";
         }
         model.addAttribute("gym", gym);
         return "gym/detail";
