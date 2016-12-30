@@ -72,7 +72,7 @@ public class FightController {
                 break;
         }
         model.addAttribute("fights", fights);
-        LOG.debug("Viewing fights of " + period);
+        LOG.debug("Viewing fights of {}", period);
         return "fight/list";
     }
 
@@ -90,11 +90,11 @@ public class FightController {
         if (fights.isEmpty()) {
             model.addAttribute("alert_warning", "No fights of this gym found");
             model.addAttribute("gym", gym);
-            LOG.debug("Tried to look up fights of '" + gym.getCity() + "' Gym - the gym doesn't have any fight history.");
+            LOG.debug("Tried to look up fights of '{}' Gym - the gym doesn't have any fight history.", gym.getCity());
             return "gym/detail";
         }
         model.addAttribute("fights", fights);
-        LOG.debug("Viewing fights of '" + gym.getCity() + "' Gym");
+        LOG.debug("Viewing fights of '{}' Gym", gym.getCity());
         return "fight/list";
     }
 
@@ -111,18 +111,18 @@ public class FightController {
         Collection<UserDTO> user = userFacade.findUserByUserName(username);
         if (user.isEmpty()) {
             model.addAttribute("alert_warning", "No trainer with such username found");
-            LOG.error("Tried to look up fights of '" + username + "' - user doesn't exists.");
+            LOG.error("Tried to look up fights of '{}' - user doesn't exists.", username);
             return "home";
         }
         Collection<FightDTO> fights = fightFacade.listFightsOfTrainer(userFacade.findUserByUserName(username).iterator().next());
         if (fights.isEmpty()) {
             model.addAttribute("alert_warning", "No fights of this user found");
             model.addAttribute("trainer", userFacade.findUserByUserName(username).iterator().next());
-            LOG.debug("Tried to look up fights of '" + username + "' - user doesn't have any fight history.");
+            LOG.debug("Tried to look up fights of '{}' - user doesn't have any fight history.", username);
             return "user/detail";
         }
         model.addAttribute("fights", fights);
-        LOG.debug("Viewing fights of user '" + username + "'");
+        LOG.debug("Viewing fights of user '{}'", username);
         return "fight/list";
     }
 
@@ -146,9 +146,10 @@ public class FightController {
         session.setAttribute("wildPokemon", wildPokemon);
         model.addAttribute("wildPokemon", wildPokemon);
         model.addAttribute("trainersPokemon", user.getPokemons().get(0));
-        LOG.debug("A wild " + wildPokemon.getName().getName() + " level " + wildPokemon.getLevel() + " appeared for " + user.getUserName());
+        LOG.debug("A wild {} level {} appeared for {}", wildPokemon.getName().getName(), wildPokemon.getLevel(), user.getUserName());
         return "fight/grass";
     }
+
 
     @RequestMapping(value = "/fightWild", method = RequestMethod.GET)
     public String fightWild(@RequestParam String mode, ServletRequest r, Model model) {
@@ -189,8 +190,13 @@ public class FightController {
         user = userFacade.findUserByUserName(user.getUserName()).iterator().next();
         session.setAttribute("authenticatedUser", user);
 
-        LOG.debug(user.getUserName() + (mode_ == WildPokemonFightMode.CATCH ? " catching" : " fighting") + " wild " + wildPokemon.getName().getName() + " level " + wildPokemon.getLevel() + " -> " + (fightResult ? "Success!" : "Failed"));
-        return "home";
+        LOG.debug("{} {} wild {} level {} -> {}", user.getUserName(), (mode_ == WildPokemonFightMode.CATCH ? " catching" : " fighting"), wildPokemon.getName().getName(), wildPokemon.getLevel(), (fightResult ? "Success!" : "Failed"));
+        wildPokemon = pokemonFacade.generateWildPokemon(user);
+        session.setAttribute("wildPokemon", wildPokemon);
+        model.addAttribute("wildPokemon", wildPokemon);
+        model.addAttribute("trainersPokemon", user.getPokemons().get(0));
+        LOG.debug("A wild {} level {} appeared for {}", wildPokemon.getName().getName(), wildPokemon.getLevel(), user.getUserName());
+        return "fight/grass";
     }
 
     @RequestMapping(value = "/fightGym", method = RequestMethod.GET)
@@ -213,19 +219,19 @@ public class FightController {
         GymDTO gym = gymFacade.findGymById(id);
         if (gym == null) {
             model.addAttribute("alert_warning", "Error: Gym not found in database!");
-            LOG.error("Error: Gym ID " + id + " not found in database!");
+            LOG.error("Error: Gym ID {} not found in database!", id);
             return "home";
         }
         for (BadgeDTO b : userDTO.getBadges()) {
             if (b.getName().equals(gym.getBadgeName())) {
                 model.addAttribute("alert_warning", "You have already beaten this gym!");
-                LOG.error("User " + userDTO.getUserName() + " has already beaten " + gym.getCity() + " Gym.");
+                LOG.error("User {} has already beaten {} Gym.", userDTO.getUserName(), gym.getCity());
                 return "home";
             }
         }
         if (gym.getTrainer().getUserName().equals(userDTO.getUserName())) {
             model.addAttribute("alert_warning", "You cannot fight your own gym!");
-            LOG.error("User " + userDTO.getUserName() + " owns " + gym.getCity() + " Gym.");
+            LOG.error("User {} owns {} Gym.", userDTO.getUserName(), gym.getCity());
             return "home";
         }
         boolean fightResult = fightFacade.fightForBadge(userDTO, gym);
@@ -242,7 +248,7 @@ public class FightController {
         }
         userDTO = users.iterator().next();
         session.setAttribute("authenticatedUser", userDTO);
-        LOG.debug(userDTO.getUserName() + " is fighting " + gym.getCity() + " Gym -> " + (fightResult ? "Success!" : "Failed"));
+        LOG.debug("{} is fighting [} Gym -> {}", userDTO.getUserName(), gym.getCity(), (fightResult ? "Success!" : "Failed"));
         return "home";
     }
 
@@ -258,11 +264,11 @@ public class FightController {
         FightDTO fight = fightFacade.findFightById(id);
         if (fight == null) {
             model.addAttribute("alert_warning", "Error: Fight not found in database!");
-            LOG.error("Error: Fight ID " + id + " not found in database!");
+            LOG.error("Error: Fight ID {} not found in database!", id);
             return "home";
         }
         model.addAttribute("fight", fight);
-        LOG.debug("Viewing detail of fight " + id);
+        LOG.debug("Viewing detail of fight {}", id);
         return "fight/detail";
     }
 }
