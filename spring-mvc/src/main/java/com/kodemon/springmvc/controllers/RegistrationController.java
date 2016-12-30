@@ -1,9 +1,14 @@
 package com.kodemon.springmvc.controllers;
 
+import com.kodemon.api.dto.UserDTO;
 import com.kodemon.api.dto.UserRegisterDTO;
 import com.kodemon.api.facade.UserFacade;
 import com.kodemon.persistence.enums.PokemonName;
 import com.kodemon.springmvc.validator.UserRegisterDTOValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,10 +17,11 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,6 +30,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/register")
 public class RegistrationController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(RegistrationController.class);
 
     private UserFacade userFacade;
 
@@ -49,20 +57,31 @@ public class RegistrationController {
             BindingResult bindingResult,
             Model model,
             RedirectAttributes redirectAttributes) {
-
+        LOG.debug("Performing registration of user with username: {}.", userRegister.getUserName());
         if (bindingResult.hasErrors()) {
             for (ObjectError ge : bindingResult.getGlobalErrors()) {
-//                log.trace("ObjectError: {}", ge);
+                LOG.trace("ObjectError: {}", ge);
             }
             for (FieldError fe : bindingResult.getFieldErrors()) {
                 model.addAttribute(fe.getField() + "_error", true);
-//                log.trace("FieldError: {}", fe);
+                LOG.trace("FieldError: {}", fe);
             }
-            return "";
+            return "register";
         }
-        userFacade.register(userRegister);
-        redirectAttributes.addFlashAttribute("alert_success", "You have been successfully registered.");
-        return "redirect:/login";
+        try {
+            if (userFacade.register(userRegister) != null) {
+                redirectAttributes.addFlashAttribute("alert_success", "You have been successfully registered.");
+                return "redirect:/login";
+            } else {
+                model.addAttribute("alert_error", "Registration unsuccessful, please try again later.");
+                LOG.error("Error while registering user with username: {}", userRegister.getUserName());
+                return "register";
+            }
+        } catch (DataAccessException ex) {
+            model.addAttribute("alert_error", "Registration unsuccessful, please try again later.");
+            LOG.error("Error while registering user with username: {}", userRegister.getUserName(), ex);
+            return "register";
+        }
     }
 
     /**
@@ -73,7 +92,10 @@ public class RegistrationController {
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         if (binder.getTarget() instanceof UserRegisterDTO) {
-            binder.addValidators(new UserRegisterDTOValidator());
+            binder.addValidators(new UserRegisterDTOValidator(userFacade));
+            // awesome time handling...
+            SimpleDateFormat dateFormat = new SimpleDateFormat("d.M.y");
+            binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
         }
     }
 }

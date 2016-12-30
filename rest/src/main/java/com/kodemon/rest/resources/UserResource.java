@@ -98,6 +98,7 @@ public class UserResource {
     }*/
     // TODO remove UserAndPasswordDTO, which is replaced by UserRegisterDTO
 
+
     /**
      * Edits the user with the given id
      *

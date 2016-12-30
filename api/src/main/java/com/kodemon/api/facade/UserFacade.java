@@ -16,8 +16,8 @@ public interface UserFacade {
     /**
      * Creates new user in the database.
      * Checks whether an user with that username exists, etc.
-     *  @param user     User details
      *
+     * @param user User details
      */
     UserDTO register(UserRegisterDTO user);
 
@@ -35,6 +35,14 @@ public interface UserFacade {
      * @return Collection of Users
      */
     Collection<UserDTO> findUserByUserName(String userName);
+
+    /**
+     * Finds users with the given username. Matching exactly this username, neither ignoring case, nor finding substrings.
+     *
+     * @param userName username to find
+     * @return Collection of Users (ideally of size()==1, when any)
+     */
+    Collection<UserDTO> findUserByUserNameExact(String userName);
 
     /**
      * Finds all users

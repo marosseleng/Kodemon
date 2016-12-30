@@ -70,6 +70,11 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
+    public Collection<UserDTO> findUserByUserNameExact(String userName) {
+        return beanMappingService.mapListTo(trainerService.findByUserName(userName), UserDTO.class);
+    }
+
+    @Override
     public Collection<UserDTO> findAllUsers() {
         return beanMappingService.mapListTo(trainerService.findAll(), UserDTO.class);
     }
