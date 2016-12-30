@@ -91,7 +91,7 @@ public class FightController {
             model.addAttribute("alert_warning", "No fights of this gym found");
             model.addAttribute("gym", gym);
             LOG.debug("Tried to look up fights of '" + gym.getCity() + "' Gym - the gym doesn't have any fight history.");
-            return "/gym/detail";
+            return "gym/detail";
         }
         model.addAttribute("fights", fights);
         LOG.debug("Viewing fights of '" + gym.getCity() + "' Gym");
@@ -119,7 +119,7 @@ public class FightController {
             model.addAttribute("alert_warning", "No fights of this user found");
             model.addAttribute("trainer", userFacade.findUserByUserName(username).iterator().next());
             LOG.debug("Tried to look up fights of '" + username + "' - user doesn't have any fight history.");
-            return "/user/detail";
+            return "user/detail";
         }
         model.addAttribute("fights", fights);
         LOG.debug("Viewing fights of user '" + username + "'");
