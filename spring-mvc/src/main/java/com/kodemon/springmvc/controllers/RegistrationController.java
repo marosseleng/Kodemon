@@ -1,6 +1,5 @@
 package com.kodemon.springmvc.controllers;
 
-import com.kodemon.api.dto.UserDTO;
 import com.kodemon.api.dto.UserRegisterDTO;
 import com.kodemon.api.facade.UserFacade;
 import com.kodemon.persistence.enums.PokemonName;

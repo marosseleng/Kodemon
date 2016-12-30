@@ -1,6 +1,5 @@
 package com.kodemon.rest.resources;
 
-import com.kodemon.api.dto.UserAndPasswordDTO;
 import com.kodemon.api.dto.UserDTO;
 import com.kodemon.api.facade.UserFacade;
 import com.kodemon.rest.exception.RestDataAccessException;

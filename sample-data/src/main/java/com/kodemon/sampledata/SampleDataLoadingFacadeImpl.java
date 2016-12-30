@@ -1,8 +1,5 @@
 package com.kodemon.sampledata;
 
-import com.kodemon.api.dto.UserRegisterDTO;
-import com.kodemon.persistence.dao.PokemonDao;
-import com.kodemon.persistence.dao.TrainerDao;
 import com.kodemon.persistence.dao.TrainerFightDao;
 import com.kodemon.persistence.entity.Pokemon;
 import com.kodemon.persistence.entity.Trainer;
@@ -18,8 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
 
 /**
  * @author Oliver Roch

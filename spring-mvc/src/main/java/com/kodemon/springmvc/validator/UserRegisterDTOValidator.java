@@ -1,16 +1,12 @@
 package com.kodemon.springmvc.validator;
 
-import com.kodemon.api.dto.UserDTO;
 import com.kodemon.api.dto.UserRegisterDTO;
 import com.kodemon.api.facade.UserFacade;
 import com.kodemon.persistence.enums.PokemonName;
-import com.kodemon.service.interfaces.TrainerService;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Validator for the user registration
@@ -18,8 +14,6 @@ import java.util.List;
  * @author <a href="mailto:xseleng@fi.muni.cz">Maros Seleng, 422624</a>
  */
 public class UserRegisterDTOValidator implements Validator {
-
-    private static final String CHARS_AND_SPACES_REGEX = "/^([a-zA-Z]+\\s)*[a-zA-Z]+$/";
 
     private UserFacade userFacade;
 
@@ -65,8 +59,6 @@ public class UserRegisterDTOValidator implements Validator {
             errors.rejectValue("lastName", "UserRegisterDTOValidator.lastName.null", "Last name cannot be null");
         } else if (lastName.isEmpty()) {
             errors.rejectValue("lastName", "UserRegisterDTOValidator.lastName.empty", "Last name cannot be empty");
-        } else if (!lastName.matches(CHARS_AND_SPACES_REGEX)) {
-            errors.rejectValue("lastName", "UserRegisterDTOValidator.lastName.regex", "Last name may contain only characters and spaces");
         }
 
         String firstName = dto.getFirstName();
@@ -74,8 +66,6 @@ public class UserRegisterDTOValidator implements Validator {
             errors.rejectValue("firstName", "UserRegisterDTOValidator.firstName.null", "First name cannot be null");
         } else if (firstName.isEmpty()) {
             errors.rejectValue("firstName", "UserRegisterDTOValidator.firstName.empty", "First name cannot be empty");
-        } else if (!firstName.matches(CHARS_AND_SPACES_REGEX)) {
-            errors.rejectValue("firstName", "UserRegisterDTOValidator.firstName.regex", "First name may contain only characters and spaces");
         }
 
         String userName = dto.getUserName();
