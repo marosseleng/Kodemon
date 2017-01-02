@@ -10,11 +10,12 @@
 
     <h1><c:out value="${trainer.userName}"/></h1>
     <h2><c:out value="${trainer.firstName} ${trainer.lastName}"/></h2>
-    <h4>Trainer was born on <fmt:formatDate value="${trainer.dateOfBirth}" pattern="dd.MM.yyyy"/></h4>
-    <c:if test="${trainer.blocked}"><h4>User is blocked</h4></c:if>
+    <h4><fmt:message key="user.detail.wasBornOn"/> <fmt:formatDate value="${trainer.dateOfBirth}"
+                                                                   pattern="dd.MM.yyyy"/></h4>
+    <c:if test="${trainer.blocked}"><h4><fmt:message key="user.detail.isBlocked"/></h4></c:if>
     <div class="row">
         <div class="col-xs-12 col-sm-6">
-            <h3>Trainer's pokemons:</h3>
+            <h3><fmt:message key="user.detail.trainersPokemon"/></h3>
             <ul>
                 <c:forEach items="${trainer.pokemons}" var="pokemon">
                     <li><c:out value="${pokemon.name} at level ${pokemon.level}"/></li>
@@ -22,7 +23,7 @@
             </ul>
         </div>
         <div class="col-xs-12 col-sm-6">
-            <h3>Trainer's badges:</h3>
+            <h3><fmt:message key="user.detail.trainersBadges"/></h3>
             <ul>
                 <c:forEach items="${trainer.badges}" var="badge">
                     <li><c:out value="${badge.name} from ${badge.gym.city} Gym"/></li>
@@ -31,7 +32,8 @@
         </div>
     </div>
     <form method="get" action="${pageContext.request.contextPath}/fight/listFightsOfUser">
-        <button type="submit" class="btn btn-primary" name="username" value="${trainer.userName}">This user's fights
+        <button type="submit" class="btn btn-primary" name="username" value="${trainer.userName}">
+            <fmt:message key="user.detail.usersFights"/>
         </button>
     </form>
     <br/>
@@ -39,15 +41,15 @@
         <c:choose>
             <c:when test="${!trainer.blocked}">
                 <form method="post" action="${pageContext.request.contextPath}/user/blockUser">
-                    <button type="submit" class="btn btn-primary" name="username" value="${trainer.userName}">Block this
-                        user
+                    <button type="submit" class="btn btn-primary" name="username" value="${trainer.userName}">
+                        <fmt:message key="user.detail.blockUser"/>
                     </button>
                 </form>
             </c:when>
             <c:otherwise>
                 <form method="post" action="${pageContext.request.contextPath}/user/unblockUser">
-                    <button type="submit" class="btn btn-primary" name="username" value="${trainer.userName}">Unblock
-                        this user
+                    <button type="submit" class="btn btn-primary" name="username" value="${trainer.userName}">
+                        <fmt:message key="user.detail.unblockUser"/>
                     </button>
                 </form>
             </c:otherwise>
