@@ -5,7 +5,8 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<kodemon:pagetemplate title="List of all trainers">
+<s:message code="user.list.pageTitle" var="pageTitle"/>
+<kodemon:pagetemplate title="${pageTitle}">
 <jsp:attribute name="body">
 
     <form method="get" action="${pageContext.request.contextPath}/user/find">

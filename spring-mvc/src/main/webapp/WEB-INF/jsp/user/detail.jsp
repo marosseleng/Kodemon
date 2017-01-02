@@ -5,7 +5,8 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<kodemon:pagetemplate title="Details of trainer">
+<s:message code="user.detail.pageTitle" var="pageTitle"/>
+<kodemon:pagetemplate title="${pageTitle}">
 <jsp:attribute name="body">
 
     <h1><c:out value="${trainer.userName}"/></h1>
@@ -18,7 +19,7 @@
             <h3><fmt:message key="user.detail.trainersPokemon"/></h3>
             <ul>
                 <c:forEach items="${trainer.pokemons}" var="pokemon">
-                    <li><c:out value="${pokemon.name} at level ${pokemon.level}"/></li>
+                    <li><s:message code="user.detail.pokemonAtLevel" arguments="${pokemon.name},${pokemon.level}"/></li>
                 </c:forEach>
             </ul>
         </div>
@@ -26,7 +27,7 @@
             <h3><fmt:message key="user.detail.trainersBadges"/></h3>
             <ul>
                 <c:forEach items="${trainer.badges}" var="badge">
-                    <li><c:out value="${badge.name} from ${badge.gym.city} Gym"/></li>
+                    <li><s:message code="user.detail.badgeFromGym" arguments="${badge.name},${badge.gym.city}"/></li>
                 </c:forEach>
             </ul>
         </div>

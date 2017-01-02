@@ -5,7 +5,8 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<kodemon:pagetemplate title="List of all gyms">
+<s:message code="gym.list.pageTitle" var="pageTitle"/>
+<kodemon:pagetemplate title="${pageTitle}">
 <jsp:attribute name="body">
     <h4><fmt:message key="gym.list.clickOnGym"/></h4>
         <c:forEach items="${gyms}" var="gym">
