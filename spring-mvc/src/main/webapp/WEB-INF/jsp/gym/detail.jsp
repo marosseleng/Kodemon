@@ -5,26 +5,27 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<kodemon:pagetemplate title="${gym.city} gym">
+<s:message code="gym.detail.pageTitle" arguments="${gym.city}" var="pageTitle"/>
+<kodemon:pagetemplate title="${pageTitle}">
 <jsp:attribute name="body">
 
-    <h4>Gym master <kodemon:a href="/user/detail/${gym.trainer.userName}"><c:out
+    <h4><fmt:message key="gym.detail.gymMaster"/> <kodemon:a href="/user/detail/${gym.trainer.userName}"><c:out
             value="${gym.trainer.firstName} ${gym.trainer.lastName}"/></kodemon:a></h4>
-    <h4><c:out value="${gym.type}"/> type</h4>
-    <h4>Awards <c:out value="${gym.badgeName}"/></h4>
+    <h4><s:message code="gym.detail.gymType" arguments="${gym.type}"/></h4>
+    <h4><s:message code="gym.detail.awardsBadgeName" arguments="${gym.badgeName}"/></h4>
     <div class="row">
         <div class="col-xs-12 col-sm-6">
-            <h3>Pokemons on this gym:</h3>
+            <h3><fmt:message key="gym.detail.pokemonsOnGym"/></h3>
             <ul>
                 <c:forEach items="${gym.trainer.pokemons}" var="pokemon">
-                    <li><c:out value="${pokemon.name} at level ${pokemon.level}"/></li>
+                    <li><s:message code="gym.detail.pokemonAtLevel" arguments="${pokemon.name},${pokemon.level}"/></li>
                 </c:forEach>
             </ul>
         </div>
     </div>
 
     <form method="get" action="${pageContext.request.contextPath}/fight/listFightsOfGym">
-        <button type="submit" class="btn btn-primary" name="id" value="${gym.id}">This gym's fights</button>
+        <button type="submit" class="btn btn-primary" name="id" value="${gym.id}"><fmt:message key="gym.detail.gymsFights"/></button>
     </form>
     <c:choose>
         <c:when test="${not empty authenticatedUser}">
@@ -32,7 +33,7 @@
                 <c:when test="${authenticatedUser.userName == gym.trainer.userName}">
                     <form method="get" action="${pageContext.request.contextPath}/fight/fightGym">
                         <button type="submit" class="btn btn-primary" name="id" value="${gym.id}" disabled="disabled">
-                            You cannot fight your own gym.
+                            <fmt:message key="gym.detail.youCannotFightOwnGym"/>
                         </button>
                     </form>
                 </c:when>
@@ -48,12 +49,15 @@
                     <c:choose>
                         <c:when test="${!beaten}">
                         <form method="get" action="${pageContext.request.contextPath}/fight/fightGym">
-                            <button type="submit" class="btn btn-primary" name="id" value="${gym.id}">FIGHT IT!</button>
+                            <button type="submit" class="btn btn-primary" name="id" value="${gym.id}">
+                                <fmt:message key="gym.detail.fightIt"/>
+                            </button>
                         </form>
                         </c:when>
                         <c:otherwise>
                             <button type="submit" class="btn btn-primary" name="id" value="${gym.id}"
-                                    disabled="disabled">You already beat this gym.
+                                    disabled="disabled">
+                                <fmt:message key="gym.detail.youAlreadyBeat"/>
                             </button>
                         </c:otherwise>
                     </c:choose>

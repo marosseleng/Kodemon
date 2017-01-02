@@ -5,12 +5,26 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<kodemon:pagetemplate title="Details of a fight">
+<fmt:message key="fight.detail.pageTitle" var="pageTitle"/>
+<kodemon:pagetemplate title="${pageTitle}">
 <jsp:attribute name="body">
 
-    <h1><c:out value="${fight.challenger.firstName} ${fight.challenger.lastName} vs. ${fight.targetGym.city} Gym"/></h1>
-    <h2>Fought on <fmt:formatDate value="${fight.fightTime}" pattern="dd.MM.yyyy"/></h2>
-    <h3><c:out value="Challenger was ${fight.wasChallengerSuccessful ? 'successful' : 'unsuccessful'}"/></h3>
+    <h1>
+        <s:message code="fight.detail.challengerVsDefender"
+                   arguments="${fight.challenger.firstName},${fight.challenger.lastName},${fight.targetGym.city}"/>
+    </h1>
+    <fmt:formatDate value="${fight.fightTime}" pattern="dd.MM.yyyy" var="fightDate"/>
+    <h2><s:message code="fight.detail.onDate" arguments="${fightDate}"/></h2>
+    <h3>
+    <c:choose>
+        <c:when test="${fight.wasChallengerSuccessful}">
+        <fmt:message key="fight.detail.challengerSuccessFul"/>
+        </c:when>
+        <c:otherwise>
+        <fmt:message key="fight.detail.challengerNotSuccessFul"/>
+        </c:otherwise>
+    </c:choose>
+    </h3>
 
 </jsp:attribute>
 </kodemon:pagetemplate>

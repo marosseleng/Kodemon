@@ -8,18 +8,20 @@
 <kodemon:pagetemplate>
 <jsp:attribute name="body">
 
-    <h1>Welcome young trainer. Please log in.</h1>
+    <h1><fmt:message key="login.header"/></h1>
     <form method="post" action="${pageContext.request.contextPath}/user/login">
         <div class="form-group">
-            <label for="username">User name</label>
+            <label for="username"><fmt:message key="login.userName"/></label>
+            <fmt:message key="login.userNamePlaceholder" var="userNamePlaceholder"/>
             <input type="text" class="form-control" name="username" id="username" aria-describedby="emailHelp"
-                   placeholder="Enter your login">
+                   placeholder="${userNamePlaceholder}">
         </div>
         <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+            <label for="password"><fmt:message key="login.password"/></label>
+            <fmt:message key="login.passwordPlaceholder" var="passwordPlaceholder"/>
+            <input type="password" class="form-control" name="password" id="password" placeholder="${passwordPlaceholder}">
         </div>
-        <button type="submit" class="btn btn-primary">Enter Kodemon world</button>
+        <button type="submit" class="btn btn-primary"><fmt:message key="login.enterKodemonWorld"/></button>
     </form>
 
 </jsp:attribute>

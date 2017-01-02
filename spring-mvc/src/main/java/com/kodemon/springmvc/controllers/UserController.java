@@ -5,6 +5,7 @@ import com.kodemon.api.dto.UserDTO;
 import com.kodemon.api.facade.UserFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
+import java.util.Locale;
 
 import static com.kodemon.persistence.util.Constants.MIN_USERNAME_LENGTH;
 
@@ -32,10 +34,12 @@ public class UserController {
     private final static Logger LOG = LoggerFactory.getLogger(UserController.class);
 
     private UserFacade userFacade;
+    private MessageSource messageSource;
 
     @Inject
-    public UserController(UserFacade userFacade) {
+    public UserController(UserFacade userFacade, MessageSource messageSource) {
         this.userFacade = userFacade;
+        this.messageSource = messageSource;
     }
 
     /**
@@ -59,11 +63,11 @@ public class UserController {
      * @return JSP page name
      */
     @RequestMapping(value = "/detail/{username}", method = RequestMethod.GET)
-    public String detail(@PathVariable String username, Model model, RedirectAttributes redirectAttributes) {
+    public String detail(@PathVariable String username, Model model, RedirectAttributes redirectAttributes, Locale locale) {
         Collection<UserDTO> user = userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(username);
         if (user.isEmpty()) {
             LOG.warn("No trainer with such username found");
-            redirectAttributes.addFlashAttribute("alert_warning", "No trainer with such username found");
+            redirectAttributes.addFlashAttribute("alert_warning", getMessage("warning.user.noTrainerFound", locale));
             redirectAttributes.addFlashAttribute("users", userFacade.findAllUsers());
             return "redirect:/user/list";
         }
@@ -79,16 +83,16 @@ public class UserController {
      * @return JSP page name
      */
     @RequestMapping(value = "/find", method = RequestMethod.GET)
-    public String find(@RequestParam String username, Model model) {
+    public String find(@RequestParam String username, Model model, Locale locale) {
         Collection<UserDTO> result;
         if (username.length() < MIN_USERNAME_LENGTH) {
-            model.addAttribute("alert_warning", "Search query should be at least " + MIN_USERNAME_LENGTH + " characters long.");
+            model.addAttribute("alert_warning", getMessage("warning.user.searchQueryShort", locale, MIN_USERNAME_LENGTH));
             result = userFacade.findAllUsers();
         } else {
             Collection<UserDTO> found = userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(username);
             if (found.isEmpty()) {
                 LOG.warn("No trainer with such username found");
-                model.addAttribute("alert_warning", "No trainer with such username found");
+                model.addAttribute("alert_warning", getMessage("warning.user.noTrainerFound", locale));
                 result = userFacade.findAllUsers();
             } else {
                 result = found;
@@ -106,7 +110,7 @@ public class UserController {
      * @return JSP page name
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@RequestParam String username, @RequestParam String password, ServletRequest r, Model model) {
+    public String login(@RequestParam String username, @RequestParam String password, ServletRequest r, Model model, Locale locale) {
         UserAuthDTO userAuthDTO = new UserAuthDTO();
         userAuthDTO.setUserName(username);
         userAuthDTO.setPassword(password);
@@ -115,16 +119,16 @@ public class UserController {
         if (userFacade.login(userAuthDTO)) {
             UserDTO authenticated = userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(username).iterator().next();
             if (authenticated.isBlocked()) {
-                model.addAttribute("alert_danger", "This account is blocked");
+                model.addAttribute("alert_danger", getMessage("danger.user.accountBlocked", locale));
                 return "login";
             }
             HttpSession session = request.getSession();
             session.setAttribute("authenticatedUser", authenticated);
-            model.addAttribute("alert_success", "Welcome " + username);
+            model.addAttribute("alert_success", getMessage("success.user.welcomeUser", locale, username));
             model.addAttribute("trainer", authenticated);
             return "user/detail";
         } else {
-            model.addAttribute("alert_danger", "Incorrect username or password ");
+            model.addAttribute("alert_danger", getMessage("danger.user.incorrectCredentials", locale));
             return "login";
         }
     }
@@ -139,26 +143,27 @@ public class UserController {
      * @return JSP page name
      */
     @RequestMapping(value = "/blockUser", method = RequestMethod.POST)
-    public String blockUser(@RequestParam String username, ServletRequest r, Model model) {
+    public String blockUser(@RequestParam String username, ServletRequest r, Model model, Locale locale) {
         HttpServletRequest request = (HttpServletRequest) r;
         HttpSession session = request.getSession();
         UserDTO toBeBlocked = userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(username).iterator().next();
         if (toBeBlocked == null) {
-            model.addAttribute("alert_warning", "User with this username does not exists");
+            model.addAttribute("alert_warning", getMessage("warning.user.doesNotExist", locale));
             LOG.error("Trying to block non-existing user");
             return "user/list";
         }
         model.addAttribute("trainer", toBeBlocked);
-        if ((UserDTO) session.getAttribute("authenticatedUser") == null || !(((UserDTO) session.getAttribute("authenticatedUser")).isAdmin())) {
-            model.addAttribute("alert_warning", "You do not have permissions to do this");
+        if (session.getAttribute("authenticatedUser") == null ||
+                !(((UserDTO) session.getAttribute("authenticatedUser")).isAdmin())) {
+            model.addAttribute("alert_warning", getMessage("warning.user.insufficientPermissions", locale));
             LOG.error("User is not admin.");
         } else if (toBeBlocked.isAdmin()) {
-            model.addAttribute("alert_warning", "Admin can not block another admin");
+            model.addAttribute("alert_warning", getMessage("warning.user.adminCannotBlockOther", locale));
             LOG.error("Admin trying to block admin");
         } else {
             LOG.info("User blocked");
             userFacade.setBlocked(toBeBlocked.getId(), true);
-            model.addAttribute("alert_success", "User successfully blocked");
+            model.addAttribute("alert_success", getMessage("success.user.userBlocked", locale));
         }
         return "user/detail";
     }
@@ -172,23 +177,24 @@ public class UserController {
      * @return JSP page name
      */
     @RequestMapping(value = "/unblockUser", method = RequestMethod.POST)
-    public String unblockUser(@RequestParam String username, ServletRequest r, Model model) {
+    public String unblockUser(@RequestParam String username, ServletRequest r, Model model, Locale locale) {
         HttpServletRequest request = (HttpServletRequest) r;
         HttpSession session = request.getSession();
         UserDTO toBeUnblocked = userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(username).iterator().next();
         if (toBeUnblocked == null) {
-            model.addAttribute("alert_warning", "User with this username does not exists");
+            model.addAttribute("alert_warning", getMessage("warning.user.doesNotExist", locale));
             LOG.error("Trying to unblock non-existing user");
             return "user/list";
         }
         model.addAttribute("trainer", toBeUnblocked);
-        if ((UserDTO) session.getAttribute("authenticatedUser") == null || !(((UserDTO) session.getAttribute("authenticatedUser")).isAdmin())) {
-            model.addAttribute("alert_warning", "You do not have permissions to do this");
+        if (session.getAttribute("authenticatedUser") == null ||
+                !(((UserDTO) session.getAttribute("authenticatedUser")).isAdmin())) {
+            model.addAttribute("alert_warning", getMessage("warning.user.insufficientPermissions", locale));
             LOG.error("User is not admin.");
         } else {
             LOG.info("User unblocked");
             userFacade.setBlocked(toBeUnblocked.getId(), false);
-            model.addAttribute("alert_success", "User successfully unblocked");
+            model.addAttribute("alert_success", getMessage("success.user.userUnblocked", locale));
         }
         return "user/detail";
     }
@@ -201,16 +207,20 @@ public class UserController {
      * @return JSP page name
      */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout(ServletRequest r, Model model) {
+    public String logout(ServletRequest r, Model model, Locale locale) {
         HttpServletRequest request = (HttpServletRequest) r;
         HttpSession session = request.getSession();
-        if ((UserDTO) session.getAttribute("authenticatedUser") == null) {
-            model.addAttribute("alert_warning", "You are not logged in");
+        if (session.getAttribute("authenticatedUser") == null) {
+            model.addAttribute("alert_warning", getMessage("warning.user.notLoggedIn", locale));
             return "login";
         }
         LOG.info("User logged out");
         session.removeAttribute("authenticatedUser");
-        model.addAttribute("alert_success", "Succesfully logged out");
+        model.addAttribute("alert_success", getMessage("success.user.userLoggedOut", locale));
         return "login";
+    }
+
+    private String getMessage(String code, Locale locale, Object... args) {
+        return messageSource.getMessage(code, args, locale);
     }
 }

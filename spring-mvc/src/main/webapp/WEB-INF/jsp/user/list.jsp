@@ -5,17 +5,19 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<kodemon:pagetemplate title="List of all trainers">
+<s:message code="user.list.pageTitle" var="pageTitle"/>
+<kodemon:pagetemplate title="${pageTitle}">
 <jsp:attribute name="body">
 
     <form method="get" action="${pageContext.request.contextPath}/user/find">
         <div class="form-group">
-            <input type="text" name="username" class="form-control" placeholder="Enter username"/>
+            <fmt:message key="user.list.userNamePlaceholder" var="userNamePlaceholder"/>
+            <input type="text" name="username" class="form-control" placeholder="${userNamePlaceholder}"/>
         </div>
-        <button type="submit" class="btn btn-primary">Find user by username</button>
+        <button type="submit" class="btn btn-primary"><fmt:message key="user.list.findByUsername"/></button>
     </form>
 
-    <h4>Click on name to see details</h4>
+    <h4><fmt:message key="user.list.clickOnName"/></h4>
     <c:forEach items="${users}" var="trainer">
         <h3><kodemon:a href="detail/${trainer.userName}"><c:out
                 value="${trainer.firstName} ${trainer.lastName}"/></kodemon:a></h3>

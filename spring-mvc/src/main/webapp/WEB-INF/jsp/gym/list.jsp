@@ -5,9 +5,10 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<kodemon:pagetemplate title="List of all gyms">
+<s:message code="gym.list.pageTitle" var="pageTitle"/>
+<kodemon:pagetemplate title="${pageTitle}">
 <jsp:attribute name="body">
-    <h4>Click on gym to see its details</h4>
+    <h4><fmt:message key="gym.list.clickOnGym"/></h4>
         <c:forEach items="${gyms}" var="gym">
             <h3><kodemon:a href="detail/${gym.id}"><c:out
                     value="${gym.id}: ${gym.city} (${gym.type})"/></kodemon:a></h3>

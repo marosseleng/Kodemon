@@ -32,19 +32,19 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><kodemon:a href="/">Home</kodemon:a></li>
-                <li><kodemon:a href="/fight/list?period=all">Fight history</kodemon:a></li>
-                <li><kodemon:a href="/gym/list">Gyms</kodemon:a></li>
-                <li><kodemon:a href="/user/list">Trainers</kodemon:a></li>
+                <li><kodemon:a href="/"><f:message key="navigation.home"/></kodemon:a></li>
+                <li><kodemon:a href="/fight/list?period=all"><f:message key="navigation.fightHistory"/></kodemon:a></li>
+                <li><kodemon:a href="/gym/list"><f:message key="navigation.gyms"/></kodemon:a></li>
+                <li><kodemon:a href="/user/list"><f:message key="navigation.trainers"/></kodemon:a></li>
                 <c:choose>
                     <c:when test="${not empty authenticatedUser}">
-                        <li><kodemon:a href="/fight/grass">Visit grass</kodemon:a></li>
-                        <li><kodemon:a href="/user/detail/${authenticatedUser.userName}">My profile</kodemon:a></li>
-                        <li><kodemon:a href="/user/logout">Logout</kodemon:a></li>
+                        <li><kodemon:a href="/fight/grass"><f:message key="navigation.visitGrass"/></kodemon:a></li>
+                        <li><kodemon:a href="/user/detail/${authenticatedUser.userName}"><f:message key="navigation.myProfile"/></kodemon:a></li>
+                        <li><kodemon:a href="/user/logout"><f:message key="navigation.logout"/></kodemon:a></li>
                     </c:when>
                     <c:otherwise>
-                        <li><kodemon:a href="/login">Login</kodemon:a></li>
-                        <li><kodemon:a href="/register">Register</kodemon:a></li>
+                        <li><kodemon:a href="/login"><f:message key="navigation.login"/></kodemon:a></li>
+                        <li><kodemon:a href="/register"><f:message key="navigation.register"/></kodemon:a></li>
                     </c:otherwise>
                 </c:choose>
             </ul>
