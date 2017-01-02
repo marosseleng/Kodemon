@@ -2,6 +2,7 @@ package com.kodemon.api.facade;
 
 import com.kodemon.api.dto.UserAuthDTO;
 import com.kodemon.api.dto.UserDTO;
+import com.kodemon.api.dto.UserRegisterDTO;
 
 import java.util.Collection;
 
@@ -16,10 +17,9 @@ public interface UserFacade {
      * Creates new user in the database.
      * Checks whether an user with that username exists, etc.
      *
-     * @param user     User details
-     * @param password user's password
+     * @param user User details
      */
-    UserDTO register(UserDTO user, String password);
+    UserDTO register(UserRegisterDTO user);
 
     /**
      * Authenticates the user with given credentials
@@ -29,12 +29,20 @@ public interface UserFacade {
     boolean login(UserAuthDTO auth);
 
     /**
-     * Finds users with the given username (should be 1)
+     * Finds users with the given username
      *
      * @param userName username to find
      * @return Collection of Users
      */
-    Collection<UserDTO> findUserByUserName(String userName);
+    Collection<UserDTO> findUserByUserNameIgnoringCaseIncludeSubstrings(String userName);
+
+    /**
+     * Finds users with the given username. Matching exactly this username, neither ignoring case, nor finding substrings.
+     *
+     * @param userName username to find
+     * @return Collection of Users (ideally of size()==1, when any)
+     */
+    Collection<UserDTO> findUserByUserNameExactMatch(String userName);
 
     /**
      * Finds all users

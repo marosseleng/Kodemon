@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
 
+import static com.kodemon.persistence.util.Constants.MIN_USERNAME_LENGTH;
+
 /**
  * @author Oliver Roch
  */
@@ -27,10 +29,14 @@ import java.util.Collection;
 @RequestMapping("/user")
 public class UserController {
 
-    final static Logger LOG = LoggerFactory.getLogger(UserController.class);
+    private final static Logger LOG = LoggerFactory.getLogger(UserController.class);
+
+    private UserFacade userFacade;
 
     @Inject
-    private UserFacade userFacade;
+    public UserController(UserFacade userFacade) {
+        this.userFacade = userFacade;
+    }
 
     /**
      * Show list of all trainers.
@@ -54,7 +60,7 @@ public class UserController {
      */
     @RequestMapping(value = "/detail/{username}", method = RequestMethod.GET)
     public String detail(@PathVariable String username, Model model, RedirectAttributes redirectAttributes) {
-        Collection<UserDTO> user = userFacade.findUserByUserName(username);
+        Collection<UserDTO> user = userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(username);
         if (user.isEmpty()) {
             LOG.warn("No trainer with such username found");
             redirectAttributes.addFlashAttribute("alert_warning", "No trainer with such username found");
@@ -75,11 +81,11 @@ public class UserController {
     @RequestMapping(value = "/find", method = RequestMethod.GET)
     public String find(@RequestParam String username, Model model) {
         Collection<UserDTO> result;
-        if (username.length() < 4) { // TODO: extract to a constant
-            model.addAttribute("alert_warning", "Search query should be at least 4 characters long.");
+        if (username.length() < MIN_USERNAME_LENGTH) {
+            model.addAttribute("alert_warning", "Search query should be at least " + MIN_USERNAME_LENGTH + " characters long.");
             result = userFacade.findAllUsers();
         } else {
-            Collection<UserDTO> found = userFacade.findUserByUserName(username);
+            Collection<UserDTO> found = userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(username);
             if (found.isEmpty()) {
                 LOG.warn("No trainer with such username found");
                 model.addAttribute("alert_warning", "No trainer with such username found");
@@ -107,7 +113,7 @@ public class UserController {
 
         HttpServletRequest request = (HttpServletRequest) r;
         if (userFacade.login(userAuthDTO)) {
-            UserDTO authenticated = userFacade.findUserByUserName(username).iterator().next();
+            UserDTO authenticated = userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(username).iterator().next();
             if (authenticated.isBlocked()) {
                 model.addAttribute("alert_danger", "This account is blocked");
                 return "login";
@@ -136,7 +142,7 @@ public class UserController {
     public String blockUser(@RequestParam String username, ServletRequest r, Model model) {
         HttpServletRequest request = (HttpServletRequest) r;
         HttpSession session = request.getSession();
-        UserDTO toBeBlocked = userFacade.findUserByUserName(username).iterator().next();
+        UserDTO toBeBlocked = userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(username).iterator().next();
         if (toBeBlocked == null) {
             model.addAttribute("alert_warning", "User with this username does not exists");
             LOG.error("Trying to block non-existing user");
@@ -169,7 +175,7 @@ public class UserController {
     public String unblockUser(@RequestParam String username, ServletRequest r, Model model) {
         HttpServletRequest request = (HttpServletRequest) r;
         HttpSession session = request.getSession();
-        UserDTO toBeUnblocked = userFacade.findUserByUserName(username).iterator().next();
+        UserDTO toBeUnblocked = userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(username).iterator().next();
         if (toBeUnblocked == null) {
             model.addAttribute("alert_warning", "User with this username does not exists");
             LOG.error("Trying to unblock non-existing user");

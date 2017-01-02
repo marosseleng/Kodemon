@@ -15,6 +15,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import static com.kodemon.persistence.util.Constants.AMOUNT_OF_POKEMONS_FOR_MATCH;
+
 /**
  * Service for TrainerFights. It can find you fights played at specified time range and simulate fight,
  * determine, whether match for a badge was successful and save the result.
@@ -25,7 +27,6 @@ import java.util.List;
 @Service
 public class TrainerFightServiceImpl implements TrainerFightService {
 
-    public static final int AMOUNT_OF_POKEMONS_FOR_MATCH = 6;
     private static final Logger LOG = LoggerFactory.getLogger(TrainerFightServiceImpl.class);
 
     private TrainerDao trainerDao;

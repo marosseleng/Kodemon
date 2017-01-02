@@ -14,6 +14,7 @@ import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.persistence.enums.PokemonName;
 import com.kodemon.persistence.enums.PokemonType;
 import com.kodemon.service.interfaces.GymService;
+import com.kodemon.service.util.PasswordStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -53,7 +54,7 @@ public class GymServiceImpl implements GymService {
     }
 
     @Override
-    public void initializeGyms() {
+    public void initializeGyms() throws PasswordStorage.CannotPerformOperationException {
         LOG.info("Initializing gyms.");
         Pokemon pokemon01 = new Pokemon(PokemonName.GEODUDE);
         Pokemon pokemon02 = new Pokemon(PokemonName.OMANYTE);
@@ -206,6 +207,7 @@ public class GymServiceImpl implements GymService {
         trainer0.setUserName("Brock");
         Date dob = new Calendar.Builder().setDate(1987, 8, 24).build().getTime();
         trainer0.setDateOfBirth(dob);
+        trainer0.setPwdHash(PasswordStorage.createHash("iL0v3ONIX"));
 
         Trainer trainer1 = new Trainer(pokemon11);
         trainer1.addPokemon(pokemon12);
@@ -218,6 +220,7 @@ public class GymServiceImpl implements GymService {
         trainer1.setUserName("MistygurlxD");
         dob = new Calendar.Builder().setDate(1995, 7, 7).build().getTime();
         trainer1.setDateOfBirth(dob);
+        trainer1.setPwdHash(PasswordStorage.createHash("psyduckUseless123"));
 
         Trainer trainer2 = new Trainer(pokemon21);
         trainer2.addPokemon(pokemon22);
@@ -229,6 +232,7 @@ public class GymServiceImpl implements GymService {
         trainer2.setUserName("Headsh0tman");
         dob = new Calendar.Builder().setDate(1989, 11, 20).build().getTime();
         trainer2.setDateOfBirth(dob);
+        trainer2.setPwdHash(PasswordStorage.createHash("n#34Rt?1"));
 
         Trainer trainer3 = new Trainer(pokemon31);
         trainer3.addPokemon(pokemon32);
@@ -240,6 +244,7 @@ public class GymServiceImpl implements GymService {
         trainer3.setUserName("Krowka227");
         dob = new Calendar.Builder().setDate(1994, 2, 15).build().getTime();
         trainer3.setDateOfBirth(dob);
+        trainer3.setPwdHash(PasswordStorage.createHash("lk%%u*&846ss"));
 
         Trainer trainer4 = new Trainer(pokemon41);
         trainer4.addPokemon(pokemon42);
@@ -252,6 +257,7 @@ public class GymServiceImpl implements GymService {
         trainer4.setUserName("MsPoIsON1997");
         dob = new Calendar.Builder().setDate(1997, 7, 2).build().getTime();
         trainer4.setDateOfBirth(dob);
+        trainer4.setPwdHash(PasswordStorage.createHash("mn34gh78()$#"));
 
         Trainer trainer5 = new Trainer(pokemon51);
         trainer5.addPokemon(pokemon52);
@@ -263,6 +269,7 @@ public class GymServiceImpl implements GymService {
         trainer5.setUserName("Psyxox");
         dob = new Calendar.Builder().setDate(1991, 1, 10).build().getTime();
         trainer5.setDateOfBirth(dob);
+        trainer5.setPwdHash(PasswordStorage.createHash("pw"));
 
         Trainer trainer6 = new Trainer(pokemon61);
         trainer6.addPokemon(pokemon62);
@@ -275,6 +282,7 @@ public class GymServiceImpl implements GymService {
         trainer6.setUserName("Quizman999");
         dob = new Calendar.Builder().setDate(1952, 7, 27).build().getTime();
         trainer6.setDateOfBirth(dob);
+        trainer6.setPwdHash(PasswordStorage.createHash("vabirv#(N1"));
 
         Trainer trainer7 = new Trainer(pokemon71);
         trainer7.addPokemon(pokemon72);
@@ -287,6 +295,7 @@ public class GymServiceImpl implements GymService {
         trainer7.setUserName("BadGuy3");
         dob = new Calendar.Builder().setDate(1988, 10, 5).build().getTime();
         trainer7.setDateOfBirth(dob);
+        trainer7.setPwdHash(PasswordStorage.createHash("PEY8%))@"));
 
         trainerDao.save(trainer0);
         trainerDao.save(trainer1);

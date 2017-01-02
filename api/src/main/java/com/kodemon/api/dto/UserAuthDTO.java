@@ -36,7 +36,6 @@ public class UserAuthDTO {
 
         if (!getUserName().equals(that.getUserName())) return false;
         return getPassword().equals(that.getPassword());
-
     }
 
     @Override

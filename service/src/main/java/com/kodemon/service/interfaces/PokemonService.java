@@ -21,7 +21,6 @@ public interface PokemonService {
      * <p/>
      * When the {@param type} is {@code null}, Pokemon type is random also.
      * <p/>
-     * The only way a Pokemon can be created is through this method.
      *
      * @param type     (optional) type of the Pokemon
      * @param minLevel minimum level of the Pokemon
@@ -29,6 +28,16 @@ public interface PokemonService {
      * @return generated wild Pokemon
      */
     Pokemon generateWildPokemon(@Nullable PokemonType type, int minLevel, int maxLevel);
+
+    /**
+     * Creates a Pokemon with the given name. Pokemon's level needs to be set afterwards
+     * <p/>
+     * This method does not saves the Pokemon to the database
+     *
+     * @param name
+     * @return
+     */
+    Pokemon createPokemonWithName(PokemonName name);
 
     /**
      * Levels up the given Pokemon

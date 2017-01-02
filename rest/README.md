@@ -9,7 +9,7 @@
     /users
 #####Model classes used:
 * [UserDTO](https://github.com/mseleng/Kodemon/blob/master/api/src/main/java/com/kodemon/api/dto/UserDTO.java)
-* [UserAndPasswordDTO](https://github.com/mseleng/Kodemon/blob/master/api/src/main/java/com/kodemon/api/dto/UserAndPasswordDTO.java)
+* [UserRegisterDTO](https://github.com/mseleng/Kodemon/blob/master/api/src/main/java/com/kodemon/api/dto/UserRegisterDTO.java)
 
 #####Available endpoints:
 * `GET /users`
@@ -54,22 +54,22 @@
 * `POST /users`
     - **Description:** creates a new user in the database (equivalent to the registration in UI)
     - **Request body:**
-        + `user`: `UserDTO` (required)
-            + `userName`: `String` (required)
-            + `firstName`: `String` (required)
-            + `lastName`: `String` (required)
-            + `dateOfBirth`: `Date` (required)
-        + `password`: String (required)
+        + `userName`: `String` (required)
+        + `firstName`: `String` (required)
+        + `lastName`: `String` (required)
+        + `dateOfBirth`: `Date` (required)
+        + `pokemon`: `PokemonName` enum; One of `{SQUIRTLE, BULBASAUR, CHARMANDER}` (required)
+        + `password`: `String` (required)
     - **Example usage:**
     ```bash
-    curl -H "Content-Type: application/json" -X POST -d '{"user":{"userName":"PikAsh","firstName":"Ash","lastName":"Ketchum","dateOfBirth":"1995-01-03"},"password": "asdfghjkl"}' http://localhost:8080/pa165/rest/users
+    curl -H "Content-Type: application/json" -X POST -d '{"userName":"PikaAsh","firstName":"Ash","lastName":"Ketchum","dateOfBirth":"2016-12-3","password": "asdfghjkl","pokemon": "BULBASAUR"}' http://localhost:8080/pa165/rest/users
     ```
     - **Response codes:**
         + 201 - if an entity was successfully created (also returns the `URI` of the newly created resource)
-        + 400 - if the `user` was `null` of the `password` was `null` or the `password` was empty
+        + 400 - if the input data was incorrect
         + 409 - if a problem occurs while performing db operation (typically constraint violation)
             
-* `PUT /users/{id}`
+* `PUT /users/{id}` **UNSTABLE AND MAY CHANGE**
     - **Description:** updates the user with the given id
     - **Path parameters:**
         + `id` - id of the user
