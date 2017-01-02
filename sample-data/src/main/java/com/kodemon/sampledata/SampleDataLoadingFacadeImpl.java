@@ -5,7 +5,6 @@ import com.kodemon.persistence.entity.Pokemon;
 import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.persistence.entity.TrainerFight;
 import com.kodemon.persistence.enums.PokemonName;
-import com.kodemon.service.implementations.TrainerServiceImpl;
 import com.kodemon.service.interfaces.GymService;
 import com.kodemon.service.interfaces.PokemonService;
 import com.kodemon.service.interfaces.TrainerService;

@@ -3,6 +3,7 @@ package com.kodemon.springmvc.validator;
 import com.kodemon.api.dto.UserRegisterDTO;
 import com.kodemon.api.facade.UserFacade;
 import com.kodemon.persistence.enums.PokemonName;
+import com.kodemon.persistence.util.Constants;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -38,46 +39,54 @@ public class UserRegisterDTOValidator implements Validator {
         UserRegisterDTO dto = (UserRegisterDTO) target;
         PokemonName pokemonName = dto.getPokemon();
         if (pokemonName == null) {
-            errors.rejectValue("pokemon", "UserRegisterDTOValidator.pokemon.null", "Pokemon cannot be null");
+            errors.rejectValue("pokemon", "UserRegisterDTOValidator.pokemon.null");
         } else if (!PokemonName.getInitialPokemon().contains(pokemonName)) {
-            errors.rejectValue("pokemon", "UserRegisterDTOValidator.pokemon.invalid", "Invalid pokemon selected. Select one of given");
+            errors.rejectValue("pokemon", "UserRegisterDTOValidator.pokemon.invalid");
         }
 
         Date dob = dto.getDateOfBirth();
         if (dob == null) {
-            errors.rejectValue("dateOfBirth", "UserRegisterDTOValidator.dateOfBirth.null", "Day of birth cannot be null");
+            errors.rejectValue("dateOfBirth", "UserRegisterDTOValidator.dateOfBirth.null");
         } else if (System.currentTimeMillis() <= dob.getTime()) {
-            errors.rejectValue("dateOfBirth", "UserRegisterDTOValidator.dateOfBirth.invalid", "Invalid day of birth");
+            errors.rejectValue("dateOfBirth", "UserRegisterDTOValidator.dateOfBirth.invalid");
         }
 
         String password = dto.getPassword();
         if (password == null) {
-            errors.rejectValue("password", "UserRegisterDTOValidator.password.null", "Password cannot be null");
+            errors.rejectValue("password", "UserRegisterDTOValidator.password.null");
         } else if (password.length() < MIN_PASSWORD_LENGTH) {
-            errors.rejectValue("password", "UserRegisterDTOValidator.password.short", "Password needs to be at least 6 characters long");
+            errors.rejectValue(
+                    "password",
+                    "UserRegisterDTOValidator.password.short",
+                    new Object[]{Constants.MIN_PASSWORD_LENGTH},
+                    "Password needs to be at least {} characters long");
         }
 
         String lastName = dto.getLastName();
         if (lastName == null) {
-            errors.rejectValue("lastName", "UserRegisterDTOValidator.lastName.null", "Last name cannot be null");
+            errors.rejectValue("lastName", "UserRegisterDTOValidator.lastName.null");
         } else if (lastName.isEmpty()) {
-            errors.rejectValue("lastName", "UserRegisterDTOValidator.lastName.empty", "Last name cannot be empty");
+            errors.rejectValue("lastName", "UserRegisterDTOValidator.lastName.empty");
         }
 
         String firstName = dto.getFirstName();
         if (firstName == null) {
-            errors.rejectValue("firstName", "UserRegisterDTOValidator.firstName.null", "First name cannot be null");
+            errors.rejectValue("firstName", "UserRegisterDTOValidator.firstName.null");
         } else if (firstName.isEmpty()) {
-            errors.rejectValue("firstName", "UserRegisterDTOValidator.firstName.empty", "First name cannot be empty");
+            errors.rejectValue("firstName", "UserRegisterDTOValidator.firstName.empty");
         }
 
         String userName = dto.getUserName();
         if (userName == null) {
-            errors.rejectValue("userName", "UserRegisterDTOValidator.userName.null", "User name cannot be null");
+            errors.rejectValue("userName", "UserRegisterDTOValidator.userName.null");
         } else if (userName.length() < MIN_USERNAME_LENGTH) {
-            errors.rejectValue("userName", "UserRegisterDTOValidator.userName.short", "User name needs to be at least 4 characters long");
+            errors.rejectValue(
+                    "userName",
+                    "UserRegisterDTOValidator.userName.short",
+                    new Object[]{Constants.MIN_USERNAME_LENGTH},
+                    "User name needs to be at least {} characters long");
         } else if (!userFacade.findUserByUserNameExactMatch(userName).isEmpty()) {
-            errors.rejectValue("userName", "UserRegisterDTOValidator.userName.taken", "User name is already taken");
+            errors.rejectValue("userName", "UserRegisterDTOValidator.userName.taken");
         }
     }
 }
