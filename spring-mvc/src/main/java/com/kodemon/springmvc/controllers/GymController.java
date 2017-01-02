@@ -23,7 +23,7 @@ import javax.inject.Inject;
 @RequestMapping("/gym")
 public class GymController {
 
-    final static Logger LOG = LoggerFactory.getLogger(GymController.class);
+    private final static Logger LOG = LoggerFactory.getLogger(GymController.class);
 
     private GymFacade gymFacade;
 

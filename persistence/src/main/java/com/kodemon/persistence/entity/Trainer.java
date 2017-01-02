@@ -6,6 +6,8 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.*;
 
+import static com.kodemon.persistence.util.Constants.MIN_USERNAME_LENGTH;
+
 /**
  * An entity that represents a Pokemon trainer.
  * <p>
@@ -27,7 +29,7 @@ public class Trainer {
 
     @Column(unique = true, nullable = false)
     @NotNull
-    @Size(min = 4)
+    @Size(min = MIN_USERNAME_LENGTH)
     private String userName;
 
     private String pwdHash;

@@ -3,6 +3,7 @@ package com.kodemon.service.interfaces;
 import com.kodemon.persistence.entity.Badge;
 import com.kodemon.persistence.entity.Pokemon;
 import com.kodemon.persistence.entity.Trainer;
+import com.kodemon.persistence.enums.PokemonName;
 import com.kodemon.service.util.PasswordStorage;
 
 import java.util.Date;
@@ -19,11 +20,14 @@ public interface TrainerService {
      * Creates new user in the database.
      * Checks whether an user with that username exists, etc.
      *
-     * @param trainer  trainer to be registered(created), eg. correct {@link Trainer} instance that can be saved into db
-     * @param password hash of user's password
-     * @return an instance of {@link Trainer} when successful
+     * @param userName
+     * @param firstName
+     * @param lastName
+     * @param dayOfBirth
+     * @param pokemon
+     * @param password   hash of user's password  @return an instance of {@link Trainer} when successful
      */
-    Trainer register(Trainer trainer, String password) throws PasswordStorage.CannotPerformOperationException;
+    Trainer register(String userName, String firstName, String lastName, Date dayOfBirth, PokemonName pokemon, String password) throws PasswordStorage.CannotPerformOperationException;
 
     /**
      * Authenticates the user with given credentials
@@ -42,7 +46,7 @@ public interface TrainerService {
      * @param badge   badge to add
      * @param trainer trainer that receives the badge
      */
-    void addBadge(Badge badge, Trainer trainer);
+    Trainer addBadge(Badge badge, Trainer trainer);
 
     /**
      * Adds the given Pokemon to the given trainer and updates the trainer table
@@ -53,7 +57,7 @@ public interface TrainerService {
      * @param pokemon Pokemon to be added to trainer
      * @param trainer trainer that receives a new Pokemon
      */
-    void addPokemon(Pokemon pokemon, Trainer trainer);
+    Trainer addPokemon(Pokemon pokemon, Trainer trainer);
 
     /**
      * Saves the given trainer to the database.
