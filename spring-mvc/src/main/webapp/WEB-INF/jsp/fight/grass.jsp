@@ -18,6 +18,9 @@
         <button type="submit" class="btn btn-primary" name="mode" value="catch">
             <fmt:message key="fight.grass.catchIt"/>
         </button>
+        <button type="submit" class="btn btn-primary" name="mode" value="run">
+            <fmt:message key="fight.grass.runAway"/>
+        </button>
     </form>
     <h4><fmt:message key="fight.grass.youHave"/></h4>
     <h1>${trainersPokemon.name.name}</h1>
