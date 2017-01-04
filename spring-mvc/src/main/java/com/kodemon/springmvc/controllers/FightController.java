@@ -160,7 +160,21 @@ public class FightController {
     public String fightWild(@RequestParam String mode, ServletRequest r, Model model, Locale locale) {
         HttpServletRequest request = (HttpServletRequest) r;
         HttpSession session = request.getSession();
-        WildPokemonFightMode mode_ = (mode.equals("train")) ? WildPokemonFightMode.TRAIN : WildPokemonFightMode.CATCH;
+        if (mode.equals("run")) {
+            model.addAttribute("alert_success", getMessage("success.fight.ranAway", locale));
+            return "home";
+        }
+        WildPokemonFightMode mode_;
+        if (mode.equals("train")) {
+            mode_ = WildPokemonFightMode.TRAIN;
+        }
+        else if (mode.equals("catch")) {
+            mode_ = WildPokemonFightMode.CATCH;
+        }
+        else {
+            model.addAttribute("alert_warning", getMessage("warning.fight.incorrectMode", locale));
+            return "home";
+        }
         PokemonDTO wildPokemon = (PokemonDTO) session.getAttribute("wildPokemon");
         if (wildPokemon == null) {
             return "home";
