@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.kodemon.persistence.util.Constants.AMOUNT_OF_POKEMONS_FOR_MATCH;
 import static com.kodemon.persistence.util.Constants.INITIAL_POKEMON_LEVEL;
 
 /**
@@ -93,7 +94,7 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     public Trainer addPokemon(Pokemon pokemon, Trainer trainer) {
         trainer.addPokemon(pokemon);
-        if(trainer.getActivePokemons().size() < 6) {
+        if(trainer.getActivePokemons().size() < AMOUNT_OF_POKEMONS_FOR_MATCH) {
             trainer.addActivePokemon(pokemon);
         }
         return trainerDao.save(trainer);
@@ -145,18 +146,29 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Override
     public void setFirstSixPokemons(Long trainerId, List<Integer> indices) {
-        List<Pokemon> newActivePokemons = new ArrayList<>();
         Trainer trainer = findById(trainerId);
+        if(trainer == null) {
+            LOG.error("Trying to modify active pokemons of non existing trainer.");
+            return;
+        }
         List<Pokemon> trainersPokemons = trainer.getPokemons();
+        trainer.getActivePokemons().clear();
 
         for(int index : indices) {
-            Pokemon toBeActive = trainersPokemons.get(index);
-            if(newActivePokemons.size() < 6 && !newActivePokemons.contains(toBeActive)) {
-                newActivePokemons.add(toBeActive);
+            try {
+                Pokemon toBeActive = trainersPokemons.get(index);
+                if(trainer.getActivePokemons().size() < 6 && !trainer.getActivePokemons().contains(toBeActive)) {
+                    trainer.addActivePokemon(toBeActive);
+                }
+            } catch(ArrayIndexOutOfBoundsException aioobe) {
+                LOG.error("Trying to make active pokemons, which trainer does not have", aioobe);
+                return;
+            } catch(NullPointerException npe) {
+                LOG.error("Trying to make active null pokemon", npe);
+                return;
             }
         }
 
-        trainer.setActivePokemons(newActivePokemons);
         trainerDao.saveAndFlush(trainer);
     }
 

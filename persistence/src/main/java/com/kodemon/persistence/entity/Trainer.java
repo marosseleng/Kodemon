@@ -146,10 +146,6 @@ public class Trainer {
         pokemons.add(pokemon);
     }
 
-    public void setPokemons(List<Pokemon> pokemons) {
-        this.pokemons = pokemons;
-    }
-
     public boolean removePokemon(Pokemon pokemon) {
         return pokemons.remove(pokemon);
     }
@@ -158,9 +154,9 @@ public class Trainer {
         return activePokemons;
     }
 
-    public void setActivePokemons(List<Pokemon> activePokemons) {
+    /*public void setActivePokemons(List<Pokemon> activePokemons) {
         this.activePokemons = activePokemons;
-    }
+    }*/
 
     public void addActivePokemon(Pokemon pokemon) {
         this.activePokemons.add(pokemon);

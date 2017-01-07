@@ -267,7 +267,7 @@ public class TrainerDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(found.getActivePokemons().size(), is(equalTo(0)));
         List<Pokemon> activePokemons = new ArrayList<>();
         activePokemons.add(pokemon);
-        trainer.setActivePokemons(activePokemons);
+        trainer.addActivePokemon(pokemon);
         trainerDao.saveAndFlush(trainer);
         found = trainerDao.findOne(trainer.getId());
         assertThat(found.getActivePokemons().size(), is(equalTo(1)));

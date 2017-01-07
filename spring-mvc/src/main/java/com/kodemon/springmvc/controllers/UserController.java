@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
+import static com.kodemon.persistence.util.Constants.AMOUNT_OF_POKEMONS_FOR_MATCH;
 import static com.kodemon.persistence.util.Constants.MIN_USERNAME_LENGTH;
 
 /**
@@ -229,8 +230,8 @@ public class UserController {
     /**
      * Page for selecting first 6 pokemons to be used for fight
      *
-     * @param r servlet request to get logged user
-     * @param model data to display
+     * @param r      servlet request to get logged user
+     * @param model  data to display
      * @param locale locale settings
      * @return JSP page name
      */
@@ -244,13 +245,16 @@ public class UserController {
         }
         UserDTO currentUser = (UserDTO) session.getAttribute("authenticatedUser");
         model.addAttribute("pokemons", currentUser.getPokemons());
+        model.addAttribute("activePokemons", currentUser.getActivePokemons());
+        model.addAttribute("numberOfPokemonsForFight", AMOUNT_OF_POKEMONS_FOR_MATCH);
         return "user/reorder";
     }
 
     @RequestMapping(value = "setFirstSixPokemons", method = RequestMethod.POST)
-    public String setFirstSixPokemons(ServletRequest r, Model model, Locale locale, @RequestParam int pokemon1,
-                                      @RequestParam int pokemon2, @RequestParam int pokemon3, @RequestParam int pokemon4,
-                                      @RequestParam int pokemon5, @RequestParam int pokemon6) {
+    public String setFirstSixPokemons(ServletRequest r, Model model, Locale locale, @RequestParam(required = false) Integer pokemon1,
+                                      @RequestParam(required = false) Integer pokemon2, @RequestParam(required = false) Integer pokemon3,
+                                      @RequestParam(required = false) Integer pokemon4, @RequestParam(required = false) Integer pokemon5,
+                                      @RequestParam(required = false) Integer pokemon6) {
         HttpServletRequest request = (HttpServletRequest) r;
         HttpSession session = request.getSession();
 
@@ -260,12 +264,12 @@ public class UserController {
         }
 
         List<Integer> pokemonIndices = new ArrayList<>();
-        pokemonIndices.add(pokemon1);
-        pokemonIndices.add(pokemon2);
-        pokemonIndices.add(pokemon3);
-        pokemonIndices.add(pokemon4);
-        pokemonIndices.add(pokemon5);
-        pokemonIndices.add(pokemon6);
+        if(pokemon1 != null) pokemonIndices.add(pokemon1);
+        if(pokemon2 != null) pokemonIndices.add(pokemon2);
+        if(pokemon3 != null) pokemonIndices.add(pokemon3);
+        if(pokemon4 != null) pokemonIndices.add(pokemon4);
+        if(pokemon5 != null) pokemonIndices.add(pokemon5);
+        if(pokemon6 != null) pokemonIndices.add(pokemon6);
 
         UserDTO currentUser = (UserDTO) session.getAttribute("authenticatedUser");
         userFacade.chooseActivePokemons(currentUser.getId(), pokemonIndices);
