@@ -84,6 +84,7 @@ public class TrainerFightServiceTest extends AbstractTransactionalTestNGSpringCo
         challenger.setDateOfBirth(dob);
         challenger.setUserName("Ash123");
         challenger.addPokemon(pikachu);
+        challenger.addActivePokemon(pikachu);
 
         onix = new Pokemon();
         onix.setName(PokemonName.ONIX);
@@ -98,6 +99,7 @@ public class TrainerFightServiceTest extends AbstractTransactionalTestNGSpringCo
         defender.setDateOfBirth(dob2);
         defender.setUserName("Brocky123");
         defender.addPokemon(onix);
+        defender.addActivePokemon(onix);
 
         targetGym1 = new Gym();
         targetGym1.setTrainer(defender);
@@ -141,6 +143,7 @@ public class TrainerFightServiceTest extends AbstractTransactionalTestNGSpringCo
         articuno.setNickname("Arti");
         articuno.setTrainer(challenger);
         challenger.addPokemon(articuno);
+        challenger.addActivePokemon(articuno);
 
         Pokemon charizard = new Pokemon();
         charizard.setLevel(6);
@@ -148,6 +151,7 @@ public class TrainerFightServiceTest extends AbstractTransactionalTestNGSpringCo
         charizard.setNickname("Redflame");
         charizard.setTrainer(defender);
         defender.addPokemon(charizard);
+        defender.addActivePokemon(charizard);
 
         when(pokemonFightService.getScorePair(pikachu, onix)).thenReturn(new Pair<Double, Double>(3.2, 5.0));
         when(pokemonFightService.getScorePair(articuno, charizard)).thenReturn(new Pair<Double, Double>(10.0, 6.0));

@@ -10,5 +10,5 @@ public abstract class Constants {
     public static final int MIN_USERNAME_LENGTH = 4;
     public static final int MIN_PASSWORD_LENGTH = 6;
 
-    public static final int AMOUNT_OF_POKEMONS_FOR_MATCH = 6;
+    public static final int MAX_ACTIVE_POKEMON = 6;
 }

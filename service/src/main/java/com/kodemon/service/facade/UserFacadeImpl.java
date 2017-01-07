@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * User Facade Implementation
@@ -98,5 +99,10 @@ public class UserFacadeImpl implements UserFacade {
     @Override
     public void setBlocked(Long id, boolean blocked) {
         trainerService.setBlocked(id, blocked);
+    }
+
+    @Override
+    public void chooseActivePokemons(Long id, List<Integer> pokemonIndices) {
+        trainerService.setFirstSixPokemons(id, pokemonIndices);
     }
 }

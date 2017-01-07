@@ -90,6 +90,11 @@ public class PokemonServiceImpl implements PokemonService {
     }
 
     @Override
+    public Pokemon findById(Long id) {
+        return pokemonDao.findOne(id);
+    }
+
+    @Override
     public List<Pokemon> findByTrainer(Trainer trainer) {
         return pokemonDao.findByTrainer(trainer);
     }

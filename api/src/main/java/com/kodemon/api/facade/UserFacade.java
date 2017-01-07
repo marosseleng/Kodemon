@@ -5,6 +5,7 @@ import com.kodemon.api.dto.UserDTO;
 import com.kodemon.api.dto.UserRegisterDTO;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Facade providing access to the user administration
@@ -81,4 +82,12 @@ public interface UserFacade {
      * @param id of user to be blocked or unblocked
      */
     void setBlocked(Long id, boolean blocked);
+
+    /**
+     * Set first six pokemons of trainer
+     *
+     * @param id of trainer, whose pokemons will be reordered
+     * @param pokemonIndices list of six indices of pokemons, which will be set as first six
+     */
+    void chooseActivePokemons(Long id, List<Integer> pokemonIndices);
 }

@@ -106,6 +106,14 @@ public interface TrainerService {
     Trainer findById(Long id);
 
     /**
+     * Put six pokemons with indices in indices list as first six pokemons of trainer, which will be used for fight
+     *
+     * @param trainerId id of trainer, whose pokemons will be reordered
+     * @param indices indices of six pokemons, which will be user as first six for fight
+     */
+    void setFirstSixPokemons(Long trainerId, List<Integer> indices);
+
+    /**
      * Returns a {@link List} of {@link Trainer}s with the given username.
      *
      * @param userName Username to search by

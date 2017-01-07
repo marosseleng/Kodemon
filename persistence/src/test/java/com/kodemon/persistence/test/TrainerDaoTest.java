@@ -258,6 +258,21 @@ public class TrainerDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(found.getPokemons().size(), is(equalTo(0)));
     }
 
+    @Test
+    void testCorrectActivePokemonUpdate() {
+        trainer = randomTrainer(8);
+        trainerDao.save(trainer);
+        assertThat(trainerDao.count(), is(equalTo(1L)));
+        Trainer found = trainerDao.findOne(trainer.getId());
+        assertThat(found.getActivePokemons().size(), is(equalTo(0)));
+        List<Pokemon> activePokemons = new ArrayList<>();
+        activePokemons.add(pokemon);
+        trainer.addActivePokemon(pokemon);
+        trainerDao.saveAndFlush(trainer);
+        found = trainerDao.findOne(trainer.getId());
+        assertThat(found.getActivePokemons().size(), is(equalTo(1)));
+    }
+
     @Test(expectedExceptions = {NullPointerException.class})
     void testUpdateWithNullFirstName() {
         trainer = randomTrainer(10);

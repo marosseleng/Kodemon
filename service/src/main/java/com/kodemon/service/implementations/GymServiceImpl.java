@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -395,6 +396,30 @@ public class GymServiceImpl implements GymService {
         pokemonDao.save(pokemon74);
         pokemonDao.save(pokemon75);
         pokemonDao.save(pokemon76);
+
+        List<Trainer> trainers = new ArrayList<>();
+        trainers.add(trainer0);
+        trainers.add(trainer1);
+        trainers.add(trainer2);
+        trainers.add(trainer3);
+        trainers.add(trainer4);
+        trainers.add(trainer5);
+        trainers.add(trainer6);
+        trainers.add(trainer7);
+        for(Trainer t : trainers) {
+            for(Pokemon p : t.getPokemons()) {
+                t.addActivePokemon(p);
+            }
+        }
+
+        trainerDao.save(trainer0);
+        trainerDao.save(trainer1);
+        trainerDao.save(trainer2);
+        trainerDao.save(trainer3);
+        trainerDao.save(trainer4);
+        trainerDao.save(trainer5);
+        trainerDao.save(trainer6);
+        trainerDao.save(trainer7);
 
         Gym gym0 = new Gym(trainer0);
         gym0.setCity("Pewter City");

@@ -67,6 +67,10 @@ public class Trainer {
     @NotNull
     private List<Pokemon> pokemons = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.EAGER)
+    @NotNull
+    private List<Pokemon> activePokemons = new ArrayList<>();
+
     /**
      * Parameterless constructor for (not only) persistence purposes.
      */
@@ -144,6 +148,14 @@ public class Trainer {
 
     public boolean removePokemon(Pokemon pokemon) {
         return pokemons.remove(pokemon);
+    }
+
+    public List<Pokemon> getActivePokemons() {
+        return activePokemons;
+    }
+
+    public void addActivePokemon(Pokemon pokemon) {
+        this.activePokemons.add(pokemon);
     }
 
     public boolean isAdmin() {
