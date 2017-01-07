@@ -28,6 +28,7 @@ public class UserDTO {
     private Set<BadgeDTO> badges = new HashSet<>();
     @JsonProperty(required = false, defaultValue = "[]")
     private List<PokemonDTO> pokemons = new ArrayList<>();
+    @JsonIgnore
     private List<PokemonDTO> activePokemons = new ArrayList<>();
 
     public Long getId() {

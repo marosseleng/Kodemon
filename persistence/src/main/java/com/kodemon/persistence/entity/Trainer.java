@@ -154,10 +154,6 @@ public class Trainer {
         return activePokemons;
     }
 
-    /*public void setActivePokemons(List<Pokemon> activePokemons) {
-        this.activePokemons = activePokemons;
-    }*/
-
     public void addActivePokemon(Pokemon pokemon) {
         this.activePokemons.add(pokemon);
     }

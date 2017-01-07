@@ -15,7 +15,7 @@
             <c:forEach begin="1" end="${numberOfPokemonsForFight > numberOfTrainerPokemons ? numberOfTrainerPokemons : numberOfPokemonsForFight}" var="number">
                 <div class="form-group">
                     <label for="pokemon-${number}"><s:message code="user.reorder.selectPokemon" arguments="${number}"/></label><br/>
-                    <select name="pokemon${number}" id="pokemon-${number}" required>
+                    <select name="pokemon" id="pokemon-${number}" required>
                         <c:set var="index" value="0" scope="page"/>
                         <option value="${index}" selected disabled><fmt:message key="user.reorder.selectPokemonOption" /></option>
                         <c:forEach items="${pokemons}" var="pokemon">

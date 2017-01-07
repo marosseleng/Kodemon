@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import static com.kodemon.persistence.util.Constants.AMOUNT_OF_POKEMONS_FOR_MATCH;
+import static com.kodemon.persistence.util.Constants.MAX_ACTIVE_POKEMON;
 
 /**
  * Service for TrainerFights. It can find you fights played at specified time range and simulate fight,
@@ -55,7 +55,7 @@ public class TrainerFightServiceImpl implements TrainerFightService {
         double challengerScore = 0;
         double defenderScore = 0;
 
-        for (int i = 0; i < AMOUNT_OF_POKEMONS_FOR_MATCH; i++) {
+        for (int i = 0; i < MAX_ACTIVE_POKEMON; i++) {
             Pair<Double, Double> scorePair;
             if (challenger.getActivePokemons().size() > i && defender.getActivePokemons().size() > i) {
                 Pokemon currentChallengerPokemon = challenger.getActivePokemons().get(i);

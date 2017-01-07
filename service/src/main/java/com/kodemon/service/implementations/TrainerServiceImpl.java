@@ -13,11 +13,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.kodemon.persistence.util.Constants.AMOUNT_OF_POKEMONS_FOR_MATCH;
+import static com.kodemon.persistence.util.Constants.MAX_ACTIVE_POKEMON;
 import static com.kodemon.persistence.util.Constants.INITIAL_POKEMON_LEVEL;
 
 /**
@@ -94,7 +93,7 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     public Trainer addPokemon(Pokemon pokemon, Trainer trainer) {
         trainer.addPokemon(pokemon);
-        if(trainer.getActivePokemons().size() < AMOUNT_OF_POKEMONS_FOR_MATCH) {
+        if(trainer.getActivePokemons().size() < MAX_ACTIVE_POKEMON) {
             trainer.addActivePokemon(pokemon);
         }
         return trainerDao.save(trainer);
@@ -157,7 +156,7 @@ public class TrainerServiceImpl implements TrainerService {
         for(int index : indices) {
             try {
                 Pokemon toBeActive = trainersPokemons.get(index);
-                if(trainer.getActivePokemons().size() < 6 && !trainer.getActivePokemons().contains(toBeActive)) {
+                if(trainer.getActivePokemons().size() < MAX_ACTIVE_POKEMON && !trainer.getActivePokemons().contains(toBeActive)) {
                     trainer.addActivePokemon(toBeActive);
                 }
             } catch(ArrayIndexOutOfBoundsException aioobe) {

@@ -23,7 +23,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-import static com.kodemon.persistence.util.Constants.AMOUNT_OF_POKEMONS_FOR_MATCH;
+import static com.kodemon.persistence.util.Constants.MAX_ACTIVE_POKEMON;
 import static com.kodemon.persistence.util.Constants.MIN_USERNAME_LENGTH;
 
 /**
@@ -246,15 +246,12 @@ public class UserController {
         UserDTO currentUser = (UserDTO) session.getAttribute("authenticatedUser");
         model.addAttribute("pokemons", currentUser.getPokemons());
         model.addAttribute("activePokemons", currentUser.getActivePokemons());
-        model.addAttribute("numberOfPokemonsForFight", AMOUNT_OF_POKEMONS_FOR_MATCH);
+        model.addAttribute("numberOfPokemonsForFight", MAX_ACTIVE_POKEMON);
         return "user/reorder";
     }
 
     @RequestMapping(value = "setFirstSixPokemons", method = RequestMethod.POST)
-    public String setFirstSixPokemons(ServletRequest r, Model model, Locale locale, @RequestParam(required = false) Integer pokemon1,
-                                      @RequestParam(required = false) Integer pokemon2, @RequestParam(required = false) Integer pokemon3,
-                                      @RequestParam(required = false) Integer pokemon4, @RequestParam(required = false) Integer pokemon5,
-                                      @RequestParam(required = false) Integer pokemon6) {
+    public String setFirstSixPokemons(ServletRequest r, Model model, Locale locale) {
         HttpServletRequest request = (HttpServletRequest) r;
         HttpSession session = request.getSession();
 
@@ -264,12 +261,9 @@ public class UserController {
         }
 
         List<Integer> pokemonIndices = new ArrayList<>();
-        if(pokemon1 != null) pokemonIndices.add(pokemon1);
-        if(pokemon2 != null) pokemonIndices.add(pokemon2);
-        if(pokemon3 != null) pokemonIndices.add(pokemon3);
-        if(pokemon4 != null) pokemonIndices.add(pokemon4);
-        if(pokemon5 != null) pokemonIndices.add(pokemon5);
-        if(pokemon6 != null) pokemonIndices.add(pokemon6);
+        for(String i : request.getParameterValues("pokemon")) {
+            pokemonIndices.add(Integer.valueOf(i));
+        }
 
         UserDTO currentUser = (UserDTO) session.getAttribute("authenticatedUser");
         userFacade.chooseActivePokemons(currentUser.getId(), pokemonIndices);
