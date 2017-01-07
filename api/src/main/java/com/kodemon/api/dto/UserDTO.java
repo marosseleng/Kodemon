@@ -87,10 +87,6 @@ public class UserDTO {
         pokemons.add(pokemon);
     }
 
-    public void setPokemons(List<PokemonDTO> pokemons) {
-        this.pokemons = pokemons;
-    }
-
     public boolean removePokemon(PokemonDTO pokemon) {
         return pokemons.remove(pokemon);
     }
@@ -113,10 +109,6 @@ public class UserDTO {
 
     public List<PokemonDTO> getActivePokemons() {
         return activePokemons;
-    }
-
-    public void setActivePokemons(List<PokemonDTO> activePokemons) {
-        this.activePokemons = activePokemons;
     }
 
     public void addActivePokemon(PokemonDTO pokemon) {

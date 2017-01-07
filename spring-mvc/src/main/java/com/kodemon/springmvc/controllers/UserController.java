@@ -251,7 +251,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "setFirstSixPokemons", method = RequestMethod.POST)
-    public String setFirstSixPokemons(ServletRequest r, Model model, Locale locale) {
+    public String setFirstSixPokemons(ServletRequest r, Model model, RedirectAttributes redirectAttributes, Locale locale) {
         HttpServletRequest request = (HttpServletRequest) r;
         HttpSession session = request.getSession();
 
@@ -268,10 +268,10 @@ public class UserController {
         UserDTO currentUser = (UserDTO) session.getAttribute("authenticatedUser");
         userFacade.chooseActivePokemons(currentUser.getId(), pokemonIndices);
 
-        model.addAttribute("alert_success", getMessage("success.reorder.changed", locale));
+        redirectAttributes.addFlashAttribute("alert_success", getMessage("success.reorder.changed", locale));
         UserDTO user = userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(currentUser.getUserName()).iterator().next();
-        model.addAttribute("trainer", user);
+        redirectAttributes.addFlashAttribute("trainer", user);
 
-        return "user/detail";
+        return "redirect:/user/detail/"+user.getUserName();
     }
 }
