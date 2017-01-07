@@ -1,11 +1,9 @@
 package com.kodemon.service.facade;
 
-import com.kodemon.api.dto.PokemonDTO;
 import com.kodemon.api.dto.UserAuthDTO;
 import com.kodemon.api.dto.UserDTO;
 import com.kodemon.api.dto.UserRegisterDTO;
 import com.kodemon.api.facade.UserFacade;
-import com.kodemon.persistence.entity.Pokemon;
 import com.kodemon.persistence.entity.Trainer;
 import com.kodemon.service.interfaces.BeanMappingService;
 import com.kodemon.service.interfaces.TrainerService;

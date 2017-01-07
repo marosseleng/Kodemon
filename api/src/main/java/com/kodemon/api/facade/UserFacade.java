@@ -1,6 +1,5 @@
 package com.kodemon.api.facade;
 
-import com.kodemon.api.dto.PokemonDTO;
 import com.kodemon.api.dto.UserAuthDTO;
 import com.kodemon.api.dto.UserDTO;
 import com.kodemon.api.dto.UserRegisterDTO;
