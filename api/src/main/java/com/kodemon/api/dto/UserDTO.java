@@ -28,6 +28,8 @@ public class UserDTO {
     private Set<BadgeDTO> badges = new HashSet<>();
     @JsonProperty(required = false, defaultValue = "[]")
     private List<PokemonDTO> pokemons = new ArrayList<>();
+    @JsonProperty(required = false, defaultValue = "[]")
+    private List<PokemonDTO> activePokemons = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -85,6 +87,10 @@ public class UserDTO {
         pokemons.add(pokemon);
     }
 
+    public void setPokemons(List<PokemonDTO> pokemons) {
+        this.pokemons = pokemons;
+    }
+
     public boolean removePokemon(PokemonDTO pokemon) {
         return pokemons.remove(pokemon);
     }
@@ -103,6 +109,18 @@ public class UserDTO {
 
     public void setBlocked(boolean blocked) {
         isBlocked = blocked;
+    }
+
+    public List<PokemonDTO> getActivePokemons() {
+        return activePokemons;
+    }
+
+    public void setActivePokemons(List<PokemonDTO> activePokemons) {
+        this.activePokemons = activePokemons;
+    }
+
+    public void addActivePokemon(PokemonDTO pokemon) {
+        activePokemons.add(pokemon);
     }
 
     @Override

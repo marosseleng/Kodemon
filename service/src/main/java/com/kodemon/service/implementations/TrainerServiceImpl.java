@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -92,6 +93,9 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     public Trainer addPokemon(Pokemon pokemon, Trainer trainer) {
         trainer.addPokemon(pokemon);
+        if(trainer.getActivePokemons().size() < 6) {
+            trainer.addActivePokemon(pokemon);
+        }
         return trainerDao.save(trainer);
     }
 
@@ -137,6 +141,23 @@ public class TrainerServiceImpl implements TrainerService {
             found.setDateOfBirth(dob);
         }
         return save(found);
+    }
+
+    @Override
+    public void setFirstSixPokemons(Long trainerId, List<Integer> indices) {
+        List<Pokemon> newActivePokemons = new ArrayList<>();
+        Trainer trainer = findById(trainerId);
+        List<Pokemon> trainersPokemons = trainer.getPokemons();
+
+        for(int index : indices) {
+            Pokemon toBeActive = trainersPokemons.get(index);
+            if(newActivePokemons.size() < 6 && !newActivePokemons.contains(toBeActive)) {
+                newActivePokemons.add(toBeActive);
+            }
+        }
+
+        trainer.setActivePokemons(newActivePokemons);
+        trainerDao.saveAndFlush(trainer);
     }
 
     @Override

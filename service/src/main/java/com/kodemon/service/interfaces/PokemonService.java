@@ -81,6 +81,14 @@ public interface PokemonService {
     void delete(Pokemon pokemon);
 
     /**
+     * Find pokemon with specified id
+     *
+     * @param id of pokemon
+     * @return pokemon with specified id
+     */
+    Pokemon findById(Long id);
+
+    /**
      * Returns a {@link List} of {@link Pokemon}s belonging to given (@link Trainer)
      *
      * @param trainer Trainer to search belonging to for

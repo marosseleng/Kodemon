@@ -150,7 +150,7 @@ public class FightController {
         PokemonDTO wildPokemon = pokemonFacade.generateWildPokemon(user);
         session.setAttribute("wildPokemon", wildPokemon);
         model.addAttribute("wildPokemon", wildPokemon);
-        model.addAttribute("trainersPokemon", user.getPokemons().get(0));
+        model.addAttribute("trainersPokemon", user.getActivePokemons().get(0));
         LOG.debug("A wild {} level {} appeared for {}", wildPokemon.getName().getName(), wildPokemon.getLevel(), user.getUserName());
         return "fight/grass";
     }
@@ -196,7 +196,7 @@ public class FightController {
 
         boolean fightResult = fightFacade.fightWildPokemon(user, wildPokemon, mode_);
         String wildPokemonName = wildPokemon.getName().getName();
-        PokemonDTO userPokemon = user.getPokemons().get(0);
+        PokemonDTO userPokemon = user.getActivePokemons().get(0);
         String userPokemonName = userPokemon.getName().getName();
         if (fightResult) {
             int userPokemonOldLevel = userPokemon.getLevel();
@@ -224,7 +224,7 @@ public class FightController {
         wildPokemon = pokemonFacade.generateWildPokemon(user);
         session.setAttribute("wildPokemon", wildPokemon);
         model.addAttribute("wildPokemon", wildPokemon);
-        model.addAttribute("trainersPokemon", user.getPokemons().get(0));
+        model.addAttribute("trainersPokemon", user.getActivePokemons().get(0));
         LOG.debug("A wild {} level {} appeared for {}", wildPokemon.getName().getName(), wildPokemon.getLevel(), user.getUserName());
         return "fight/grass";
     }

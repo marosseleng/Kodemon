@@ -16,18 +16,31 @@
     <c:if test="${trainer.blocked}"><h4><fmt:message key="user.detail.isBlocked"/></h4></c:if>
     <div class="row">
         <div class="col-xs-12 col-sm-6">
-            <h3><fmt:message key="user.detail.trainersPokemon"/></h3>
+            <h3><fmt:message key="user.detail.activePokemons"/></h3>
             <ul>
-                <c:forEach items="${trainer.pokemons}" var="pokemon">
+                <c:forEach items="${trainer.activePokemons}" var="pokemon">
                     <li><s:message code="user.detail.pokemonAtLevel" arguments="${pokemon.name},${pokemon.level}"/></li>
                 </c:forEach>
             </ul>
+            <c:if test="${authenticatedUser.userName == trainer.userName}">
+                <h4><kodemon:a href="/user/reorder"><fmt:message key="user.detail.choosePokemons"/></kodemon:a></h4>
+            </c:if>
         </div>
         <div class="col-xs-12 col-sm-6">
             <h3><fmt:message key="user.detail.trainersBadges"/></h3>
             <ul>
                 <c:forEach items="${trainer.badges}" var="badge">
                     <li><s:message code="user.detail.badgeFromGym" arguments="${badge.name},${badge.gym.city}"/></li>
+                </c:forEach>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <h3><fmt:message key="user.detail.trainersPokemon"/></h3>
+            <ul>
+                <c:forEach items="${trainer.pokemons}" var="pokemon">
+                    <li><s:message code="user.detail.pokemonAtLevel" arguments="${pokemon.name},${pokemon.level}"/></li>
                 </c:forEach>
             </ul>
         </div>

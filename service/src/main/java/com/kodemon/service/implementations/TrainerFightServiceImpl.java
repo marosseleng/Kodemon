@@ -57,14 +57,14 @@ public class TrainerFightServiceImpl implements TrainerFightService {
 
         for (int i = 0; i < AMOUNT_OF_POKEMONS_FOR_MATCH; i++) {
             Pair<Double, Double> scorePair;
-            if (challenger.getPokemons().size() > i && defender.getPokemons().size() > i) {
-                Pokemon currentChallengerPokemon = challenger.getPokemons().get(i);
-                Pokemon currentDefenderPokemon = defender.getPokemons().get(i);
+            if (challenger.getActivePokemons().size() > i && defender.getActivePokemons().size() > i) {
+                Pokemon currentChallengerPokemon = challenger.getActivePokemons().get(i);
+                Pokemon currentDefenderPokemon = defender.getActivePokemons().get(i);
                 scorePair = pokemonFightService.getScorePair(currentChallengerPokemon, currentDefenderPokemon);
-            } else if (challenger.getPokemons().size() <= i && defender.getPokemons().size() > i) {
-                scorePair = new Pair<>(0.0, (double) defender.getPokemons().get(i).getLevel());
-            } else if (challenger.getPokemons().size() > i && defender.getPokemons().size() <= i) {
-                scorePair = new Pair<>((double) challenger.getPokemons().get(i).getLevel(), 0.0);
+            } else if (challenger.getActivePokemons().size() <= i && defender.getActivePokemons().size() > i) {
+                scorePair = new Pair<>(0.0, (double) defender.getActivePokemons().get(i).getLevel());
+            } else if (challenger.getActivePokemons().size() > i && defender.getActivePokemons().size() <= i) {
+                scorePair = new Pair<>((double) challenger.getActivePokemons().get(i).getLevel(), 0.0);
             } else {
                 scorePair = new Pair<>(0.0, 0.0);
             }

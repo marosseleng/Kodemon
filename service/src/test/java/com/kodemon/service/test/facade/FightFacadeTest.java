@@ -138,9 +138,7 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
         randomWildPokemon.setLevel(1);
         randomWildPokemon.setNickname("Teleportabra");
 
-        List<Pokemon> trainersPokemons = new ArrayList<>();
-        trainersPokemons.add(pikachu);
-        when(pokemonService.findByTrainer(challenger)).thenReturn(trainersPokemons);
+        when(pokemonService.findById(null)).thenReturn(pikachu);
         when(pokemonFightService.getScorePair(pikachu, randomWildPokemon)).thenReturn(new Pair<Double, Double>(20.0, 1.0));
 
         PokemonDTO wildPokemonDto = new PokemonDTO();
@@ -225,6 +223,7 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
         challenger.setDateOfBirth(dob);
         challenger.setUserName("Ash123");
         challenger.addPokemon(pikachu);
+        challenger.addActivePokemon(pikachu);
 
         challengerDTO = new UserDTO();
         challengerDTO.setFirstName("Ash");
@@ -232,6 +231,7 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
         challengerDTO.setDateOfBirth(dob);
         challengerDTO.setUserName("Ash123");
         challengerDTO.addPokemon(pikachuDTO);
+        challengerDTO.addActivePokemon(pikachuDTO);
 
         pikachu.setTrainer(challenger);
         pikachuDTO.setTrainer(challengerDTO);
@@ -253,6 +253,7 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
         defender.setDateOfBirth(dob2);
         defender.setUserName("Brocky123");
         defender.addPokemon(onix);
+        defender.addActivePokemon(onix);
 
         defenderDTO = new UserDTO();
         defenderDTO.setFirstName("Brock");
@@ -260,6 +261,7 @@ public class FightFacadeTest extends AbstractTestNGSpringContextTests {
         defenderDTO.setDateOfBirth(dob2);
         defenderDTO.setUserName("Brocky123");
         defenderDTO.addPokemon(onixDTO);
+        defenderDTO.addActivePokemon(onixDTO);
 
         onix.setTrainer(defender);
         onixDTO.setTrainer(defenderDTO);

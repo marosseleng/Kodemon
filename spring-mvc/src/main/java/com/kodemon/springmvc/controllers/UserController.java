@@ -18,7 +18,9 @@ import javax.inject.Inject;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 
 import static com.kodemon.persistence.util.Constants.MIN_USERNAME_LENGTH;
@@ -222,5 +224,56 @@ public class UserController {
 
     private String getMessage(String code, Locale locale, Object... args) {
         return messageSource.getMessage(code, args, locale);
+    }
+
+    /**
+     * Page for selecting first 6 pokemons to be used for fight
+     *
+     * @param r servlet request to get logged user
+     * @param model data to display
+     * @param locale locale settings
+     * @return JSP page name
+     */
+    @RequestMapping(value = "/reorder", method = RequestMethod.GET)
+    public String reorder(ServletRequest r, Model model, Locale locale) {
+        HttpServletRequest request = (HttpServletRequest) r;
+        HttpSession session = request.getSession();
+        if (session.getAttribute("authenticatedUser") == null) {
+            model.addAttribute("alert_warning", getMessage("warning.user.notLoggedIn", locale));
+            return "login";
+        }
+        UserDTO currentUser = (UserDTO) session.getAttribute("authenticatedUser");
+        model.addAttribute("pokemons", currentUser.getPokemons());
+        return "user/reorder";
+    }
+
+    @RequestMapping(value = "setFirstSixPokemons", method = RequestMethod.POST)
+    public String setFirstSixPokemons(ServletRequest r, Model model, Locale locale, @RequestParam int pokemon1,
+                                      @RequestParam int pokemon2, @RequestParam int pokemon3, @RequestParam int pokemon4,
+                                      @RequestParam int pokemon5, @RequestParam int pokemon6) {
+        HttpServletRequest request = (HttpServletRequest) r;
+        HttpSession session = request.getSession();
+
+        if (session.getAttribute("authenticatedUser") == null) {
+            model.addAttribute("alert_warning", getMessage("warning.user.notLoggedIn", locale));
+            return "login";
+        }
+
+        List<Integer> pokemonIndices = new ArrayList<>();
+        pokemonIndices.add(pokemon1);
+        pokemonIndices.add(pokemon2);
+        pokemonIndices.add(pokemon3);
+        pokemonIndices.add(pokemon4);
+        pokemonIndices.add(pokemon5);
+        pokemonIndices.add(pokemon6);
+
+        UserDTO currentUser = (UserDTO) session.getAttribute("authenticatedUser");
+        userFacade.chooseActivePokemons(currentUser.getId(), pokemonIndices);
+
+        model.addAttribute("alert_success", getMessage("success.reorder.changed", locale));
+        UserDTO user = userFacade.findUserByUserNameIgnoringCaseIncludeSubstrings(currentUser.getUserName()).iterator().next();
+        model.addAttribute("trainer", user);
+
+        return "user/detail";
     }
 }
