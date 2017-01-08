@@ -4,7 +4,7 @@
 
     <groupId>com.kodemon</groupId>
     <artifactId>kodemon-app</artifactId>
-    <version>1.0.0</version>
+    <version>0.9-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Kodemon</name>
