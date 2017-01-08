@@ -97,7 +97,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         fight.setChallenger(ash);
         fight.setTargetGym(gymService.findAll().get(0));
         fight.setFightTime(new Calendar.Builder().setDate(2016, 11, 11).build().getTime());
-        fight.setWasChallengerSuccessful(true);
+        fight.setWasChallengerSuccessful(false);
         trainerFightDao.save(fight);
     }
 }
