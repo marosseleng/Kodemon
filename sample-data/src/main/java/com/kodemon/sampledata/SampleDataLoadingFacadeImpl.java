@@ -53,7 +53,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         ash.setLastName("Ketchum");
         ash.setUserName("Ash123");
         ash.setDateOfBirth(cal.getTime());
-        ash.setPwdHash(PasswordStorage.createHash("password"));
+        ash.setPwdHash(PasswordStorage.createHash("password123"));
         ash = trainerService.save(ash);
 
         Pokemon pikachu = pokemonService.createPokemonWithName(PokemonName.PIKACHU);
