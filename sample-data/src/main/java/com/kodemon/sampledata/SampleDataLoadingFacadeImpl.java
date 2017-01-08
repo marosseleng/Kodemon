@@ -53,7 +53,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         ash.setLastName("Ketchum");
         ash.setUserName("Ash123");
         ash.setDateOfBirth(cal.getTime());
-        ash.setPwdHash(PasswordStorage.createHash("password"));
+        ash.setPwdHash(PasswordStorage.createHash("password123"));
         ash = trainerService.save(ash);
 
         Pokemon pikachu = pokemonService.createPokemonWithName(PokemonName.PIKACHU);
@@ -97,7 +97,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         fight.setChallenger(ash);
         fight.setTargetGym(gymService.findAll().get(0));
         fight.setFightTime(new Calendar.Builder().setDate(2016, 11, 11).build().getTime());
-        fight.setWasChallengerSuccessful(true);
+        fight.setWasChallengerSuccessful(false);
         trainerFightDao.save(fight);
     }
 }
