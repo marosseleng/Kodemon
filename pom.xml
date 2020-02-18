@@ -10,7 +10,7 @@
     <name>Kodemon</name>
 
     <properties>
-        <spring.version>4.3.3.RELEASE</spring.version>
+        <spring.version>5.2.3.RELEASE</spring.version>
         <spring.data.version>1.10.4.RELEASE</spring.data.version>
         <junit.version>3.8.1</junit.version>
         <hibernate.core.version>5.2.3.Final</hibernate.core.version>
